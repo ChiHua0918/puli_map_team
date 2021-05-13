@@ -10,21 +10,22 @@
         // 輸出數據
         while($row = $result->fetch_assoc()) {
             $restaurant = 
-            array(" Restaurant_ID " => $row["Restaurant_ID"], 
-            " Restaurant_name " => $row["Restaurant_name"],
-            " Restaurant_TEL " => $row["Restaurant_TEL"], 
-            " Restaurant_intro " => $row["Restaurant_intro"], 
-            " Restaurant_time " => $row["Restaurant_time"], 
-            " Restaurant_photo " => $row["Restaurant_photo"], 
-            " Restaurant_comment	 " => $row["Restaurant_comment"], 
-            " Restaurant_price " => $row["Restaurant_price"], 
-            " Restaurant_address " => $row["Restaurant_address"], 
-            " Restaurant_x " => $row["Restaurant_x"], 
-            " Restaurant_y " => $row["Restaurant_y"]);
+            array("Restaurant_ID" => $row["Restaurant_ID"], 
+            "Restaurant_name" => $row["Restaurant_name"],
+            "Restaurant_TEL" => $row["Restaurant_TEL"], 
+            "Restaurant_intro" => $row["Restaurant_intro"], 
+            "Restaurant_time" => $row["Restaurant_time"], 
+            "Restaurant_photo" => $row["Restaurant_photo"], 
+            "Restaurant_comment" => $row["Restaurant_comment"], 
+            "Restaurant_price" => $row["Restaurant_price"], 
+            "Restaurant_address" => $row["Restaurant_address"], 
+            "Restaurant_x" => $row["Restaurant_x"], 
+            "Restaurant_y" => $row["Restaurant_y"]);
             array_push($arr_data,$restaurant);
         }
+	echo json_encode($arr_data,JSON_NUMERIC_CHECK);
     } else {
-        echo "0 結果";
+        echo json_encode($arr_data);//"0 結果";
     }
 // mysqli_query($link, "SET sNAMES 'utf8'");  //設定資料庫編碼 utf8
 
