@@ -1,25 +1,3 @@
-<?php
-        $link = mysqli_connect("localhost","root","","puilmap"); 
-        if ($link == false) {
-            die("連接失敗: " .mysqli_connect_error());
-        }
-        $sql = "SELECT * FROM puli_restaurant";
-        $result = $link->query($sql);
-
-        $x = $y = $name = $url = array();
-
-        if($result -> num_rows>0)
-        {
-            while($row = $result -> fetch_assoc())
-            {
-                array_push($name,$row["Restaurant_name"]);
-                array_push($url,$row["Restaurant_photo"]);
-                array_push($x,$row["Restaurant_x"]);
-                array_push($y,$row["Restaurant_Y"]);
-            }
-        }     
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -199,110 +177,120 @@
         <br/><br/><input type="submit" value="OK"/>
     </div>
     <div id='map'></div>
-
-
-    <script>
-        
-    </script>
-
-    
     <script>
             //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
             // var x = [160,656,333,1003,786];
             // var y = [195,398,573,398,471];
             // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
             // var url = ["暨南cm.jpg","","","",""];
+            
 
-            var x = <?php echo json_encode($x);?>;
-            var y = <?php echo json_encode($y);?>;
-            var restaurant_name = <?php echo json_encode($name);?>;
-            var url = <?php echo json_encode($url);?>;
+            fetch("http://localhost/PuliMap/read.php")
+            .then(res => {  return res.json()})
+            .then(result => { 
 
-            //存放各個marker
-            var markers = []; 
+                var x =[];
+                var y = [];
+                var photo = [];
+                var restaurant_name = [];
 
-            const map = L.map('map', {
-                minZoom: 0,
-                maxZoom: 4,
-                maxBounds: [[0,0],[900,1600]],
-                crs: L.CRS.Simple
-            });
-            var addMarker;
-
-            const bounds = [[0,0], [900,1600]];
-            const image = L.imageOverlay('puliMap.png', bounds).addTo(map);
-            map.fitBounds(bounds);
-            map.setView( [450, 800],0);
-
-            // set my own marker icon
-            const myIcon = L.icon({
-            iconUrl: 'markericon.png',
-            iconSize: [34, 48],
-            });
-
-            for(let i = 0 ; i < x.length ; i++)
-            {
-                markers.push(createMarker(x[i],y[i],url[i],restaurant_name[i]));
-            }
-
-            const popup = L.popup();
-            // show xy when mouse clicks
-            function onMapClick(showxy) {
-                let lat = showxy.latlng.lat; // 緯度
-                let lng = showxy.latlng.lng; // 經度
-                popup
-                    .setLatLng(showxy.latlng)
-                    .setContent(`X座標：${lng}<br/>Y座標：${lat}`)
-                    .openOn(map);
-                    addmarker = new L.marker(showxy.latlng, {draggable:true});
-                    map.addLayer(addmarker);
-                    console.log(addmarker);
-                    map.removeLayer(addmarker);
-            }
-            map.on('click', onMapClick);
-
-            function createMarker( x ,  y , url , name)
-            {
-                var loc = L.latLng([y, x]); // [y,x]
-                
-                
-                if(url != "")
+                for(let i = 0 ; i<result.length ; i++)
                 {
-                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>" + name + "</b><br><img src=' " + url +"' width='150px' alt='ncnu cm'><br/><a target='_blank' href='https://cm.ncnu.edu.tw/'>click for more info</a>");
+                    x.push(result[i].Restaurant_x);
+                    y.push(result[i].Restaurant_Y);
+                    photo.push(result[i].Restaurant_photo);
+                    restaurant_name.push(result[i].Restaurant_name);
+                }
+                
 
-                }
-                else
-                {
-                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>"+ name + "</b><br>");
-                }
-                map.setView( [450, 600],0);
-                marker.on('mouseover', function (e) {
-                    this.openPopup();
+                //存放各個marker
+                var markers = []; 
+    
+                const map = L.map('map', {
+                    minZoom: 0,
+                    maxZoom: 4,
+                    maxBounds: [[0,0],[900,1600]],
+                    crs: L.CRS.Simple
                 });
-                return marker;
-            }
+                var addMarker;
+    
+                const bounds = [[0,0], [900,1600]];
+                const image = L.imageOverlay('puliMap.png', bounds).addTo(map);
+                map.fitBounds(bounds);
+                map.setView( [450, 800],0);
+    
+                // set my own marker icon
+                const myIcon = L.icon({
+                iconUrl: 'markericon.png',
+                iconSize: [34, 48],
+                });
+    
+                //console.log(x.length);
+                //console.log(y.length);
 
-            function randomSelected()
-            {
-                for(let i = 0 ; i<markers.length ; i++)
+                for(let i = 0 ; i < x.length ; i++)
                 {
-                    map.addLayer(markers[i]);
-                    //console.log(markers[i]);
-                    
+                    markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i]));
                 }
-                //console.log("-------------------");
-                
-                var index = Math.floor(Math.random()*(markers.length)); // random * (max - min ) + min
-                //console.log("Random selected marker: ",index);
-                for(let i = 0 ; i<markers.length ; i++)
+    
+                const popup = L.popup();
+                // show xy when mouse clicks
+                function onMapClick(showxy) {
+                    let lat = showxy.latlng.lat; // 緯度
+                    let lng = showxy.latlng.lng; // 經度
+                    popup
+                        .setLatLng(showxy.latlng)
+                        .setContent(`X座標：${lng}<br/>Y座標：${lat}`)
+                        .openOn(map);
+                        addmarker = new L.marker(showxy.latlng, {draggable:true});
+                        map.addLayer(addmarker);
+                        console.log(addmarker);
+                        map.removeLayer(addmarker);
+                }
+                map.on('click', onMapClick);
+    
+                function createMarker( x ,  y , url , name)
                 {
-                    if(markers[i] != markers[index])
+                    var loc = L.latLng([y, x]); // [y,x]
+                    
+                    if(url != "")
                     {
+                        var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>" + name + "</b><br><img src=' " + url +"' width='150px' alt='ncnu cm'><br/><a target='_blank' href='https://cm.ncnu.edu.tw/'>click for more info</a>");
+    
+                    }
+                    else
+                    {
+                        var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>"+ name + "</b><br>");
+                    }
+                    map.setView( [450, 600],0);
+                    marker.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+                    return marker;
+                }
+    
+                function randomSelected()
+                {
+                    for(let i = 0 ; i<markers.length ; i++)
+                    {
+                        map.addLayer(markers[i]);
                         //console.log(markers[i]);
-                        map.removeLayer(markers[i]);
+                        
+                    }
+                    //console.log("-------------------");
+                    
+                    var index = Math.floor(Math.random()*(markers.length)); // random * (max - min ) + min
+                    //console.log("Random selected marker: ",index);
+                    for(let i = 0 ; i<markers.length ; i++)
+                    {
+                        if(markers[i] != markers[index])
+                        {
+                            //console.log(markers[i]);
+                            map.removeLayer(markers[i]);
+                        }
                     }
                 }
-            }
+            })
     </script>
 
 </body>
