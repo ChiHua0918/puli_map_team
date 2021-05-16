@@ -1,7 +1,7 @@
 <!-- fetch data 連接 puli_restaurant 取得資料 -->
 <?php
     // db_host, db_username, db_password, db_name
-    $link = mysqli_connect("localhost","root","","wordpress"); 
+    $link = mysqli_connect("localhost","foodmap","foodmap@puli#ncnu","testfoodmap"); 
     if ($link == false) {
         die("連接失敗: " .mysqli_connect_error());
     }
