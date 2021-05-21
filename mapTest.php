@@ -183,11 +183,10 @@
             // var y = [195,398,573,398,471];
             // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
             // var url = ["暨南cm.jpg","","","",""];
-            
-
             fetch("http://localhost/PuliMap/read.php")
             .then(res => {  return res.json()})
             .then(result => { 
+                console.log(result);
 
                 var x =[];
                 var y = [];
@@ -197,7 +196,7 @@
                 for(let i = 0 ; i<result.length ; i++)
                 {
                     x.push(result[i].Restaurant_x);
-                    y.push(result[i].Restaurant_Y);
+                    y.push(result[i].Restaurant_y);
                     photo.push(result[i].Restaurant_photo);
                     restaurant_name.push(result[i].Restaurant_name);
                 }
