@@ -83,6 +83,7 @@ URL:http://localhost/puli_foodmap/read_filter.php
 最大價錢:'maxPrice’
 距離:'dis’
 使用者位置:‘userLocation’
+使用者位置格式[緯度, 經度]
 
 讀取全部餐廳 read.php
 API名稱:讀取全部餐廳
