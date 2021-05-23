@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-05-23 09:13:57
+-- 產生時間： 2021-05-23 09:27:57
 -- 伺服器版本： 10.4.14-MariaDB
 -- PHP 版本： 7.4.10
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- 資料表結構 `puli_manager`
 --
 
+DROP TABLE IF EXISTS `puli_manager`;
 CREATE TABLE `puli_manager` (
   `ID` bigint(20) NOT NULL,
   `user_login` varchar(60) NOT NULL,
@@ -54,6 +55,7 @@ INSERT INTO `puli_manager` (`ID`, `user_login`, `user_pass`, `user_nicename`, `u
 -- 資料表結構 `puli_recommend`
 --
 
+DROP TABLE IF EXISTS `puli_recommend`;
 CREATE TABLE `puli_recommend` (
   `Recommend_ID` int(11) NOT NULL,
   `Restaurant_ID` int(11) NOT NULL,
@@ -77,6 +79,7 @@ INSERT INTO `puli_recommend` (`Recommend_ID`, `Restaurant_ID`, `Category_ID`, `C
 -- 資料表結構 `puli_restaurant`
 --
 
+DROP TABLE IF EXISTS `puli_restaurant`;
 CREATE TABLE `puli_restaurant` (
   `Restaurant_ID` int(20) NOT NULL,
   `Restaurant_name` varchar(20) NOT NULL,
@@ -108,6 +111,7 @@ INSERT INTO `puli_restaurant` (`Restaurant_ID`, `Restaurant_name`, `Restaurant_T
 -- 資料表結構 `puli_rest_time`
 --
 
+DROP TABLE IF EXISTS `puli_rest_time`;
 CREATE TABLE `puli_rest_time` (
   `rest_Time_ID` int(11) NOT NULL,
   `Day_ID` int(11) NOT NULL,
@@ -133,6 +137,7 @@ INSERT INTO `puli_rest_time` (`rest_Time_ID`, `Day_ID`, `Restaurant_ID`, `open_t
 -- 資料表結構 `wp_class`
 --
 
+DROP TABLE IF EXISTS `wp_class`;
 CREATE TABLE `wp_class` (
   `class_ID` int(11) NOT NULL,
   `clss` varchar(10) NOT NULL
@@ -144,6 +149,7 @@ CREATE TABLE `wp_class` (
 -- 資料表結構 `wp_commentmeta`
 --
 
+DROP TABLE IF EXISTS `wp_commentmeta`;
 CREATE TABLE `wp_commentmeta` (
   `meta_id` bigint(20) UNSIGNED NOT NULL,
   `comment_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -157,6 +163,7 @@ CREATE TABLE `wp_commentmeta` (
 -- 資料表結構 `wp_comments`
 --
 
+DROP TABLE IF EXISTS `wp_comments`;
 CREATE TABLE `wp_comments` (
   `comment_ID` bigint(20) UNSIGNED NOT NULL,
   `comment_post_ID` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -188,6 +195,7 @@ INSERT INTO `wp_comments` (`comment_ID`, `comment_post_ID`, `comment_author`, `c
 -- 資料表結構 `wp_links`
 --
 
+DROP TABLE IF EXISTS `wp_links`;
 CREATE TABLE `wp_links` (
   `link_id` bigint(20) UNSIGNED NOT NULL,
   `link_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -210,6 +218,7 @@ CREATE TABLE `wp_links` (
 -- 資料表結構 `wp_map`
 --
 
+DROP TABLE IF EXISTS `wp_map`;
 CREATE TABLE `wp_map` (
   `ID` int(11) NOT NULL,
   `restaurant_ID` int(11) NOT NULL,
@@ -222,6 +231,7 @@ CREATE TABLE `wp_map` (
 -- 資料表結構 `wp_options`
 --
 
+DROP TABLE IF EXISTS `wp_options`;
 CREATE TABLE `wp_options` (
   `option_id` bigint(20) UNSIGNED NOT NULL,
   `option_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -389,6 +399,7 @@ INSERT INTO `wp_options` (`option_id`, `option_name`, `option_value`, `autoload`
 -- 資料表結構 `wp_postmeta`
 --
 
+DROP TABLE IF EXISTS `wp_postmeta`;
 CREATE TABLE `wp_postmeta` (
   `meta_id` bigint(20) UNSIGNED NOT NULL,
   `post_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -410,6 +421,7 @@ INSERT INTO `wp_postmeta` (`meta_id`, `post_id`, `meta_key`, `meta_value`) VALUE
 -- 資料表結構 `wp_posts`
 --
 
+DROP TABLE IF EXISTS `wp_posts`;
 CREATE TABLE `wp_posts` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `post_author` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -452,6 +464,7 @@ INSERT INTO `wp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post
 -- 資料表結構 `wp_recommend`
 --
 
+DROP TABLE IF EXISTS `wp_recommend`;
 CREATE TABLE `wp_recommend` (
   `recommend` int(11) NOT NULL,
   `restaurant_ID` int(11) NOT NULL,
@@ -464,6 +477,7 @@ CREATE TABLE `wp_recommend` (
 -- 資料表結構 `wp_termmeta`
 --
 
+DROP TABLE IF EXISTS `wp_termmeta`;
 CREATE TABLE `wp_termmeta` (
   `meta_id` bigint(20) UNSIGNED NOT NULL,
   `term_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -477,6 +491,7 @@ CREATE TABLE `wp_termmeta` (
 -- 資料表結構 `wp_terms`
 --
 
+DROP TABLE IF EXISTS `wp_terms`;
 CREATE TABLE `wp_terms` (
   `term_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -497,6 +512,7 @@ INSERT INTO `wp_terms` (`term_id`, `name`, `slug`, `term_group`) VALUES
 -- 資料表結構 `wp_term_relationships`
 --
 
+DROP TABLE IF EXISTS `wp_term_relationships`;
 CREATE TABLE `wp_term_relationships` (
   `object_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `term_taxonomy_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -516,6 +532,7 @@ INSERT INTO `wp_term_relationships` (`object_id`, `term_taxonomy_id`, `term_orde
 -- 資料表結構 `wp_term_taxonomy`
 --
 
+DROP TABLE IF EXISTS `wp_term_taxonomy`;
 CREATE TABLE `wp_term_taxonomy` (
   `term_taxonomy_id` bigint(20) UNSIGNED NOT NULL,
   `term_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -538,6 +555,7 @@ INSERT INTO `wp_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `desc
 -- 資料表結構 `wp_usermeta`
 --
 
+DROP TABLE IF EXISTS `wp_usermeta`;
 CREATE TABLE `wp_usermeta` (
   `umeta_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -577,6 +595,7 @@ INSERT INTO `wp_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALU
 -- 資料表結構 `wp_users`
 --
 
+DROP TABLE IF EXISTS `wp_users`;
 CREATE TABLE `wp_users` (
   `ID` bigint(20) UNSIGNED NOT NULL,
   `user_login` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -603,6 +622,7 @@ INSERT INTO `wp_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_
 -- 資料表結構 `wp_user_position`
 --
 
+DROP TABLE IF EXISTS `wp_user_position`;
 CREATE TABLE `wp_user_position` (
   `ID` int(11) NOT NULL,
   `X` double NOT NULL,
