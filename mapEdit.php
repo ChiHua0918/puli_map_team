@@ -1,7 +1,12 @@
+<?php 
+header("Content-Type:text/html; charset=utf-8");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>地圖頁面</title>
+    <title>修改頁面</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +30,8 @@
         }
     </style>
     <style type="text/css">
-        .menu{
-            width: 300px;
+        .modify{
+            width: 1200px;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.801);
             box-shadow: 0px 0px 3px hsla(240, 40%, 15%, 0.6);
@@ -40,6 +45,25 @@
         ul{
             list-style-type:none ;
         }
+        /* @media screen and (min-width: 680px) {
+            nav li:first-child {
+                padding-left: 30px;
+            }
+            nav li {
+                display: inline-block;
+                padding-right: 30px;
+            }
+        }
+        @media (min-width: 480px) and (max-width: 680px) {
+            nav li {
+                text-align: center;
+            }
+            nav ul {
+                columns: 2;
+                -webkit-columns: 2;
+                -moz-columns: 2;
+            }
+        } */
         input[type=submit],button {
             font-family: times new roman;
             font-size:14pt;
@@ -50,62 +74,18 @@
             font-size: 14pt;
             font-family: times new roman;
         }
-        #main {
+        #data {
             text-align: left;
             display:inline-block;
             line-height: 30pt;
         }
-        .button {
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            padding: 6px 20px;
-            border: 0px solid #ae7a0d;
-            border-radius: 23px;
-            background: #ffc815;
-            background: -webkit-gradient(linear, left top, left bottom, from(#ffc815), to(#ae7a0d));
-            background: -moz-linear-gradient(top, #ffc815, #ae7a0d);
-            background: linear-gradient(to bottom, #ffc815, #ae7a0d);
-            text-shadow: #7c5709 2px 2px 0px;
-            font: normal normal bold 20px arial;
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .button:hover {
-            border: 0px solid #f8ae12;
-            background: #fff019;
-            background: -webkit-gradient(linear, left top, left bottom, from(#fff019), to(#d19210));
-            background: -moz-linear-gradient(top, #fff019, #d19210);
-            background: linear-gradient(to bottom, #fff019, #d19210);
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .button:active {
-            background: #ae7a0d;
-            background: -webkit-gradient(linear, left top, left bottom, from(#ae7a0d), to(#ae7a0d));
-            background: -moz-linear-gradient(top, #ae7a0d, #ae7a0d);
-            background: linear-gradient(to bottom, #ae7a0d, #ae7a0d);
-        }
-        .button:before{
-            content:  "\0000a0";
-            display: inline-block;
-            height: 24px;
-            width: 24px;
-            line-height: 24px;
-            margin: 0 4px -6px -4px;
-            position: relative;
-            top: 0px;
-            left: 0px;
-            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAE9klEQVRIiY1UW09cVRT+1j6XOTMMMFwHaAsEKEMLRWlrbUyqtdo2tk0ajUlfDA8khKfa2MQYf4P60r5Jy0tfvWDrg9dojFFTI2jFoWBLK3IdrsMw5wzn7LOXLzNkClPqTk7Ot9dZ51t7f+sCbF+igG0nnx0xFfq7t7cnBOA4M1qIuIQZU0Q0woyRa9cGXAAqj2RHTFs+oLe3p4WZ3z19+pVTjY2NlYFAwFpZWVkdHY0n4vH4V45jv93fP5DJO63aCT9yg0uXLp5rbW29euz4y41aJIoHCyksrm9gV1kR6iMWFv4Zw63BTwaXV5Yv9vcPzPyfAFrWwL29PZHq6uiN02fPx5aoGNOrNoKmDk0IjM8ncWcmidqaWtRXFO2emppKdnTs/3VoaNjLknH22Ybz5Tlz4EBnh21GYHs+SoImVmwXs2sO0q7CiuPhy7EE9rTsCzc1NZ1lRl3e5R+baD2ru2Dm801tHWIq7cKVCjPJNNYcDynXh+1J+BAACOMpQjQaPUiEOgATT0q0ntsIISo1w0JiyUFGMpYdD47HkMzQdQMhXYOpETwmmIZpCSFCW3RXhXAugGLm9YxjY0MCM8kMbAmQIFimjuKgiaCpI2gIRCwDSc9TSik3Twr1OCwAoL9/QAH49uHYCKLFAaw6HjylYBo6ioMBlBcFUF1sYXckhKgpMTszE2dG4kn6bzUMjv7151yln0RrTSkMTYNlaAgFdJQGTZSHTDSUhbA0OS7v37/3DYCpLRIVxFqOfWhoOLm/fV9KbTjHnm7aZVVUVsJVgKlpqCu10FwegjP3AJ/f/HQ9WlV9I7a39fZnt27llyYK4VyjCQDo7e0BgMMA3nnxhRPPx9pikaJwWJ+fm7N/Hx5OxEfjU411tUfU2sTyfuuuqTKrH0rPe+/C1clVPGZtGxXZQOUAn2CmRoBDRLQM4M7szGz8WLN5oy0qT+3dExGL05NrS0vzH7iuc+XClX/XUKBc9TzeTe36+wdWAXyEAnX9xpv1i3VVR0TDwVMoCv5QwuC3FhfmMgDe38KDXA4YjyYmX8dt2r7+bOloamm6E77c09B1koIGLNdJnzzXaay+ejgc//h2Mle+BAC5WaTyybq7u0VLSwt1dHRQU1OT1t7eLmKxmIjFYnrCr07WGst3UwsP2w3T3F3T3IWgSVhPLh+20+tr556pGKnofM0bHh5WAFjLRmIAoq+vj7q6ujTbtjWllAnA0jQtSERFuq4Xa5pW4rJZfD9dvR4Q3jhWx17STbOoru05aHItNL+QfGpizv5+2quZP3r0KB06dAibEl2+fBnz8/O653lBKWVYCFEOoJqIaoioAUAjETUz814FapnJlFmOizGV+KOZ/EzpulWPL777hSbXrK83jKoFKSXZtq30nEREJHzfF9nEW8wcBhAGEAEQye2JKAzAYGZvIl1l6+QPpn7+6czfiR/Dy2ncRHhXAoCllJJKqc1ZBGaGpmlKCCGVUhkiWmfmXOIlEdlZm5U9hGTS7HvpmoklW/xmy7R0iyvvST2SgFIZIYRkZvVIo/X19cH3fZFKpYSUUicinZl1ALoQQmdmXQghlFKCiBQzKyKSSimZPYRkZmkYhgyHw4qIVMFG6+7uFul0GkIIOI4jDMOAUgrMLAKBwKZfJpOBEEIJIeC6LkKhkPJ9H2VlZbh+/fomp8h7iwK2Qn6F/Avi/wDP6ltgUE9BOwAAAABJRU5ErkJggg==") no-repeat left center transparent;
-            background-size: 100% 100%;
-        }
         .active {
-            transform: translateX(295px);
+            transform: translateX(1195px);
         }
         .btn {
             position: absolute;
             top: 50%;
-            right: 300px;
+            right: 1200px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
@@ -119,66 +99,117 @@
         .rotate {
             transform: rotate(180deg);
         }
+        /* crud */
+        .data {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .thead {
+        }
+        .tbody {
+            
+        }
+        tr {
+            border-bottom: 1px solid #cbcbcb;
+        }
+        th, td{
+            height: 40px;
+            padding: 2px;
+        }
+        tr:hover {
+            background-color: rgba(235, 235, 235, 0.5);
+        }
+        .edit_btn {
+            text-decoration: none;
+            padding: 3px 6px;
+            background: #2E8B57;
+            color: white;
+            border-radius: 3px;
+        }
+        .del_btn {
+            text-decoration: none;
+            padding: 3px 6px;
+            color: white;
+            border-radius: 3px;
+            background: #800000;
+        }
     </style>
     <script>
         $(function () {
             $("button.btn").click(function () {
-                $("div.menu").toggleClass("active");
+                $("div.modify").toggleClass("active");
                 $(".fa-chevron-right").toggleClass("rotate");
             });
         });
 
-        
     </script>
 </head>
 <body>
-    <div class="menu"><br/>
+    <div class="modify">
         <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
-        <a class="button" href="#" onclick="randomSelected()">隨機選取餐廳</a><hr />
-        <div id="main">
-            時段: <select name="time">
-            <option>7~10點</option>
-            <option>10~14點</option>
-            <option>14~17點</option>
-            <option>17~20點</option>
-            </select><br/>
-            距離: <select name="dist">
-            <option><100m</option>
-            <option>100~600m</option>
-            <option>600m~<1km</option>
-            <option>>1km</option>
-            </select><br/>
-            類別: 
-            <select name="type">
-            <option>麵食</option>
-            <option>飯食</option>
-            <option>日式料理</option>
-            <option>韓式料理</option>
-            </select>
-            <br />
-            價位: 
-            <select name="price">
-            <option><100</option>
-            <option>100~150</option>
-            <option>150~200</option>
-            <option>>200</option>
-            </select>
-            <br />
-            <!--
-            價位: <input list="priceList" name="browser"> <br/>
-            <datalist id="priceList">
-            <option value="<100">
-            <option value="100~150">
-            <option value="150~200">
-            </datalist> 
-            <br />
-            -->
+        <div>
+            <h1 align = "center">資料總表</h1>
+            <form action="http://localhost/PuliMap/creat.php" method="post">
+            <table border="1" width="480" align = "center" style="background-color:white">
+                <tr>
+                    <th>名稱</th>
+                    <th>電話</th>
+                    <th>簡介</th>
+                    <th>營業時間</th>
+                    <th>照片</th>
+                    <th>評價</th>
+                    <th>價錢</th>
+                    <th>地址</th>
+                    <th>x座標</th>
+                    <th>y座標</th>
+                </tr>
+
+
+
+            <tr>
+            <td><input type="text" name="Restaurant_name"  required size="4" style="border-style:none" /></td>
+            <td><input type="tel" name="Restaurant_TEL" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_intro" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_time" required size="4" style="border-style:none"/></td>
+            <td><input type="file" accept="image/*" multiple name="Restaurant_photo"  size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_comment" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_price" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_address" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_x" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="Restaurant_y" required size="4" style="border-style:none"/></td>
+            </tr>
+
+            </table>
+
+            <input type="submit" value="新增餐廳"/>
+
+        </form>
         </div>
-        <br/><br/><input type="submit" value="OK"/>
+        <div id="list">
+        <!-- <table class="data" id="list"> -->
+            <!-- <thead class="thead">
+                <tr>
+                    <th>店家名稱</th>
+                    <th>(x,y)座標</th>
+                    <th>營業時間</th>
+                    <th>電話號碼</th>
+                    <th>評分</th>
+                    <th>照片網址</th>
+                    <th>部落格網址</th>
+                    <th colspan="2"></th>
+                </tr>
+            </thead> -->
+
+            <!-- <tbody >
+                     
+            </tbody> -->
+        <!-- </table> -->
+        </div>
     </div>
     <div id='map'></div>
     <script>
-            //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
+       //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
             // var x = [160,656,333,1003,786];
             // var y = [195,398,573,398,471];
             // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
@@ -187,18 +218,29 @@
             .then(res => {  return res.json()})
             .then(result => { 
                 console.log(result);
-
+                
+                var id = [];
                 var x =[];
                 var y = [];
+                var time = [];
+                var tel = [];
+                var cmt = [];
                 var photo = [];
+                var intro = [];
                 var restaurant_name = [];
 
                 for(let i = 0 ; i<result.length ; i++)
                 {
+                    id.push(result[i].Restaurant_ID);
                     x.push(result[i].Restaurant_x);
                     y.push(result[i].Restaurant_y);
+                    time.push(result[i].Restaurant_time);
+                    tel.push(result[i].Restaurant_TEL);
+                    cmt.push(result[i].Restaurant_comment);
                     photo.push(result[i].Restaurant_photo);
+                    intro.push(result[i].Restaurant_intro);
                     restaurant_name.push(result[i].Restaurant_name);
+
                 }
                 
 
@@ -227,10 +269,54 @@
                 //console.log(x.length);
                 //console.log(y.length);
 
+                var tbl = "<table class='data'>";
+
+                
+
+                tbl += "<tr><th>店家名稱</th><th>(x,y)座標</th><th>營業時間</th><th>電話號碼</th><th>評分</th><th>照片網址</th><th>部落格網址</th><th colspan='2'></th></tr>";
+
+                tbl += "<tbody>";
                 for(let i = 0 ; i < x.length ; i++)
                 {
                     markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i]));
+
+                    // $("list").innerHTML += "<tr><td>"+ restaurant_name[i]+"</td>";
+                    // $("list").innerHTML += "<td>" + restaurant_name[i] +"</td>";
+                    // $("list").innerHTML += "<td>(" + x[i] +"," + y[i] +")</td>";
+                    // $("list").innerHTML += "<td>" + time[i] +"</td>";
+                    // $("list").innerHTML += "<td>" + tel[i] +"</td>";
+                    // $("list").innerHTML += "<td>" + cmt[i] +"</td>";
+                    // $("list").innerHTML += "<td>" + photo[i] +"</td>";
+                    // $("list").innerHTML += "<td>" + intro[i] +"</td>";
+                    // $("list").innerHTML += "</tr>";
+
+                    
+
+                    tbl += "<tr>";
+                    tbl += "<td>" + restaurant_name[i] +"</td>";
+                    tbl += "<td>(" + x[i] +"," + y[i] +")</td>";
+                    tbl += "<td>" + time[i] +"</td>";
+                    tbl += "<td>" + tel[i] +"</td>";
+                    tbl += "<td>" + cmt[i] +"</td>";
+                    tbl += "<td>" + photo[i] +"</td>";
+                    tbl += "<td>" + intro[i] +"</td>";
+
+                    //修改按鈕
+                    tbl += "<td><a href='' class='edit_btn'>修改</a></td>";
+
+                    //刪除按鈕
+                    //tbl += "<td><a href=\"delete.php?del="+ id[i] +"\" class='del_btn'>刪除</a></td>";
+                    tbl +="<td>";
+                    var del_form = "<form action=\"http://localhost/PuliMap/delete.php\" method=\"POST\">"
+                    del_form += "<input type=\"hidden\" name=\"Restaurant_ID\" value=\""+id[i]+"\">";
+                    tbl += del_form;
+                    tbl += "<input type=\"submit\" class=\"del_btn\" value=\"刪除\"></form></td>";
+                    tbl += "</tr>";
                 }
+
+                tbl += "</tbody></table>";
+
+                $("list").innerHTML = tbl;
     
                 const popup = L.popup();
                 // show xy when mouse clicks
@@ -289,8 +375,13 @@
                         }
                     }
                 }
+
+                function $(id)
+                {
+                    return document.getElementById(id);
+                }
             })
-    </script>
+            </script>
 
 </body>
 </html>
