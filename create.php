@@ -4,16 +4,16 @@
 include("login.php");
 
 // 取得使用者想新增的資料餐廳資料
-    @$RestaurantName = $_POST['RestaurantName'];
-    @$RestaurantTEL = $_POST['RestaurantTEL'];
-    @$RestaurantIntro = $_POST['RestaurantIntro'];
-    @$RestaurantTime = $_POST['RestaurantTime'];
+    @$RestaurantName = $_GET['RestaurantName'];
+    @$RestaurantTEL = $_GET['RestaurantTEL'];
+    @$RestaurantIntro = $_GET['RestaurantIntro'];
+    @$RestaurantTime = $_GET['RestaurantTime'];
     @$RestaurantPhoto = $_POST['RestaurantPhoto'];
-    @$RestaurantComment = $_POST['RestaurantComment'];
-    @$RestaurantPrice = $_POST['RestaurantPrice'];
-    @$RestaurantAddress = $_POST['RestaurantAddress'];
-    @$RestaurantX = $_POST['RestaurantX'];
-    @$RestaurantY = $_POST['RestaurantY'];
+    @$RestaurantComment = $_GET['RestaurantComment'];
+    @$RestaurantPrice = $_GET['RestaurantPrice'];
+    @$RestaurantAddress = $_GET['RestaurantAddress'];
+    @$RestaurantX = $_GET['RestaurantX'];
+    @$RestaurantY = $_GET['RestaurantY'];
 
 
 echo $_SESSION['userLogin'];
