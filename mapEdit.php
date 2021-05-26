@@ -196,7 +196,7 @@ header("Content-Type:text/html; charset=utf-8");
 
             tbl += "名稱: <input type=\"text\" name=\"RestaurantName\" size=\"10\" style=\"border-style:none\" value=\""+ restaurant_name[pos] +"\" /><br/>";
             tbl += "電話: <input type=\"tel\" name=\"RestaurantTEL\" size=\"10\" style=\"border-style:none\" value=\""+ tel[pos] +"\" /><br/>";
-            tbl += "簡介: <textarea type=\"text\" name=\"RestaurantIntro\" size=\"30\" style=\"border-style:none\" value=\""+ intro[pos] +"\" ></textarea><br/>";
+            tbl += "簡介: <textarea type=\"text\" name=\"RestaurantIntro\" size=\"30\" style=\"border-style:none\" >"+ intro[pos] + "</textarea><br/>";
             tbl += "照片: <input type=\"file\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" size=\"10\" style=\"border-style:none\" value=\""+ photo[pos] +"\" /><br/>";
             tbl += "營業時間: <input type=\"text\" name=\"RestaurantTime\" size=\"10\" style=\"border-style:none\" value=\""+ time[pos] +"\" /><br/>";
             tbl += "評價: <input type=\"text\" name=\"RestaurantComment\" size=\"10\" style=\"border-style:none\" value=\""+ cmt[pos] +"\" /><br/>";
