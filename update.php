@@ -5,16 +5,16 @@
 
     @$RestaurantID = $_GET['RestaurantID'];
 // @$RestaurantID = $_POST['RestaurantID'];
-    @$RestaurantName = $_GET['RestaurantName'];
-    @$RestaurantTEL = $_GET['RestaurantTEL'];
-    @$RestaurantIntro = $_GET['RestaurantIntro'];
-    @$RestaurantTime = $_GET['RestaurantTime'];
+    @$RestaurantName = $_POST['RestaurantName'];
+    @$RestaurantTEL = $_POST['RestaurantTEL'];
+    @$RestaurantIntro = $_POST['RestaurantIntro'];
+    @$RestaurantTime = $_POST['RestaurantTime'];
     @$RestaurantPhoto = $_POST['RestaurantPhoto'];
-    @$RestaurantComment = $_GET['RestaurantComment'];
-    @$RestaurantPrice = $_GET['RestaurantPrice'];
-    @$RestaurantAddress = $_GET['RestaurantAddress'];
-    @$RestaurantX = $_GET['RestaurantX'];
-    @$RestaurantY = $_GET['RestaurantY'];
+    @$RestaurantComment = $_POST['RestaurantComment'];
+    @$RestaurantPrice = $_POST['RestaurantPrice'];
+    @$RestaurantAddress = $_POST['RestaurantAddress'];
+    @$RestaurantX = $_POST['RestaurantX'];
+    @$RestaurantY = $_POST['RestaurantY'];
 
 // @$key = $_GET['key'];
 // @$val = $_GET['val'];
