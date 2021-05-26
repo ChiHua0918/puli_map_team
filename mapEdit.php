@@ -6,7 +6,7 @@ header("Content-Type:text/html; charset=utf-8");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>修改頁面</title>
+    <title>編輯頁面</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,14 +134,100 @@ header("Content-Type:text/html; charset=utf-8");
             border-radius: 3px;
             background: #800000;
         }
+        #dialog{
+            display: none;
+            width: 500px;
+            height: 500px;
+            position: absolute;
+            padding: 30px;
+            /* border: 2px solid blue; */
+            background-color: rgba(155, 212, 233, 0.9);
+            z-index: 3;
+            /* right: 35%;
+            top: 15%; */
+        }
+        #closeBtn{
+            /* position:relative; */
+            margin: 15px;
+        }
     </style>
+
     <script>
+
+        var id = [];
+        var x =[];
+        var y = [];
+        var time = [];
+        var tel = [];
+        var cmt = [];
+        var photo = [];
+        var intro = [];
+        var restaurant_name = [];
+        var price = [];
+        var address = [];
+
+        window.onload = function()
+        {
+            setDialog();
+
+            window.onresize = setDialog;
+
+        }
+
+        function setDialog()
+        {
+            var w=document.documentElement.clientWidth;
+            var h=document.documentElement.clientHeight;
+
+            document.getElementById("dialog").style.left = (w-500)/2+"px";
+            document.getElementById("dialog").style.top = (h-500)/2+"px";
+        }
+
+        function updateBtn(pos)
+        {
+            var dialog = document.getElementById("dialog");
+            var content = document.getElementById("dialog_content");
+
+            dialog.style.display = "block";
+
+            content.innerHTML = "id is : " + pos;
+            
+            var tbl = "<form action=\"http://localhost/PuliMap/api/update.php\" method=\"post\">";
+
+            tbl += "名稱: <input type=\"text\" name=\"RestaurantName\" size=\"10\" style=\"border-style:none\" value=\""+ restaurant_name[pos] +"\" /><br/>";
+            tbl += "電話: <input type=\"tel\" name=\"RestaurantTEL\" size=\"10\" style=\"border-style:none\" value=\""+ tel[pos] +"\" /><br/>";
+            tbl += "簡介: <textarea type=\"text\" name=\"RestaurantIntro\" size=\"30\" style=\"border-style:none\" value=\""+ intro[pos] +"\" ></textarea><br/>";
+            tbl += "照片: <input type=\"file\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" size=\"10\" style=\"border-style:none\" value=\""+ photo[pos] +"\" /><br/>";
+            tbl += "營業時間: <input type=\"text\" name=\"RestaurantTime\" size=\"10\" style=\"border-style:none\" value=\""+ time[pos] +"\" /><br/>";
+            tbl += "評價: <input type=\"text\" name=\"RestaurantComment\" size=\"10\" style=\"border-style:none\" value=\""+ cmt[pos] +"\" /><br/>";
+            tbl += "價錢: <input type=\"text\" name=\"RestaurantPrice\" size=\"10\" style=\"border-style:none\" value=\""+ price[pos] +"\"/><br/>";
+            tbl += "地址: <input type=\"text\" name=\"RestaurantAddress\" size=\"30\" style=\"border-style:none\" value=\""+ address[pos] +"\" /><br/>";
+            tbl += "x座標: <input type=\"text\" name=\"RestaurantX\" size=\"4\" style=\"border-style:none\" value=\""+ x[pos] +"\" /><br/>";
+            tbl += "y座標: <input type=\"text\" name=\"RestaurantY\" size=\"4\" style=\"border-style:none\" value=\""+ y[pos] +"\" /><br/>";
+            
+            tbl += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[pos]+"\">";
+            tbl += "<input type=\"submit\" class=\"edit_btn\" value=\"更新\" style=\"padding=10px;\"></form>"
+        
+            content.innerHTML += tbl;
+        }
+
+        function closeClick()
+        {
+            document.getElementById("dialog").style.display = "none";
+        }
+
+
+
         $(function () {
             $("button.btn").click(function () {
                 $("div.modify").toggleClass("active");
                 $(".fa-chevron-right").toggleClass("rotate");
             });
         });
+
+        
+
+        
 
     </script>
 </head>
@@ -150,7 +236,7 @@ header("Content-Type:text/html; charset=utf-8");
         <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
         <div>
             <h1 align = "center">資料總表</h1>
-            <form action="http://localhost/PuliMap/creat.php" method="post">
+            <form action="http://localhost/PuliMap/api/create.php" method="post">
             <table border="1" width="480" align = "center" style="background-color:white">
                 <tr>
                     <th>名稱</th>
@@ -164,70 +250,51 @@ header("Content-Type:text/html; charset=utf-8");
                     <th>x座標</th>
                     <th>y座標</th>
                 </tr>
-
-
-
             <tr>
-            <td><input type="text" name="Restaurant_name"  required size="4" style="border-style:none" /></td>
-            <td><input type="tel" name="Restaurant_TEL" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_intro" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_time" required size="4" style="border-style:none"/></td>
-            <td><input type="file" accept="image/*" multiple name="Restaurant_photo"  size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_comment" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_price" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_address" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_x" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="Restaurant_y" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantName"  required size="4" style="border-style:none" /></td>
+            <td><input type="tel" name="RestaurantTEL" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantIntro" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantTime" required size="4" style="border-style:none"/></td>
+            <td><input type="file" accept="image/*" multiple name="RestaurantPhoto"  size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantComment" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantPrice" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantAddress" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantX" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="RestaurantY" required size="4" style="border-style:none"/></td>
             </tr>
 
             </table>
 
             <input type="submit" value="新增餐廳"/>
 
-        </form>
-        </div>
-        <div id="list">
-        <!-- <table class="data" id="list"> -->
-            <!-- <thead class="thead">
-                <tr>
-                    <th>店家名稱</th>
-                    <th>(x,y)座標</th>
-                    <th>營業時間</th>
-                    <th>電話號碼</th>
-                    <th>評分</th>
-                    <th>照片網址</th>
-                    <th>部落格網址</th>
-                    <th colspan="2"></th>
-                </tr>
-            </thead> -->
+            </form>
 
-            <!-- <tbody >
-                     
-            </tbody> -->
-        <!-- </table> -->
+            
+        </div>
+        
+        <div id="list">
         </div>
     </div>
     <div id='map'></div>
+
+    <div id="dialog">
+        <h5 style="text-align: center;">修改頁面</h5>
+        <div id="dialog_content">
+
+        </div>
+        <button id="closeBtn" onclick="closeClick()">關閉</button>
+    </div>
     <script>
        //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
             // var x = [160,656,333,1003,786];
             // var y = [195,398,573,398,471];
             // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
             // var url = ["暨南cm.jpg","","","",""];
-            fetch("http://localhost/PuliMap/read.php")
+            fetch("http://localhost/PuliMap/api/read.php")
             .then(res => {  return res.json()})
             .then(result => { 
                 console.log(result);
-                
-                var id = [];
-                var x =[];
-                var y = [];
-                var time = [];
-                var tel = [];
-                var cmt = [];
-                var photo = [];
-                var intro = [];
-                var restaurant_name = [];
+            
 
                 for(let i = 0 ; i<result.length ; i++)
                 {
@@ -240,9 +307,10 @@ header("Content-Type:text/html; charset=utf-8");
                     photo.push(result[i].Restaurant_photo);
                     intro.push(result[i].Restaurant_intro);
                     restaurant_name.push(result[i].Restaurant_name);
-
+                    price.push(result[i].Restaurant_price);
+                    address.push(result[i].Restaurant_address);
                 }
-                
+
 
                 //存放各個marker
                 var markers = []; 
@@ -265,15 +333,12 @@ header("Content-Type:text/html; charset=utf-8");
                 iconUrl: 'markericon.png',
                 iconSize: [34, 48],
                 });
-    
-                //console.log(x.length);
-                //console.log(y.length);
 
                 var tbl = "<table class='data'>";
 
                 
 
-                tbl += "<tr><th>店家名稱</th><th>(x,y)座標</th><th>營業時間</th><th>電話號碼</th><th>評分</th><th>照片網址</th><th>部落格網址</th><th colspan='2'></th></tr>";
+                tbl += "<tr><th>名稱</th><th>x座標</th><th>y座標</th><th>簡介</th><th>營業時間</th><th>照片</th><th>電話</th><th>評價</th><th>價錢</th><th>地址</th><th colspan='2'></th></tr>";
 
                 tbl += "<tbody>";
                 for(let i = 0 ; i < x.length ; i++)
@@ -294,21 +359,24 @@ header("Content-Type:text/html; charset=utf-8");
 
                     tbl += "<tr>";
                     tbl += "<td>" + restaurant_name[i] +"</td>";
-                    tbl += "<td>(" + x[i] +"," + y[i] +")</td>";
+                    tbl += "<td>" + x[i] + "</td>";
+                    tbl += "<td>" + y[i] + "</td>";
+                    tbl += "<td>" + intro[i] + "</td>";
                     tbl += "<td>" + time[i] +"</td>";
+                    tbl += "<td>" + photo[i] +"</td>";
                     tbl += "<td>" + tel[i] +"</td>";
                     tbl += "<td>" + cmt[i] +"</td>";
-                    tbl += "<td>" + photo[i] +"</td>";
-                    tbl += "<td>" + intro[i] +"</td>";
+                    tbl += "<td>" + price[i] +"</td>";
+                    tbl += "<td>" + address[i] + "</td>";
 
                     //修改按鈕
-                    tbl += "<td><a href='' class='edit_btn'>修改</a></td>";
+                    tbl += "<td><button onclick=\"updateBtn('" + i + "')\" class=\"edit_btn\">修改</button></td>";
 
                     //刪除按鈕
                     //tbl += "<td><a href=\"delete.php?del="+ id[i] +"\" class='del_btn'>刪除</a></td>";
                     tbl +="<td>";
-                    var del_form = "<form action=\"http://localhost/PuliMap/delete.php\" method=\"POST\">"
-                    del_form += "<input type=\"hidden\" name=\"Restaurant_ID\" value=\""+id[i]+"\">";
+                    var del_form = "<form action=\"http://localhost/PuliMap/api/delete.php\" method=\"GET\">"
+                    del_form += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[i]+"\">";
                     tbl += del_form;
                     tbl += "<input type=\"submit\" class=\"del_btn\" value=\"刪除\"></form></td>";
                     tbl += "</tr>";
@@ -375,6 +443,7 @@ header("Content-Type:text/html; charset=utf-8");
                         }
                     }
                 }
+
 
                 function $(id)
                 {
