@@ -3,7 +3,7 @@
 <?php
     include("login.php");
 
-    @$RestaurantID = $_GET['RestaurantID'];
+    @$RestaurantID = $_POST['RestaurantID'];
 // @$RestaurantID = $_POST['RestaurantID'];
     @$RestaurantName = $_POST['RestaurantName'];
     @$RestaurantTEL = $_POST['RestaurantTEL'];
