@@ -11,7 +11,7 @@
     $userLogin = $_SESSION['userLogin'];
     // 把狀態改成不再線上
     // 將user_status改成0
-    $sql_offline = "UPDATE puli_manager SET user_status = 0 Where user_login = '$userLogin'";
+    $sql_offline = "UPDATE wp_users SET user_status = 0 Where user_login = '$userLogin'";
     mysqli_query($link,$sql_offline);
     
     //將session清空
