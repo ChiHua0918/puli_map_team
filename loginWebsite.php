@@ -90,7 +90,7 @@ padding: 10px;
 <body>
 <div id="login_frame">
 <!-- 不會顯示於網址 -->
-<form action="http://localhost/PuliMap/api/login.php" method="POST">
+<form action="/PuliMap/api/login.php" method="POST">
 <p><input type="text" name="userLogin" id="username" class="text_field" placeholder="使用者名稱"/></p>
 <p><input type="text" name="userPass" id="password" class="text_field" placeholder="密碼"/></p>
 <!-- <a id="forget_pwd" href="forget_pwd.html">忘記密碼</a> -->

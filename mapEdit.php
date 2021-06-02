@@ -193,7 +193,7 @@ header("Content-Type:text/html; charset=utf-8");
 
             content.innerHTML = "id is : " + pos;
             
-            var tbl = "<form action=\"http://localhost/PuliMap/api/update.php\" method=\"post\">";
+            var tbl = "<form action=\"/PuliMap/api/update.php\" method=\"post\">";
 
             tbl += "名稱: <input type=\"text\" name=\"RestaurantName\" size=\"10\" style=\"border-style:none\" value=\""+ restaurant_name[pos] +"\" /><br/>";
             tbl += "電話: <input type=\"tel\" name=\"RestaurantTEL\" size=\"10\" style=\"border-style:none\" value=\""+ tel[pos] +"\" /><br/>";
@@ -249,7 +249,7 @@ header("Content-Type:text/html; charset=utf-8");
         <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
         <div>
             <h1 align = "center">資料總表</h1>
-            <form action="http://localhost/PuliMap/api/create.php" method="post">
+            <form action="/PuliMap/api/create.php" method="post">
             <table border="1" width="480" align = "center" style="background-color:white">
                 <tr>
                     <th>名稱</th>
@@ -303,7 +303,7 @@ header("Content-Type:text/html; charset=utf-8");
             // var y = [195,398,573,398,471];
             // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
             // var url = ["暨南cm.jpg","","","",""];
-            fetch("http://localhost/PuliMap/api/read.php")
+            fetch("/PuliMap/api/read.php")
             .then(res => {  return res.json()})
             .then(result => { 
                 console.log(result);
@@ -388,7 +388,7 @@ header("Content-Type:text/html; charset=utf-8");
                     //刪除按鈕
                     //tbl += "<td><a href=\"delete.php?del="+ id[i] +"\" class='del_btn'>刪除</a></td>";
                     tbl +="<td>";
-                    var del_form = "<form action=\"http://localhost/PuliMap/api/delete.php\" method=\"GET\">"
+                    var del_form = "<form action=\"/PuliMap/api/delete.php\" method=\"GET\">"
                     del_form += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[i]+"\">";
                     tbl += del_form;
                     tbl += "<input type=\"submit\" class=\"del_btn\" value=\"刪除\"></form></td>";
