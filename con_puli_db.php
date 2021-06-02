@@ -1,5 +1,5 @@
-<!-- fetch data 連接資料庫 取得資料 -->
 <?php
+    // fetch data 連接資料庫 取得資料
     //  資料夾位置
     $db_server = "localhost";
     //  資料庫管理者帳號
