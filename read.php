@@ -1,5 +1,5 @@
-<!-- fetch data 連接 puli_restaurant 取得資料 -->
 <?php
+    // fetch data 連接 puli_restaurant 取得資料
     // db_host, db_username, db_password, db_name
     $link = mysqli_connect("localhost","foodmap","foodmap@puli#ncnu","testfoodmap"); 
     if ($link == false) {
