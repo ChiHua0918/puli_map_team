@@ -36,7 +36,7 @@ if(isset($_SESSION['userLogin']))
         if(mysqli_query($link, $sql_update))
         {
                 echo '修改成功!';
-                // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
+                sleep(5);
         }
         else
         {
