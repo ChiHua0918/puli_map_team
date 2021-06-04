@@ -29,14 +29,17 @@ if (isset($_SESSION['userLogin'])) {
     if(mysqli_query($link, $sql_create)){
       echo " " . $RestaurantName . " " ;
       echo '新增成功!';
-      // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
+      echo "<script>alert('新增成功');</script>";
     }
     else{
       echo '新增失敗!';
+      echo "<script>alert('新增失敗');</script>";
       // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
     }
-} 
-else {
-  echo '您無權限觀看此頁面!';
-}
-?>
+  } 
+  else {
+    echo '您無權限觀看此頁面!';
+    echo "<script>alert('您無權限觀看此頁面!');</script>";
+  }
+  header("Refresh:0;url=http://localhost:8080/githunb/puli_map_team/mapEdit.php");
+  ?>
