@@ -2,7 +2,7 @@
     // fetch data 連接 puli_restaurant 取得資料
     // 傳json格式給地圖
     
-    include("con_puli_db.php");
+    include("connect.php");
     // $sql 加入sql語法 從 user 的資料表中選擇所有欄位
     $sql = "SELECT * FROM puli_restaurant";
     $result = $link->query($sql);
