@@ -1,3 +1,6 @@
+<?php 
+header("Content-Type:text/html; charset=utf-8");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,6 +124,8 @@
         }
     </style>
     <script>
+        var markers = []; 
+
         $(function () {
             $("button.btn").click(function () {
                 $("div.menu").toggleClass("active");
@@ -133,8 +138,11 @@
 </head>
 <body>
     <div class="menu"><br/>
-        <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
-        <a class="button" href="#" onclick="randomSelected()">隨機選取餐廳</a><hr />
+        <button class="btn" ><i class="fas fa-chevron-right fa-2x"></i></button>
+        <div >
+            <a id="buttonArea" class="button" >隨機選取餐廳</a><hr />
+        </div>
+        
         <div id="main">
             時段: <select name="time">
             <option>7~10點</option>
@@ -183,10 +191,12 @@
             // var y = [195,398,573,398,471];
             // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
             // var url = ["暨南cm.jpg","","","",""];
-            fetch("/read_all.php")
+                
+            fetch("http://localhost/PuliMap/api/read.php")
             .then(res => {  return res.json()})
             .then(result => { 
                 console.log(result);
+
 
                 var id = [];
                 var x =[];
@@ -217,7 +227,7 @@
                 
 
                 //存放各個marker
-                var markers = []; 
+
     
                 const map = L.map('map', {
                     minZoom: 0,
@@ -284,6 +294,7 @@
     
                 function randomSelected()
                 {
+                    console.log("randomSelected!!!");
                     for(let i = 0 ; i<markers.length ; i++)
                     {
                         map.addLayer(markers[i]);
@@ -303,7 +314,9 @@
                         }
                     }
                 }
+                document.getElementById("buttonArea").addEventListener("click",randomSelected,false);
             })
+
     </script>
 
 </body>
