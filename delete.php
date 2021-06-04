@@ -31,11 +31,13 @@ if(isset($_SESSION['userLogin']))
             echo " " . $row['Restaurant_ID']. " " 
             . $row['Restaurant_name']. " "
             . '刪除成功!';
+            echo "<script>alert('刪除成功');</script>";
             // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
         }
         else
         {
             echo '刪除失敗!';
+            echo "<script>alert('刪除失敗');</script>";
             // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
         }
     }
@@ -43,6 +45,8 @@ if(isset($_SESSION['userLogin']))
 else
 {
     echo '您無權限觀看此頁面!';
+    echo "<script>alert('您無權限觀看此頁面!');</script>";
     // echo '<meta http-equiv=REFRESH CONTENT=2;url=index.php>';
 }
+header("Refresh:0;url=http://localhost:8080/githunb/puli_map_team/mapEdit.php");
 ?>
