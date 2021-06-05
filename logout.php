@@ -16,7 +16,7 @@
     
     //將session清空
     unset($_SESSION['userLogin']);
-
     echo '登出中......';
+    header("location:http://localhost:8080/github/puli_map_team/loginWebsite.php");
     // echo '<meta http-equiv=REFRESH CONTENT=1;url=index.php>';
 ?>

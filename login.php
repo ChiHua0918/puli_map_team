@@ -1,4 +1,3 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php session_start(); ?>
     <!--上方語法為啟用session，此語法要放在網頁最前方-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -6,7 +5,6 @@
     //連接資料庫
     //只要此頁面上有用到連接MySQL就要include connect.php
     include("connect.php");
-
     // 取得使用者輸入的帳號、密碼
     @$userLogin = $_POST['userLogin'];
     @$userPass = $_POST['userPass'];
@@ -36,13 +34,17 @@
             
             echo $row["user_login"];
             echo '登入成功!';
+            header("location=http://localhost:8080/github/puli_map_team/mapEdit.php");
         }
         
         else // 登入失敗
         {
             echo $row["user_login"];
             echo '登入失敗!';
-            
+            echo "<script>alert('登入失敗');</script>";
+            header("Refresh:0;url=http://localhost:8080/github/puli_map_team/loginWebsite.php");
+
         }
     }
+
 ?>
