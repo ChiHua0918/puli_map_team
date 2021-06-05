@@ -1,6 +1,5 @@
 <?php 
-    // db_host, db_username, db_password, db_name
-    $link = mysqli_connect("localhost","root","","wordpress"); 
+    include("connect.php");
     if ($link == false) {
         die("連接失敗: " .mysqli_connect_error());
     }
