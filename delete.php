@@ -1,12 +1,8 @@
-<!-- php session_start();  -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
 include("login.php"); // 連接login.php 以核對權限
-// include("read.php"); // 取得餐廳資料 (以便刪除餐廳資料用)
 
 // 取得使用者想刪除的餐廳名字
-@$RestaurantID = $_GET['RestaurantID'];
-// @$RestaurantID = $_POST['RestaurantID'];
+$RestaurantID = $_POST['RestaurantID'];
 
 // 搜尋資料庫資料
 $sql = "SELECT * FROM puli_restaurant Where Restaurant_ID = '$RestaurantID'";
@@ -23,30 +19,30 @@ if(isset($_SESSION['userLogin']))
         // 餐廳資料不為null且有資料
         if($RestaurantID != null && $row['Restaurant_ID'] == $RestaurantID)
         {
-            // $RestaurantID = $row['Restaurant_ID'];
-            
             $sql_delete = "DELETE FROM puli_restaurant WHERE Restaurant_ID = $RestaurantID";
             mysqli_query($link,$sql_delete);
-            
+            $sql_D_rest = "DELETE FROM puli_rest_time WHERE Restaurant_ID = $RestaurantID";
+            mysqli_query($link,$sql_D_rest);
+            $sql_recommend = "DELETE FROM puli_recommend WHERE Restaurant_ID = $RestaurantID";
+            mysqli_query($link,$sql_recommend);
+
             echo " " . $row['Restaurant_ID']. " " 
             . $row['Restaurant_name']. " "
             . '刪除成功!';
             echo "<script>alert('刪除成功');</script>";
-            // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
         }
         else
         {
             echo '刪除失敗!';
             echo "<script>alert('刪除失敗');</script>";
-            // echo '<meta http-equiv=REFRESH CONTENT=2;url=member.php>';
         }
     }
 }
 else
 {
     echo '您無權限觀看此頁面!';
-    echo "<script>alert('您無權限觀看此頁面!');</script>";
-    // echo '<meta http-equiv=REFRESH CONTENT=2;url=index.php>';
+    echo "<script>alert('您無權限觀看此頁面!');
+    </script>";
 }
-header("Refresh:0;url=http://localhost:8080/githunb/puli_map_team/mapEdit.php");
+header("Refresh:0;url=/html/login/mapEdit.php");
 ?>

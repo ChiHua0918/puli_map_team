@@ -1,17 +1,18 @@
 <?php 
-    include("connect.php");
+    // db_host, db_username, db_password, db_name
+    $link = mysqli_connect("localhost","root","","wordpress"); 
     if ($link == false) {
         die("連接失敗: " .mysqli_connect_error());
     }
 
     // 使用者在下拉式選單選的條件
     // 時間 
-    @$time = $_GET["time"];
+    $time = $_GET["time"];
     // 類別
-    @$type = $_GET['type'];
+    $type = $_GET['type'];
     // 價錢
-    @$minPrice = $_GET['minPrice'];
-    @$maxPrice = $_GET['maxPrice'];
+    $minPrice = $_GET['minPrice'];
+    $maxPrice = $_GET['maxPrice'];
     // 使用者目前位置
     $userLocation = $_GET['userLocation'];
     // 距離範圍
@@ -80,12 +81,12 @@
         if ($dist != NULL && count($arr_fl_data) != NULL){
             for ($i = 0; $i < count($arr_fl_data); $i++){
                 //PHP代碼以檢索JSON數據 
-                @$distance_data = file_get_contents('https://maps.googleapis.com/maps/api/distancematrix/json?&origins='.urlencode($user_location).'&destinations='.urlencode($arr_fl_data[$i]['RestaurantAddress']).'&key=AIzaSyAE86ozbw5PYKeYzhTaZ71buMjLMozzc_U');
+                $distance_data = file_get_contents('https://maps.googleapis.com/maps/api/distancematrix/json?&origins='.urlencode($user_location).'&destinations='.urlencode($arr_fl_data[$i]['RestaurantAddress']).'&key=AIzaSyAE86ozbw5PYKeYzhTaZ71buMjLMozzc_U');
                 // JSON解碼，數據作為變量的Array形式獲得
                 $distance_arr = json_decode($distance_data);
 
                 // print_r($arr_fl_data[$i]['Restaurant_ID']);
-                @$distance = $distance_arr -> rows[0] -> elements[0] -> distance -> text;
+                $distance = $distance_arr -> rows[0] -> elements[0] -> distance -> text;
                 $drive_dis = floatval($distance); 
                 // 範圍內
                 // if ($drive_dis <= $dist){
