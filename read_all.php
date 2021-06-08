@@ -21,13 +21,13 @@
             "Restaurant_price" => $row["Restaurant_price"], 
             "Restaurant_address" => $row["Restaurant_address"], 
             "Restaurant_x" => $row["Restaurant_x"], 
-            "Restaurant_y" => $row["Restaurant_y"]);
+            "Restaurant_y" => $row["Restaurant_y"],
+            "wordpress_link" => $row['wordpress_link']);
             array_push($arr_data,$restaurant);
         }
 	echo json_encode($arr_data,JSON_NUMERIC_CHECK);
     } else {
-        echo json_encode($arr_data);//"0 結果";
+        echo "0 結果";
     }
-// mysqli_query($link, "SET sNAMES 'utf8'");  //設定資料庫編碼 utf8
 
 ?>
