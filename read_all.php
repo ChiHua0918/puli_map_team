@@ -11,18 +11,18 @@
         // 輸出數據
         while($row = $result->fetch_assoc()) {
             $restaurant = 
-            array("Restaurant_ID" => $row["Restaurant_ID"], 
-            "Restaurant_name" => $row["Restaurant_name"],
-            "Restaurant_TEL" => $row["Restaurant_TEL"], 
-            "Restaurant_intro" => $row["Restaurant_intro"], 
-            "Restaurant_time" => $row["Restaurant_time"], 
-            "Restaurant_photo" => $row["Restaurant_photo"], 
-            "Restaurant_comment" => $row["Restaurant_comment"], 
-            "Restaurant_price" => $row["Restaurant_price"], 
-            "Restaurant_address" => $row["Restaurant_address"], 
-            "Restaurant_x" => $row["Restaurant_x"], 
-            "Restaurant_y" => $row["Restaurant_y"],
-            "wordpress_link" => $row['wordpress_link']);
+            array("RestaurantID" => $row["Restaurant_ID"], 
+            "RestaurantName" => $row["Restaurant_name"],
+            "RestaurantTEL" => $row["Restaurant_TEL"], 
+            "RestaurantIntro" => $row["Restaurant_intro"], 
+            "RestaurantTime" => $row["Restaurant_time"], 
+            "RestaurantPhoto" => $row["Restaurant_photo"], 
+            "RestaurantComment" => $row["Restaurant_comment"], 
+            "RestaurantPrice" => $row["Restaurant_price"], 
+            "RestaurantAddress" => $row["Restaurant_address"], 
+            "RestaurantX" => $row["Restaurant_x"], 
+            "RestaurantY" => $row["Restaurant_y"],
+            "wordpressLink" => $row['wordpress_link']);
             array_push($arr_data,$restaurant);
         }
 	echo json_encode($arr_data,JSON_NUMERIC_CHECK);
