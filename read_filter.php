@@ -97,7 +97,7 @@
                 $drive_dis = floatval($distance); 
 
                 // 範圍內
-                if ($drive_dis <= $dist){
+                if ($drive_dis >= $dist){
                     unset($arr_fl_data[$i]);
                     // echo "GO";
                 }
