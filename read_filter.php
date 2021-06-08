@@ -96,15 +96,11 @@
                 $distance = $distance_arr -> rows[0] -> elements[0] -> distance -> text;
                 $drive_dis = floatval($distance); 
 
-                // 範圍內
-                if ($drive_dis >= $dist){
+                // 範圍外
+                if ($drive_dis > $dist){
                     unset($arr_fl_data[$i]);
                     // echo "GO";
                 }
-                // 範圍外
-                // else{
-                //     echo "fail";
-                // }
             }
         }
     } else {
