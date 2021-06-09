@@ -1,21 +1,18 @@
 <?php 
     // db_host, db_username, db_password, db_name
-    $link = mysqli_connect("localhost","root","","wordpress"); 
-    if ($link == false) {
-        die("連接失敗: " .mysqli_connect_error());
-    }
+    include("connect.php");
 
     // 使用者在下拉式選單選的條件
     // 時間 
-    $time = $_GET['time'];
+    $time = $_POST['time'];
     // 類別
-    $type = $_GET['type'];
+    $type = $_POST['type'];
     // 價錢
-    $price = $_GET['price'];
+    $price = $_POST['price'];
     // 使用者目前位置
-    $userLocation = $_GET['userLocation'];
+    $userLocation = $_POST['userLocation'];
     // 距離範圍
-    $dist = $_GET['dist'];
+    $dist = $_POST['dist'];
 
     // 判斷今天星期幾
     $todayDate = date("w");
@@ -36,7 +33,7 @@
     if ($time != ""){
         // 時間 (使用者選的時間)
         // 14:00 => "14:00"
-        $time = htmlspecialchars($_POST["time"]);
+        $time = htmlspecialchars($time);
         // $f_sql = $f_sql."AND puli_rest_time.Day_ID = '".$today_date."' AND puli_rest_time.open_time <= '".$time."' AND puli_rest_time.end_time >= '".$time."' ";
         $f_sql = $f_sql." AND puli_rest_time.open_time <= '".$time."' 
         AND puli_rest_time.end_time >= '".$time."' ";
@@ -64,28 +61,19 @@
 
     // 將篩選完的資料放入arr_fl_data
     $arr_fl_data = [];
-
     if ($result -> num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $restaurant = array
-            (
-                "RestaurantID" => $row["Restaurant_ID"], 
-                "RestaurantName" => $row["Restaurant_name"],
-                "RestaurantTEL" => $row["Restaurant_TEL"], 
-                "RestaurantIntro" => $row["Restaurant_intro"], 
-                "RestaurantTime" => $row["Restaurant_time"], 
-                "RestaurantPhoto" => $row["Restaurant_photo"], 
-                "RestaurantComment" => $row["Restaurant_comment"], 
-                "RestaurantPrice" => $row["Restaurant_price"], 
-                "RestaurantAddress" => $row["Restaurant_address"], 
-                "RestaurantX" => $row["Restaurant_x"], 
-                "RestaurantY" => $row["Restaurant_y"]
-            );
+            $restaurant = 
+            array("RestaurantID" => $row["Restaurant_ID"], 
+                "RestaurantAddress" => $row["Restaurant_address"]);
+
             array_push($arr_fl_data,$restaurant);
         }
         // 先做時間、價錢、類別的篩選
         // 如果有選距離篩選，再把前面篩選之結果 做距離的篩選
-        if ($dist != NULL && count($arr_fl_data) != NULL){
+        if ($dist != NULL && count($arr_fl_data) != 0){
+            $dis = explode(" ", $dist);
+            $dist = $dist[0];
             for ($i = 0; $i < count($arr_fl_data); $i++){
                 //PHP代碼以檢索JSON數據 
                 $distance_data = file_get_contents('https://maps.googleapis.com/maps/api/distancematrix/json?&origins='.urlencode($userLocation).'&destinations='.urlencode($arr_fl_data[$i]['RestaurantAddress']).'&key=AIzaSyAE86ozbw5PYKeYzhTaZ71buMjLMozzc_U');
@@ -94,20 +82,26 @@
 
                 // print_r($arr_fl_data[$i]['Restaurant_ID']);
                 $distance = $distance_arr -> rows[0] -> elements[0] -> distance -> text;
+                $distance = explode(" ", $distance);
+                // 公尺單位改公里
+                if ($distance[1] == "m"){
+                    $distance[0] = $distance[0]/1000;
+                }
+                // 取數字
+                $distance = $distance[0];
                 $drive_dis = floatval($distance); 
-
+                // echo $drive_dis;
                 // 範圍外
                 if ($drive_dis > $dist){
-                    unset($arr_fl_data[$i]);
-                    // echo "GO";
+                    // echo $arr_fl_data[$i]['RestaurantID'];
+                    array_splice($arr_fl_data,$i,1);
                 }
             }
         }
     } else {
         echo "0 結果";
     }
-
-    print_r($arr_fl_data);
+    // 轉json
     $final = json_encode($arr_fl_data);
     return $final;
 
