@@ -4,15 +4,15 @@
 
     // 使用者在下拉式選單選的條件
     // 時間 
-    $time = $_POST['time'];
+    $time = $_GET['time'];
     // 類別
-    $type = $_POST['type'];
+    $type = $_GET['type'];
     // 價錢
-    $price = $_POST['price'];
+    $price = $_GET['price'];
     // 使用者目前位置
-    $userLocation = $_POST['userLocation'];
+    $userLocation = $_GET['userLocation'];
     // 距離範圍
-    $dist = $_POST['dist'];
+    $dist = $_GET['dist'];
 
     // 判斷今天星期幾
     $todayDate = date("w");
