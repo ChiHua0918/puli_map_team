@@ -1,6 +1,7 @@
 <?php 
     // db_host, db_username, db_password, db_name
     include("connect.php");
+    //$link = mysqli_connect("localhost","root","james","wordpress"); 
 
     // 使用者在下拉式選單選的條件
     // 時間 
@@ -17,6 +18,10 @@
     // 判斷今天星期幾
     $todayDate = date("w");
 
+    //echo $todayDate;
+
+    //echo "time:" . $time . " type:" . $type . " price:" . $price . " dist:" . $dist . " userLocation:" . $userLocation;
+
     // 篩選動作 (依 使用者偏好的選項 進行篩選)
     // 將 puli_restaurant, puli_rest_time 資料表做連接    
     // JOIN 結合多個資料表，組成一個暫時性的資料表 供查詢
@@ -27,7 +32,10 @@
     FROM puli_restaurant 
     LEFT JOIN puli_rest_time on puli_restaurant.Restaurant_ID = puli_rest_time.Restaurant_ID 
     LEFT JOIN puli_recommend on puli_recommend.Restaurant_ID = puli_restaurant.Restaurant_ID 
-    WHERE puli_rest_time.Day_ID = '".$todayDate."' ";
+    WHERE puli_rest_time.Day_ID = '".$todayDate."'  ";
+    // <---- delete ---->
+    // WHERE puli_rest_time.Day_ID = '".$todayDate."' 
+    // <--- --->
 
     // 時間
     if ($time != ""){
@@ -39,11 +47,11 @@
         AND puli_rest_time.end_time >= '".$time."' ";
     }
     // 類別
-    if ($type!=null){
+    if ($type!= ""){
         $f_sql = $f_sql."AND Category_name = '".$type."' ";
     }
     // 價位
-    if ($price != NULL) {
+    if ($price != "") {
         $min_max = explode("~", $price);
         // print_r($min_max);
         if ($min_max[1] == ""){
@@ -52,8 +60,9 @@
         else if ($min_max[0] == ""){
             $min_max[0] = 0;
         }
-        $f_sql = $f_sql . "AND restaurant_price >= '".$min_max[0]."' 
-        AND restaurant_price <= '".$min_max[1]."'";
+        
+        $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= '".$min_max[0]."' 
+        AND puli_restaurant.Restaurant_price <= '".$min_max[1]."'";
     }
 
     // $result 從DB中取出結果集
@@ -98,11 +107,10 @@
                 }
             }
         }
-    } else {
-        echo "0 結果";
     }
+    //print_r($arr_fl_data);
     // 轉json
-    $final = json_encode($arr_fl_data);
-    return $final;
+    $final = json_encode($arr_fl_data,JSON_NUMERIC_CHECK);
+    echo $final;
 
 ?>
