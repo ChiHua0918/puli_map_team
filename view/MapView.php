@@ -239,17 +239,17 @@
 
             for(let i = 0 ; i<result.length ; i++)
             {
-                id.push(result[i].Restaurant_ID);
-                x.push(result[i].Restaurant_x);
-                y.push(result[i].Restaurant_y);
-                time.push(result[i].Restaurant_time);
-                tel.push(result[i].Restaurant_TEL);
-                cmt.push(result[i].Restaurant_comment);
-                photo.push(result[i].Restaurant_photo);
-                intro.push(result[i].Restaurant_intro);
-                restaurant_name.push(result[i].Restaurant_name);
-                price.push(result[i].Restaurant_price);
-                address.push(result[i].Restaurant_address);
+                id.push(result[i].RestaurantID);
+                x.push(result[i].RestaurantX);
+                y.push(result[i].RestaurantY);
+                time.push(result[i].RestaurantTime);
+                tel.push(result[i].RestaurantTEL);
+                cmt.push(result[i].RestaurantComment);
+                photo.push(result[i].RestaurantPhoto);
+                intro.push(result[i].RestaurantIntro);
+                restaurant_name.push(result[i].RestaurantName);
+                price.push(result[i].RestaurantPrice);
+                address.push(result[i].RestaurantAddress);
             }
             
             //存放各個marker
@@ -358,7 +358,7 @@
                 //console.log("filter success!!");
                 console.log("userPosition: " + userPosition);
 
-                const url = `http://localhost/PuliMap/api/read_filter.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
+                const url = `/controller/get_restaurant_info.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
                 
                 fetch(url,{
                     method:"get"
