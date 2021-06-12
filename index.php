@@ -10,8 +10,8 @@
     <style type="text/css">
         @media screen and (max-width: 1532px) {
             body {
-                background-image: url("/src/bk.jpg");
-                background-repeat: no-repeat;
+                background-image: url("/src/食物背景透明.png");
+                /* background-repeat: no-repeat; */
                 background-size: auto 100%;
                 background-position: center center;
                 background-attachment: fixed;
@@ -19,7 +19,7 @@
         }
         @media screen and (min-width: 1532px) {
             body {
-                background-image: url("/src/bk.jpg");
+                background-image: url("/src/食物背景透明.png");
                 background-repeat: no-repeat;
                 background-size: 100% auto ;
                 background-position: center center;
@@ -29,9 +29,9 @@
         
         /* 按鈕 */
         #btn {
-            position: absolute;
+            /* position: absolute;
             top: calc(50vh - 25px);
-            left: calc(50vw - 60px);
+            left: calc(50vw - 60px); */
             font-size: 16px;
             width: 120px;
             height: 50px;
@@ -42,7 +42,6 @@
             border-radius: 6px;
             border: 0;
         }
-
         /* 移到按鈕會變顏色和鼠標 */
         #btn:hover {
             background-color: #f09561;
@@ -51,10 +50,9 @@
         @media screen and (min-width: 1112px) {
             #dialog {
                 position: absolute;
-                top: calc(50vh - 175px);
-                right: 10vw;
+                top: calc(52vh - 250px);
+                right: 22vw;
             }
-
             .dialog-bottom {
                 margin-bottom: 40px;
                 width: 250px;
@@ -63,7 +61,6 @@
                 position: relative;
                 border-radius: 10px;
             }
-
             .dialog-bottom:after {
                 border-color: #e7b394 #e7b394 transparent transparent;
                 border-style: solid;
@@ -78,18 +75,17 @@
                 position: absolute;
                 width: 0px;
             }
-
             .dialogContent {
+                font-family: 'Noto Sans TC', sans-serif;
                 line-height: 80px;
-                font-size: 20px;
+                font-size: 25px;
                 font-weight: bold;
                 color: #f06b1e;
             }
-
             #arrow {
                 position: absolute;
-                top: calc(50vh - 100px);
-                right: calc(10vw + 10px);;
+                top: calc(52vh - 175px);
+                right: calc(22vw + 10px);
                 color:#f06b1e;
                 z-index: 2;
             }
@@ -101,61 +97,93 @@
             #arrow {
                 display:none;
             }
+            /* img {
+                display:none;
+            } */
         }
-
-        @media screen and (min-width: 522px) {
-            h1 {
+        @media screen and (min-width: 800px) {
+            #rec {
                 position: absolute;
+                top: calc(29vh - 25px);
+                left: calc(8vw + 0px);
+                /* margin: 190px 250px; */
+                width: 550px;
+                height: 250px;
+                background-color: rgba(231,179,148,0.8);
+                border-radius: 15px;
+                text-align: center;
+            }
+            #recbtn {
+                margin: -50px auto;
+            }
+            h1 {
+                font-family: 'Noto Sans TC', sans-serif;
+                padding: 20px;
+                /* position: absolute;
                 top: calc(50vh - 175px);
-                left: calc(50vw - 3em);
+                left: calc(50vw - 3em); */
                 color: #f06b1e;
                 font-size: 4em;
+                text-shadow: 0.05em 0.05em 0.05em #777777;
             }
-
             img {
                 position: absolute;
-                top: calc(50vh - 25px);
-                right: 50px;
-                height: 250px;
+                top: calc(50vh - 100px);
+                right: calc(12vw + 10px);
+                height: 430px;
                 -webkit-transform: scaleX(-1);
                 transform: scaleX(-1);
             }
         }
-
-        @media screen and (max-width: 522px) {
+        @media screen and (max-width: 800px) {
+            #rec {
+                position: absolute;
+                top: calc(27vh - 25px);
+                left: calc(5vw + 25px );
+                /* margin: 190px 250px; */
+                width: 400px;
+                height: 200px;
+                background-color: rgba(231,179,148,0.8);
+                border-radius: 15px;
+                text-align: center;
+            }
+            #recbtn {
+                margin: -30px auto;
+            }
             h1 {
-                position: absolute;
+                font-family: 'Noto Sans TC', sans-serif;
+                padding: 5px;
+                /* position: absolute;
                 top: calc(50vh - 140px);
-                left: calc(50vw - 3em);
+                left: calc(50vw - 3em); */
                 color: #f06b1e;
-                font-size: 2.5em;
+                font-size: 3em;
+                text-shadow: 0.05em 0.05em 0.05em #777777;
             }
-
             img {
                 position: absolute;
-                top: calc(50vh + 35px);
+                top: calc(50vh - 30px);
                 right: 50px;
-                height: 250px;
+                height: 350px;
                 -webkit-transform: scaleX(-1);
                 transform: scaleX(-1);
             }
         }
-        
         
     </style>
 </head>
 
 <body>
-    <h1>埔里美食地圖</h1>
-    <input type="button" id="btn" class="btn" value="START" onclick="location.href='/view/MapView.php'">
-    <!-- <button type="button" id="d_btn" class="d_btn" onclick="changetext()"></button> -->
+    <div id="rec">
+        <h1>埔里美食地圖</h1>
+        <div id="recbtn"><input type="button" id="btn" class="btn" value="START" onclick="location.href='/view/MapView.php'"></div>
+    </div>
     <!-- 對話框 -->
     <div id="dialog" class="dialog-bottom"></div>
     <i id="arrow" class="fas fa-chevron-circle-right" onclick="changetext()"></i>
     <!-- 人物圖片 -->
     <img src="/src/person2.png" />
 </body>
-
 <script src="https://kit.fontawesome.com/f1181f4d88.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
     // window.onload = function () {
@@ -183,7 +211,6 @@
             num += 1;
             showText = "<marquee loop=0 class='dialogContent'>" + text[num] + "</marquee>";
             document.getElementById("dialog").innerHTML = showText;
-
         }
     }
     // function changeText(text, num) {
@@ -199,5 +226,4 @@
     //     window.alert("hi again");   //test
     // };
 </script>
-
 </html>

@@ -11,8 +11,7 @@
     // 類別
     $type = $_GET['type'];
     // 價錢
-    $minPrice = $_GET['minPrice'];
-    $maxPrice = $_GET['maxPrice'];
+    $price = $_GET['price'];
     // 使用者目前位置
     $userLocation = $_GET['userLocation'];
     // 距離範圍
@@ -21,5 +20,5 @@
     // 判斷今天星期幾
     $todayDate = date("w");
 
-    echo json_encode(get_restaurant_info($todayDate, $time, $type, $minPrice, $maxPrice), JSON_NUMERIC_CHECK);
+    echo json_encode(get_restaurant_info($todayDate, $time, $type, $price, $userLocation, $dist), JSON_NUMERIC_CHECK);
 ?>

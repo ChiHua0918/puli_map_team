@@ -140,53 +140,52 @@
     </nav>
     <div class="menu"><br/>
         <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
-        <a id="buttonArea" class="button" >隨機選取餐廳</a><hr />
-        <div id="main">
-            時段: 
-            <select id="time">
-                <option value="0">無</option>
-                <option value="1">7~10點</option>
-                <option value="2">10~14點</option>
-                <option value="3">14~17點</option>
-                <option value="4">17~20點</option>
-            </select><br/>
-            距離: 
-            <select id="dist">
-                <option value="0">無</option>
-                <option value="1">小於100m</option>
-                <option value="2">100~600m</option>
-                <option value="3">600m~1km</option>
-                <option value="4">大於1km</option>
-            </select><br/>
-            類別: 
-            <select id="type">
-                <option value="0">無</option>
-                <option value="1">麵食</option>
-                <option value="2">飯食</option>
-                <option value="3">日式料理</option>
-                <option value="4">韓式料理</option>
-            </select>
-            <br />
-            價位: 
-            <select id="price">
-                <option value="0">無</option>
-                <option value="1">小於100</option>
-                <option value="2">100~150</option>
-                <option value="3">150~200</option>
-                <option value="4">大於200</option>
-            </select>
-            <br />
-            <!--
-            價位: <input list="priceList" name="browser"> <br/>
-            <datalist id="priceList">
-            <option value="<100">
-            <option value="100~150">
-            <option value="150~200">
-            </datalist> 
-            <br />
-            -->
+        <div>
+            <a id="buttonArea" class="button">隨機選取餐廳</a>
+            <hr />
         </div>
-        <br/><br/><input type="submit" value="OK"/>
+        <hr />
+        <div id="main">
+            <form id="filterForm" novalidate>
+                時段: 
+                <select name="time">
+                    <option value="">無</option>
+                    
+                    <option value="7:00~10:00">7點</option>
+                    <option value="10:00">10點</option>
+                    <option value="14:00">14點</option>
+                    <option value="17:00">17點</option>
+                </select><br />
+                距離: 
+                <select name="dist">
+                    <option value="">無</option>
+                    <option value="0.1 km">~100m</option>
+                    <option value="0.6 km">~600m</option>
+                    <option value="1 km">~1km</option>
+                    <option value="2 km">~2km</option>
+                </select><br/>
+                類別: 
+                <select name="type">
+                    <option value="">無</option>
+                    <option value="麵食">麵食</option>
+                    <option value="飯食">飯食</option>
+                    <option value="日式料理">日式料理</option>
+                    <option value="韓式料理">韓式料理</option>
+                </select>
+                <br />
+                價位: 
+                <select name="price">
+                    <option value="">無</option>
+                    <option value="~100">~100</option>
+                    <option value="100~150">100~150</option>
+                    <option value="150~200">150~200</option>
+                    <option value="200~">200~</option>
+                </select>
+                <br />
+                <br /><br /><input type="submit" value="OK"/>
+            </form>
+            <button id="showAllBtn">顯示全部餐廳</button>
+        </div>
     </div>
     <div id='map_container'>
         <div id='map'></div>
@@ -330,6 +329,106 @@
             $("div.menu").toggleClass("active");
             $(".fa-chevron-right").toggleClass("rotate");
         });
+
+        //filter form click submit event
+        var form = document.getElementById("filterForm");
+        form.addEventListener("submit",formSubmit);
+
+        //get user position variable
+        var userPosition;
+        var acceptGetLoca = false;
+        getLocation();
+
+        function formSubmit(e)
+        {
+            e.preventDefault();
+
+            const time = form[0].value;
+            const dist = form[1].value;
+            const type = form[2].value;
+            const price = form[3].value;
+
+            // console.log("time:" + time);
+            // console.log("dist:" + dist);
+            // console.log("type:" + type);
+            // console.log("price:" + price);
+
+            if(acceptGetLoca || dist == "") //if accept get user position
+            {
+                //console.log("filter success!!");
+                console.log("userPosition: " + userPosition);
+
+                const url = `http://localhost/PuliMap/api/read_filter.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
+                
+                fetch(url,{
+                    method:"get"
+                })
+                .then( res => {return res.json()})
+                .then( result => {
+                    console.log(result);
+
+                    const restaurant_id = [];
+
+                    for(let i = 0 ; i < result.length ; i++)
+                    {
+                        restaurant_id.push(result[i].RestaurantID);
+                    }
+
+                    //remove marker icon which is filter
+                    //first we should reset all of the icon
+                    //and then remove icon which isn't included in restaurant_id array
+                    for(let i = 0 ; i<markers.length ; i++)
+                    {
+                        map.addLayer(markers[i]);
+                        if( !restaurant_id.includes(id[i])) 
+                        {
+                            map.removeLayer(markers[i]);
+                        }
+                    }
+
+                });
+            }
+            else
+            {
+                alert("抱歉！您無法使用「距離」篩選功能！請開啟定位！")
+            }
+        }
+
+        document.getElementById("showAllBtn").addEventListener("click",showAll,false);
+
+        function showAll()
+        {
+            for(let i = 0 ; i<markers.length ; i++)
+            {
+                if(!map.hasLayer(markers[i])){
+                    map.addLayer(markers[i]);
+                }
+            }
+        }
+
+        //get user position
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+                // const pos = navigator.geolocation.getCurrentPosition();
+                // const result = pos.coords.latitude + "," + pos.coords.longitude;
+                //return result;
+            } else {
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
+                // console.log("Geolocation is not supported by this browser.");
+            }
+        }
+
+        //show user position
+        function showPosition(position) {
+            acceptGetLoca = true;
+            //console.log(position);
+            // const latitude = position.coords.latitude;
+            // const longitude = position.coords.longitude;
+            //document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            userPosition = position.coords.latitude + "," + position.coords.longitude;
+            //console.log("Latitude:" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+        }
     });
 
     

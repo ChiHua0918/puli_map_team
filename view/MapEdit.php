@@ -12,8 +12,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+
     <style>
         html, body {
             height: 100vh;
@@ -215,10 +219,18 @@
         <button id="closeBtn" onclick="closeClick()">關閉</button>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 <script src="https://kit.fontawesome.com/99bbad7d3f.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.1/js/plugins/piexif.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.1/js/plugins/sortable.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.1/js/fileinput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.1/themes/fa/theme.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.1/js/locales/LANG.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
 <script>
     var id = [];
     var x =[];
@@ -252,8 +264,6 @@
         var content = document.getElementById("dialog_content");
 
         dialog.style.display = "block";
-
-        content.innerHTML = "id is : " + pos;
         
         var tbl = "<form action=\"/controller/update_restaurant_info.php\" method=\"post\" enctype=\"multipart/form-data\">";
 
@@ -264,12 +274,20 @@
         if(photo[pos] != "")
         {
             //tbl += "<label for=\"files\" class=\"btn btn-primary\">選取檔案</label>";
-            tbl += "<label for=\"files\" class=\"edit_btn\">更改檔案 </label>";
-            tbl += "<input id=\"files\" style=\"visibility:hidden;\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" type=\"file\"><span style=\"margin-left: -320px;\"> 您已上傳的檔案:" + photo[pos] + "</span><br/>";
+            //tbl += "<label for=\"files\" class=\"edit_btn\">更改檔案 </label>";
+            tbl += "照片:<br/><input type=\"file\" id=\"files\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" size=\"10\" style=\"visibility:hidden\" value=\""+ photo[pos] +"\"><span style=\"margin-left: -320px;\"> 您已上傳的檔案:" + photo[pos] + "</span><br/>";
+            tbl += "<input class=\"form-control\" type=\"file\" id=\"formFileMultiple\" multiple name=\"RestaurantPhoto\">";
+            // tbl += "<label for=\"input-25\">Planets and Satellites</label>";
+            // tbl += "<div class=\"file-loading\"><input id=\"input-25\" name=\"RestaurantPhoto\" type=\"file\" multiple></div>";
+
+            
+            
         }
         else
         {
-            tbl += "照片: <input type=\"file\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" size=\"10\" style=\"border-style:none\" value=\""+ photo[pos] +"\" /><br/>";
+            // tbl += "照片: <input type=\"file\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" size=\"10\" style=\"border-style:none\" value=\""+ photo[pos] +"\" /><br/>";
+            // tbl += "照片:<br/><input type=\"file\" id=\"files\" accept=\"image/*\" multiple name=\"RestaurantPhoto\" size=\"10\" style=\"visibility:hidden\" value=\""+ photo[pos] +"\"><span style=\"margin-left: -320px;\"> 您已上傳的檔案:" + photo[pos] + "</span><br/>";
+            tbl += "照片: <input class=\"form-control\" type=\"file\" id=\"formFileMultiple\" multiple name=\"RestaurantPhoto\">";
         }
         
         
@@ -282,8 +300,8 @@
         
         tbl += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[pos]+"\">";
         tbl += "<input type=\"submit\" class=\"edit_btn\" value=\"更新\" style=\"padding=10px;\"></form>"
-
-        content.innerHTML += tbl;
+    
+        content.innerHTML = tbl;
     }
     function closeClick()
     {
