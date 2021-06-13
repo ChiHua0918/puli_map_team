@@ -79,7 +79,7 @@ header("Content-Type:text/html; charset=utf-8");
             list-style-type:none ;
         }
         body {
-            background-image: url("/puli_map_team-MVC/src/食物背景透明3.png");
+            background-image: url("/PuliMap/食物背景透明3.png");
             background-size: 100%;
         }
         input[type=submit],button {
@@ -151,7 +151,8 @@ header("Content-Type:text/html; charset=utf-8");
             display: none;
             width: 500px;
             height: 500px;
-            position: absolute;
+            /* position: absolute; */
+            position: fixed;
             padding: 30px;
             /* border: 2px solid blue; */
             background-color: rgba(155, 212, 233, 0.9);
@@ -170,12 +171,16 @@ header("Content-Type:text/html; charset=utf-8");
         }
     </style>
 </head>
+<script>
+
+
+</script>
 <body>
     <div class="modify">
     <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
         <div>
             <h1 align = "center">資料總表</h1>
-            <form action="/puli_map_team-MVC/controller/create.php" method="post">
+            <form action="/PuliMap/api/create.php" method="post">
             <table border="1" width="480" align = "center" style="background-color:white">
                 <tr>
                     <th>名稱</th>
@@ -202,13 +207,14 @@ header("Content-Type:text/html; charset=utf-8");
             <td><input type="text" name="RestaurantAddress" required size="4" style="border-style:none"/></td>
             <td><input type="text" name="RestaurantX" required size="4" style="border-style:none"/></td>
             <td><input type="text" name="RestaurantY" required size="4" style="border-style:none"/></td>
-            <td><input type="text" name="wordpress_link" required size="20" placeholder="請先縮短網址" style="border-style:none"/></td>
-            <td><select id="type">
-                <option>麵食</option>
-                <option>飯食</option>
-                <option>日式料理</option>
-                <option>韓式料理</option>
-                </select></td>
+            <td><input type="text" name="wordpressLink" required size="20" placeholder="請先縮短網址" style="border-style:none"/></td>
+            <!-- <td><select id="type" name="CategoryName">
+                <option value="麵">麵</option>
+                <option value="你好">你好</option>
+                <option value="觀光夜市">觀光夜市</option>
+                <option value="漢堡舖子">漢堡舖子</option>
+                </select></td> -->
+            <td id="typeSelect"></td>
             </tr>
 
             </table>
@@ -252,6 +258,8 @@ header("Content-Type:text/html; charset=utf-8");
     var wordpress = [];
     var category = [];
 
+    var categoryList = ["麵","你好","觀光夜市","漢堡舖子"];
+
     window.onload = function()
     {
         setDialog();
@@ -274,7 +282,7 @@ header("Content-Type:text/html; charset=utf-8");
         dialog.style.display = "block";
 
         
-        var tbl = "<form action=\"/puli_map_team-MVC/controller/update.php\" method=\"post\">";
+        var tbl = "<form action=\"/PuliMap/api/update.php\" method=\"post\">";
 
         tbl += "名稱: <input type=\"text\" name=\"RestaurantName\" size=\"10\" style=\"border-style:none\" value=\""+ restaurant_name[pos] +"\" /><br/>";
         tbl += "電話: <input type=\"tel\" name=\"RestaurantTEL\" size=\"10\" style=\"border-style:none\" value=\""+ tel[pos] +"\" /><br/>";
@@ -301,26 +309,55 @@ header("Content-Type:text/html; charset=utf-8");
         tbl += "地址: <input type=\"text\" name=\"RestaurantAddress\" size=\"30\" style=\"border-style:none\" value=\""+ address[pos] +"\" /><br/>";
         tbl += "x座標: <input type=\"text\" name=\"RestaurantX\" size=\"4\" style=\"border-style:none\" value=\""+ x[pos] +"\" /><br/>";
         tbl += "y座標: <input type=\"text\" name=\"RestaurantY\" size=\"4\" style=\"border-style:none\" value=\""+ y[pos] +"\" /><br/>";
-        tbl += "Wordpress網址: <input type=\"text\" name=\"wordpress_link\" size=\"4\" style=\"border-style:none\" value=\""+ wordpress[pos] +"\" /><br/>";
-        tbl += "食物類型: <input type=\"text\" name=\"CategoryName\" size=\"4\" style=\"border-style:none\" value=\""+ category[pos] +"\" /><br/>";
+        tbl += "Wordpress網址: <input type=\"text\" name=\"wordpressLink\" size=\"20\" style=\"border-style:none\" value=\""+ wordpress[pos] +"\" /><br/>";
         
+        // let categoryStr = ;
+
+        tbl += "食物類型:" + categoryTbl(category[pos]) +  "<br />";   
+
+
         tbl += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[pos]+"\">";
         tbl += "<input type=\"submit\" class=\"edit_btn\" value=\"更新\" style=\"padding=10px;\"></form>"
 
-        content.innerHTML += tbl;
+        content.innerHTML = tbl;
     }
+
     function closeClick()
     {
         document.getElementById("dialog").style.display = "none";
     }
+    function categoryTbl(curType)
+    {
+        let str = "<select id=\"type\" name=\"CategoryName\">";
+        for(let i = 0 ; i<categoryList.length ; i++)
+        {
+            if( categoryList[i] == curType)
+            {
+                str += `<option value=\"${categoryList[i]}\" selected>${categoryList[i]}</option>`;
+            }
+            else
+            {
+                str += `<option value=\"${categoryList[i]}\">${categoryList[i]}</option>`;
+
+            }
+        }
+        str += "</select>";
+        if(curType == "")
+        {
+            document.getElementById("typeSelect").innerHTML = str;
+        }
+        return str;
+    }
 
     $(function () {
+
+        categoryTbl("");
         //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
         // var x = [160,656,333,1003,786];
         // var y = [195,398,573,398,471];
         // var name = ["暨大管理學院","肯德基","日式拉麵店","雞排店","飲料店"];
         // var url = ["暨南cm.jpg","","","",""];
-        fetch("/puli_map_team-MVC/controller/get_all_restaurant_info.php")
+        fetch("/PuliMap/api/read.php")
         .then(res => {  return res.json()})
         .then(result => { 
             console.log(result)
@@ -330,11 +367,11 @@ header("Content-Type:text/html; charset=utf-8");
             });
             map.setView([365, 800]);
             map.fitBounds(bounds);
-            const image = L.imageOverlay('/puli_map_team-MVC/src/puliMap2.png', bounds).addTo(map);
+            const image = L.imageOverlay('/PuliMap/puliMap2.png', bounds).addTo(map);
             
             // set my own marker icon
             const myIcon = L.icon({
-                iconUrl: '/puli_map_team-MVC/src/markericon2.png',
+                iconUrl: '/PuliMap/markericon2.png',
                 iconSize: [34, 48],
             });
 
@@ -342,18 +379,18 @@ header("Content-Type:text/html; charset=utf-8");
         
             for(let i = 0 ; i<result.length ; i++)
             {
-                id.push(result[i].Restaurant_ID);
-                x.push(result[i].Restaurant_x);
-                y.push(result[i].Restaurant_y);
-                time.push(result[i].Restaurant_time);
-                tel.push(result[i].Restaurant_TEL);
-                cmt.push(result[i].Restaurant_comment);
-                photo.push(result[i].Restaurant_photo);
-                intro.push(result[i].Restaurant_intro);
-                restaurant_name.push(result[i].Restaurant_name);
-                price.push(result[i].Restaurant_price);
-                address.push(result[i].Restaurant_address);
-                wordpress.push(result[i].wordpress_link);
+                id.push(result[i].RestaurantID);
+                x.push(result[i].RestaurantX);
+                y.push(result[i].RestaurantY);
+                time.push(result[i].RestaurantTime);
+                tel.push(result[i].RestaurantTEL);
+                cmt.push(result[i].RestaurantComment);
+                photo.push(result[i].RestaurantPhoto);
+                intro.push(result[i].RestaurantIntro);
+                restaurant_name.push(result[i].RestaurantName);
+                price.push(result[i].RestaurantPrice);
+                address.push(result[i].RestaurantAddress);
+                wordpress.push(result[i].wordpressLink);
                 category.push(result[i].CategoryName);
             }
 
@@ -402,7 +439,7 @@ header("Content-Type:text/html; charset=utf-8");
                 //刪除按鈕
                 //tbl += "<td><a href=\"delete.php?del="+ id[i] +"\" class='del_btn'>刪除</a></td>";
                 tbl +="<td>";
-                var del_form = "<form action=\"/puli_map_team-MVC/controller/delete.php\" method=\"GET\">"
+                var del_form = "<form action=\"http://localhost/PuliMap/api/delete.php\" method=\"POST\">"
                 del_form += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[i]+"\">";
                 tbl += del_form;
                 tbl += "<input type=\"submit\" class=\"del_btn\" value=\"刪除\"></form></td>";
@@ -469,7 +506,6 @@ header("Content-Type:text/html; charset=utf-8");
                     }
                 }
             }
-
 
             function $(id)
             {

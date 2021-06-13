@@ -83,7 +83,7 @@ header("Content-Type:text/html; charset=utf-8");
             line-height: 30pt;
         }
         body {
-            background-image: url("/puli_map_team-MVC/src/食物背景透明3.png");
+            background-image: url("/PuliMap/食物背景透明3.png");
             background-size: 100%;
         }
         .button {
@@ -206,35 +206,34 @@ header("Content-Type:text/html; charset=utf-8");
         <div id="main">
             <form id="filterForm" novalidate>
                 開始時段: <select id="time">
-                <option >無</option>
-                <option>00:00</option>
-                <option>02:00</option>
-                <option>04:00</option>
-                <option>06:00</option>
-                <option>08:00</option>
-                <option>10:00</option>
-                <option>12:00</option>
-                <option>14:00</option>
-                <option>16:00</option>
-                <option>18:00</option>
-                <option>20:00</option>
-                <option>22:00</option>
+                <option value="" >無</option>
+                <option value="00:00">00:00</option>
+                <option value="02:00">02:00</option>
+                <option value="04:00">04:00</option>
+                <option value="06:00">06:00</option>
+                <option value="08:00">08:00</option>
+                <option value="10:00">10:00</option>
+                <option value="12:00">12:00</option>
+                <option value="14:00">14:00</option>
+                <option value="16:00">16:00</option>
+                <option value="18:00">18:00</option>
+                <option value="20:00">20:00</option>
+                <option value="22:00">22:00</option>
                 </select><br/>
                 距離: <select id="dist">
-                <option >無</option>
-                <option>0.5km</option>
-                <option>1km</option>
-                <option>2km</option>
-                <option>3km</option>
-                <option>>3km</option>
+                <option value="">無</option>
+                <option value="0.1 km">~100m</option>
+                <option value="0.6 km">~600m</option>
+                <option value="1 km">~1km</option>
+                <option value="2 km">~2km</option>
                 </select><br/>
                 類別: 
                 <select id="type">
-                <option >無</option>
-                <option>麵食</option>
-                <option>飯食</option>
-                <option>日式料理</option>
-                <option>韓式料理</option>
+                <option value="">無</option>
+                <option value="麵">麵</option>
+                <option value="123">123</option>
+                <option value="你好">你好</option>
+                <option value="漢堡舖子">漢堡舖子</option>
                 </select>
                 <br />
                 價位: 
@@ -272,9 +271,10 @@ header("Content-Type:text/html; charset=utf-8");
     var price = [];
     var address = [];
     var wordpress = [];
+    var category = [];
 
     $(function () {
-        fetch("/puli_map_team-MVC/controller/get_all_restaurant_info.php")
+        fetch("/PuliMap/api/read.php")
         .then(res => {  return res.json()} )
         .then(result => { 
             const bounds = [[0,0], [730,1600]];
@@ -287,12 +287,12 @@ header("Content-Type:text/html; charset=utf-8");
             });
             map.setView([365, 800]);
             map.fitBounds(bounds);
-            const image = L.imageOverlay('/puli_map_team-MVC/src/puliMap2.png', bounds).addTo(map);
+            const image = L.imageOverlay('/PuliMap/puliMap2.png', bounds).addTo(map);
             
 
             // set my own marker icon
             const myIcon = L.icon({
-                iconUrl: '/puli_map_team-MVC/src/markericon2.png',
+                iconUrl: '/PuliMap/markericon2.png',
                 iconSize: [34, 48],
             });
 
@@ -301,18 +301,19 @@ header("Content-Type:text/html; charset=utf-8");
             //insert data into list
             for(let i = 0 ; i<result.length ; i++)
             {
-                id.push(result[i].Restaurant_ID);
-                x.push(result[i].Restaurant_x);
-                y.push(result[i].Restaurant_y);
-                time.push(result[i].Restaurant_time);
-                tel.push(result[i].Restaurant_TEL);
-                cmt.push(result[i].Restaurant_comment);
-                photo.push(result[i].Restaurant_photo);
-                intro.push(result[i].Restaurant_intro);
-                restaurant_name.push(result[i].Restaurant_name);
-                price.push(result[i].Restaurant_price);
-                address.push(result[i].Restaurant_address);
-                wordpress.push(result[i].wordpress_link);
+                id.push(result[i].RestaurantID);
+                x.push(result[i].RestaurantX);
+                y.push(result[i].RestaurantY);
+                time.push(result[i].RestaurantTime);
+                tel.push(result[i].RestaurantTEL);
+                cmt.push(result[i].RestaurantComment);
+                photo.push(result[i].RestaurantPhoto);
+                intro.push(result[i].RestaurantIntro);
+                restaurant_name.push(result[i].RestaurantName);
+                price.push(result[i].RestaurantPrice);
+                address.push(result[i].RestaurantAddress);
+                wordpress.push(result[i].wordpressLink);
+                category.push(result[i].CategoryName);
             }
 
             var addMarker;
@@ -330,7 +331,7 @@ header("Content-Type:text/html; charset=utf-8");
                 
                 if(url != "")
                 {
-                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>" + name + "</center></b><br><img src='/puli_map_team-MVC/src/" + url +"' width='150px' alt='ncnu cm'>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ wordpressLink +"' target='_blank'><input style='float:right' type='button' value='詳細資訊' /></a><br/>");
+                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>" + name + "</center></b><br><img src='/PuliMap/" + url +"' width='150px' alt='ncnu cm'>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ wordpressLink +"' target='_blank'><input style='float:right' type='button' value='詳細資訊' /></a><br/>");
 
                 }
                 else
@@ -401,7 +402,7 @@ header("Content-Type:text/html; charset=utf-8");
                 //console.log("filter success!!");
                 console.log("userPosition: " + userPosition);
 
-                const url = `/puli_map_team-MVC/model/read_filter.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
+                const url = `/PuliMap/api/read_filter.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
                 
                 fetch(url,{
                     method:"get"
