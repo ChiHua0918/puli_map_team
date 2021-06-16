@@ -258,11 +258,7 @@ header("Content-Type:text/html; charset=utf-8");
     var wordpress = [];
     var category = [];
 
-<<<<<<< HEAD
     var categoryList = ["冰品","小吃","點心","早餐","東南亞","早午餐","美式","韓式","日式","港式","宵夜","甜點"];
-=======
-    var categoryList = ["麵","你好","觀光夜市","漢堡舖子"];
->>>>>>> ef28863a89116fcbc449e73840cfc6d1431eecc9
 
     window.onload = function()
     {
