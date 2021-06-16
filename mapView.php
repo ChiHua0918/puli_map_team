@@ -228,13 +228,14 @@ header("Content-Type:text/html; charset=utf-8");
                 <option value="2 km">~2km</option>
                 </select><br/>
                 類別: 
-                <select id="type">
+                <!-- <select id="type">
                 <option value="">無</option>
                 <option value="麵">麵</option>
                 <option value="123">123</option>
                 <option value="你好">你好</option>
                 <option value="漢堡舖子">漢堡舖子</option>
-                </select>
+                </select> -->
+                <span id="typeSelect"></span>
                 <br />
                 價位: 
                 <select name="price">
@@ -273,7 +274,11 @@ header("Content-Type:text/html; charset=utf-8");
     var wordpress = [];
     var category = [];
 
+    var categoryList = ["冰品","小吃","點心","早餐","東南亞","早午餐","美式","韓式","日式","港式","宵夜","甜點"];
+
     $(function () {
+        categoryTbl();
+
         fetch("/PuliMap/api/read.php")
         .then(res => {  return res.json()} )
         .then(result => { 
@@ -472,6 +477,20 @@ header("Content-Type:text/html; charset=utf-8");
             userPosition = position.coords.latitude + "," + position.coords.longitude;
             //console.log("Latitude:" + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
         }
+
+        function categoryTbl()
+        {
+            let str = "<select id=\"type\" name=\"CategoryName\">";
+            str += "<option value=\"\">無</option>"
+            for(let i = 0 ; i<categoryList.length ; i++)
+            {
+                str += `<option value=\"${categoryList[i]}\">${categoryList[i]}</option>`;
+            }
+            str += "</select>";
+            
+            document.getElementById("typeSelect").innerHTML = str;
+        }
+
     });
 </script>
 
