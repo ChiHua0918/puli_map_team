@@ -153,6 +153,10 @@
             /* right: 35%;
             top: 15%; */
         }
+        #dialog_content {
+            vertical-align: middle;
+            color: white;
+        }
         #closeBtn{
             /* position:relative; */
             margin: 15px;

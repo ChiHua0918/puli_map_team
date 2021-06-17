@@ -123,6 +123,40 @@
         .rotate {
             transform: rotate(180deg);
         }
+        .okdiv {
+            text-align: center;
+        }
+        .okbtn{
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            padding: 9px 6px;
+            border: 1px solid #a8791b;
+            border-radius: 8px;
+            background: #ffc72d;
+            background: -webkit-gradient(linear, left top, left bottom, from(#ffc72d), to(#a8791b));
+            background: -moz-linear-gradient(top, #ffc72d, #a8791b);
+            background: linear-gradient(to bottom, #ffc72d, #a8791b);
+            text-shadow: #785714 2px 2px 2px;
+            font: normal normal bold 20px arial;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .okbtn:hover {
+            border: 1px solid #f0ad27;
+            background: #ffef36;
+            background: -webkit-gradient(linear, left top, left bottom, from(#ffef36), to(#ca9120));
+            background: -moz-linear-gradient(top, #ffef36, #ca9120);
+            background: linear-gradient(to bottom, #ffef36, #ca9120);
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .okbtn:active {
+            background: #a8791b;
+            background: -webkit-gradient(linear, left top, left bottom, from(#a8791b), to(#a8791b));
+            background: -moz-linear-gradient(top, #a8791b, #a8791b);
+            background: linear-gradient(to bottom, #a8791b, #a8791b);
+        }
     </style>
 </head>
 <body>
@@ -138,31 +172,36 @@
             ?>
         </div>
     </nav>
-    <div class="menu"><br/>
+    <div class="menu"><br />
         <button class="btn"><i class="fas fa-chevron-right fa-2x"></i></button>
         <div>
-            <a id="buttonArea" class="button">隨機選取餐廳</a>
-            <hr />
+            <button id="buttonArea" class="button">隨機選取餐廳</button>
+            <br /><br /><button id="showAllBtn" class="button">顯示全部餐廳</button>
         </div>
         <hr />
         <div id="main">
             <form id="filterForm" novalidate>
-                時段: 
-                <select name="time">
-                    <option value="">無</option>
-                    
-                    <option value="7:00~10:00">7點</option>
-                    <option value="10:00">10點</option>
-                    <option value="14:00">14點</option>
-                    <option value="17:00">17點</option>
-                </select><br />
-                距離: 
-                <select name="dist">
-                    <option value="">無</option>
-                    <option value="0.1 km">~100m</option>
-                    <option value="0.6 km">~600m</option>
-                    <option value="1 km">~1km</option>
-                    <option value="2 km">~2km</option>
+                開始時段: <select id="time">
+                <option value="" >無</option>
+                <option value="00:00">00:00</option>
+                <option value="02:00">02:00</option>
+                <option value="04:00">04:00</option>
+                <option value="06:00">06:00</option>
+                <option value="08:00">08:00</option>
+                <option value="10:00">10:00</option>
+                <option value="12:00">12:00</option>
+                <option value="14:00">14:00</option>
+                <option value="16:00">16:00</option>
+                <option value="18:00">18:00</option>
+                <option value="20:00">20:00</option>
+                <option value="22:00">22:00</option>
+                </select><br/>
+                距離: <select id="dist">
+                <option value="">無</option>
+                <option value="0.1 km">~100m</option>
+                <option value="0.6 km">~600m</option>
+                <option value="1 km">~1km</option>
+                <option value="2 km">~2km</option>
                 </select><br/>
                 類別: 
                 <!-- <select id="type">
@@ -183,9 +222,8 @@
                     <option value="200~">200~</option>
                 </select>
                 <br />
-                <br /><br /><input type="submit" value="OK"/>
+                <div class="okdiv"><br /><input class="okbtn" type="submit" value="確認"/></div>
             </form>
-            <button id="showAllBtn">顯示全部餐廳</button>
         </div>
     </div>
     <div id='map_container'>
@@ -197,7 +235,9 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 <script src="https://kit.fontawesome.com/99bbad7d3f.js" crossorigin="anonymous"></script>
 <script>
-    function categoryTbl(categoryList)
+    var categoryList = ["冰品","小吃","點心","早餐","東南亞","早午餐","美式","韓式","日式","港式","宵夜","甜點"];
+        
+    function categoryTbl()
     {
         let str = "<select id=\"type\" name=\"CategoryName\">";
         str += "<option value=\"\">無</option>"
@@ -211,8 +251,7 @@
     }
 
     $(function () {
-        var categoryList = ["冰品","小吃","點心","早餐","東南亞","早午餐","美式","韓式","日式","港式","宵夜","甜點"];
-        categoryTbl(categoryList);
+        categoryTbl();
 
         //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
         // var x = [160,656,333,1003,786];
