@@ -196,13 +196,13 @@
     <div id="rec">
         <h1>埔里美食地圖</h1>
         <div id="recbtn"><input type="button" id="btn" class="btn" value="START"
-                onclick="location.href='/puli_map_team-MVC/view/MapView.php'"></div>
+                onclick="location.href='/view/MapView.php'"></div>
     </div>
     <!-- 對話框 -->
     <div id="dialog" class="dialog-bottom"></div>
     <i id="arrow" class="fas fa-chevron-circle-right" onclick="changetext()"></i>
     <!-- 人物圖片 -->
-    <img src="/puli_map_team-MVC/src/person2.png" />
+    <img src="/src/person2.png" />
 </body>
 <script src="https://kit.fontawesome.com/f1181f4d88.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
