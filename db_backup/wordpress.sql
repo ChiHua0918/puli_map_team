@@ -683,7 +683,7 @@ CREATE TABLE `wp_usermeta` (
 --
 
 INSERT INTO `wp_usermeta` (`umeta_id`, `user_id`, `meta_key`, `meta_value`) VALUES
-(1, 1, 'nickname', 'chi_hua'),
+(1, 1, 'nickname', 'foodmap'),
 (2, 1, 'first_name', ''),
 (3, 1, 'last_name', ''),
 (4, 1, 'description', ''),
@@ -729,7 +729,7 @@ CREATE TABLE `wp_users` (
 --
 
 INSERT INTO `wp_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES
-(1, 'chi_hua', '$P$BwYzD.aLfar3jc226z7s.Ukxenhoz/.', 'chi_hua', 's108213042@mail1.ncnu.edu.tw', 'https://localhost/wordpress', '2021-04-28 14:34:51', '', 0, 'chi_hua');
+(1, 'foodmap', '$P$BhM6u4ul1EKDMFVuN1ii31E1GN99vu/', 'foodmap', 's108213042@mail1.ncnu.edu.tw', 'https://localhost/wordpress', '2021-04-28 14:34:51', '', 0, 'foodmap');
 
 -- --------------------------------------------------------
 
