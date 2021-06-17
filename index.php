@@ -12,7 +12,7 @@
     <style type="text/css">
         @media screen and (max-width: 1532px) {
             body {
-                background-image: url("/puli_map_team-MVC/src/食物背景透明3.png");
+                background-image: url("/src/食物背景透明3.png");
                 /* background-repeat: no-repeat; */
                 background-size: auto 100%;
                 background-position: center center;
@@ -22,7 +22,7 @@
 
         @media screen and (min-width: 1532px) {
             body {
-                background-image: url("/puli_map_team-MVC/src/食物背景透明3.png");
+                background-image: url("/src/食物背景透明3.png");
                 background-repeat: no-repeat;
                 background-size: 100% auto;
                 background-position: center center;
