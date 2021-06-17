@@ -381,6 +381,82 @@
                 }
             }
             document.getElementById("buttonArea").addEventListener("click", randomSelected, false);
+
+            //filter form click submit event
+            var form = document.getElementById("filterForm");
+            form.addEventListener("submit",formSubmit);
+
+            //get user position variable
+            var userPosition;
+            var acceptGetLoca = false;
+            getLocation();
+
+            function formSubmit(e)
+            {
+                e.preventDefault();
+
+                const time = form[0].value;
+                const dist = form[1].value;
+                const type = form[2].value;
+                const price = form[3].value;
+
+                // console.log("time:" + time);
+                // console.log("dist:" + dist);
+                // console.log("type:" + type);
+                // console.log("price:" + price);
+
+                if(acceptGetLoca || dist == "") //if accept get user position
+                {
+                    //console.log("filter success!!");
+                    console.log("userPosition: " + userPosition);
+
+                    const url = `/controller/get_restaurant_info.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
+                    
+                    fetch(url,{
+                        method:"get"
+                    })
+                    .then( res => {return res.json()})
+                    .then( result => {
+                        console.log(result);
+
+                        const restaurant_id = [];
+
+                        for(let i = 0 ; i < result.length ; i++)
+                        {
+                            restaurant_id.push(result[i].RestaurantID);
+                        }
+
+                        //remove marker icon which is filter
+                        //first we should reset all of the icon
+                        //and then remove icon which isn't included in restaurant_id array
+                        for(let i = 0 ; i<markers.length ; i++)
+                        {
+                            map.addLayer(markers[i]);
+                            if( !restaurant_id.includes(id[i])) 
+                            {
+                                map.removeLayer(markers[i]);
+                            }
+                        }
+
+                    });
+                }
+                else
+                {
+                    alert("抱歉！您無法使用「距離」篩選功能！請開啟定位！")
+                }
+            }
+
+            document.getElementById("showAllBtn").addEventListener("click",showAll,false);
+
+            function showAll()
+            {
+                for(let i = 0 ; i<markers.length ; i++)
+                {
+                    if(!map.hasLayer(markers[i])){
+                        map.addLayer(markers[i]);
+                    }
+                }
+            }
         })
 
 
@@ -388,82 +464,6 @@
             $("div.menu").toggleClass("active");
             $(".fa-chevron-right").toggleClass("rotate");
         });
-
-        //filter form click submit event
-        var form = document.getElementById("filterForm");
-        form.addEventListener("submit",formSubmit);
-
-        //get user position variable
-        var userPosition;
-        var acceptGetLoca = false;
-        getLocation();
-
-        function formSubmit(e)
-        {
-            e.preventDefault();
-
-            const time = form[0].value;
-            const dist = form[1].value;
-            const type = form[2].value;
-            const price = form[3].value;
-
-            // console.log("time:" + time);
-            // console.log("dist:" + dist);
-            // console.log("type:" + type);
-            // console.log("price:" + price);
-
-            if(acceptGetLoca || dist == "") //if accept get user position
-            {
-                //console.log("filter success!!");
-                console.log("userPosition: " + userPosition);
-
-                const url = `/controller/get_restaurant_info.php?time=${time}&dist=${dist}&type=${type}&price=${price}&userLocation=${userPosition}`;
-                
-                fetch(url,{
-                    method:"get"
-                })
-                .then( res => {return res.json()})
-                .then( result => {
-                    console.log(result);
-
-                    const restaurant_id = [];
-
-                    for(let i = 0 ; i < result.length ; i++)
-                    {
-                        restaurant_id.push(result[i].RestaurantID);
-                    }
-
-                    //remove marker icon which is filter
-                    //first we should reset all of the icon
-                    //and then remove icon which isn't included in restaurant_id array
-                    for(let i = 0 ; i<markers.length ; i++)
-                    {
-                        map.addLayer(markers[i]);
-                        if( !restaurant_id.includes(id[i])) 
-                        {
-                            map.removeLayer(markers[i]);
-                        }
-                    }
-
-                });
-            }
-            else
-            {
-                alert("抱歉！您無法使用「距離」篩選功能！請開啟定位！")
-            }
-        }
-
-        document.getElementById("showAllBtn").addEventListener("click",showAll,false);
-
-        function showAll()
-        {
-            for(let i = 0 ; i<markers.length ; i++)
-            {
-                if(!map.hasLayer(markers[i])){
-                    map.addLayer(markers[i]);
-                }
-            }
-        }
 
         //get user position
         function getLocation() {
