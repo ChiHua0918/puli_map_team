@@ -13,7 +13,7 @@
     $RestaurantAddress = $_POST['RestaurantAddress'];
     $RestaurantX = $_POST['RestaurantX'];
     $RestaurantY = $_POST['RestaurantY'];
-
+    $BlogURL = $_POST['BlogURL'];
     // 抓那一欄資料
     // 身分驗證
     // if ($_SESSION['user_login'] == $row['user_login']) {
@@ -61,7 +61,7 @@
             } else {
                 echo $target_file;
                 if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
-                    if(add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY))
+                    if(add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL))
                     {
                         header('Location: '."/view/MapEdit.php");
                     }
@@ -74,7 +74,7 @@
                 }
             } 
         } else {
-            if(add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "", $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY))
+            if(add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "", $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL))
             {
                 header('Location: '."/view/MapEdit.php");
             }

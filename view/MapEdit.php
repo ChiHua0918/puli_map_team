@@ -183,6 +183,8 @@
                     <th>地址</th>
                     <th>x座標</th>
                     <th>y座標</th>
+                    <th>部落格網址</th>
+                    <th>食物類別</th>
                 </tr>
             <tr>
             <td><input type="text" name="RestaurantName"  required size="4" style="border-style:none" /></td>
@@ -195,6 +197,8 @@
             <td><input type="text" name="RestaurantAddress" required size="4" style="border-style:none"/></td>
             <td><input type="text" name="RestaurantX" required size="4" style="border-style:none"/></td>
             <td><input type="text" name="RestaurantY" required size="4" style="border-style:none"/></td>
+            <td><input type="text" name="BlogURL" required size="20" placeholder="請先縮短網址" style="border-style:none"/></td>
+            <td id="typeSelect"></td>
             </tr>
 
             </table>
@@ -243,6 +247,9 @@
     var restaurant_name = [];
     var price = [];
     var address = [];
+    var blog_url = [];
+    var category = [];
+    var categoryList = ["冰品","小吃","點心","早餐","東南亞","早午餐","美式","韓式","日式","港式","宵夜","甜點"];
 
     window.onload = function()
     {
@@ -297,7 +304,9 @@
         tbl += "地址: <input type=\"text\" name=\"RestaurantAddress\" size=\"30\" style=\"border-style:none\" value=\""+ address[pos] +"\" /><br/>";
         tbl += "x座標: <input type=\"text\" name=\"RestaurantX\" size=\"4\" style=\"border-style:none\" value=\""+ x[pos] +"\" /><br/>";
         tbl += "y座標: <input type=\"text\" name=\"RestaurantY\" size=\"4\" style=\"border-style:none\" value=\""+ y[pos] +"\" /><br/>";
-        
+        tbl += "部落格網址: <input type=\"text\" name=\"BlogURL\" size=\"20\" style=\"border-style:none\" value=\""+ blog_url[pos] +"\" /><br/>";
+        tbl += "食物類型:" + categoryTbl(category[pos]) +  "<br />";  
+
         tbl += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[pos]+"\">";
         tbl += "<input type=\"submit\" class=\"edit_btn\" value=\"更新\" style=\"padding=10px;\"></form>"
     
@@ -306,6 +315,27 @@
     function closeClick()
     {
         document.getElementById("dialog").style.display = "none";
+    }
+    function categoryTbl(curType)
+    {
+        let str = "<select id=\"type\" name=\"CategoryName\">";
+        for(let i = 0 ; i<categoryList.length ; i++)
+        {
+            if( categoryList[i] == curType)
+            {
+                str += `<option value=\"${categoryList[i]}\" selected>${categoryList[i]}</option>`;
+            }
+            else
+            {
+                str += `<option value=\"${categoryList[i]}\">${categoryList[i]}</option>`;
+            }
+        }
+        str += "</select>";
+        if(curType == "")
+        {
+            document.getElementById("typeSelect").innerHTML = str;
+        }
+        return str;
     }
 
     $(function () {
@@ -346,6 +376,8 @@
                 restaurant_name.push(result[i].RestaurantName);
                 price.push(result[i].RestaurantPrice);
                 address.push(result[i].RestaurantAddress);
+                blog_url.push(result[i].BlogURL);
+                category.push(result[i].CategoryName);
             }
 
 
@@ -384,6 +416,8 @@
                 tbl += "<td>" + cmt[i] +"</td>";
                 tbl += "<td>" + price[i] +"</td>";
                 tbl += "<td>" + address[i] + "</td>";
+                tbl += "<td>" + blog_url[i] + "</td>";
+                tbl += "<td>" + category[i] + "</td>";
 
                 //修改按鈕
                 tbl += "<td><button onclick=\"updateBtn('" + i + "')\" class=\"edit_btn\">修改</button></td>";
@@ -414,17 +448,17 @@
             }
             map.on('click', onMapClick);
 
-            function createMarker( x ,  y , url , name)
+            function createMarker( x ,  y , url , name, comment, blog_url)
             {
                 var loc = L.latLng([y, x]); // [y,x]
                 
                 if(url != "")
                 {
-                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>" + name + "</b><br><img src=' " + url +"' width='150px' alt='ncnu cm'><br/><a target='_blank' href='https://cm.ncnu.edu.tw/'>click for more info</a>");
+                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>" + name + "</center></b><br><img src='/puli_map_team-MVC/src/" + url +"' width='150px' alt='ncnu cm'>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input style='float:right' type='button' value='詳細資訊' /></a><br/>");
                 }
                 else
                 {
-                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>"+ name + "</b><br>");
+                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>"+ name + "</center></b>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/>");
                 }
                 marker.on('mouseover', function (e) {
                     this.openPopup();

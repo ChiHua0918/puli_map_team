@@ -34,7 +34,7 @@
                     "RestaurantAddress" => $row["Restaurant_address"], 
                     "RestaurantX" => $row["Restaurant_x"], 
                     "RestaurantY" => $row["Restaurant_y"],
-                    "wordpressLink" => $row['wordpress_link']
+                    "BlogURL" => $row['Blog_URL']
                 );
                 array_push($arr_data, $restaurant);
             }
@@ -130,17 +130,17 @@
         return $final_data;
     }
 
-    function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY){
+    function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL){
         global $link;
         $sql_create = "INSERT INTO puli_restaurant 
-        ( Restaurant_name, Restaurant_TEL, Restaurant_intro, Restaurant_time, Restaurant_photo, Restaurant_comment, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y)
+        ( Restaurant_name, Restaurant_TEL, Restaurant_intro, Restaurant_time, Restaurant_photo, Restaurant_comment, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y, Blog_URL)
         VALUES
-        ( '$RestaurantName', '$RestaurantTEL', '$RestaurantIntro', '$RestaurantTime', '$RestaurantPhotoUrl', '$RestaurantComment', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY')";
+        ( '$RestaurantName', '$RestaurantTEL', '$RestaurantIntro', '$RestaurantTime', '$RestaurantPhotoUrl', '$RestaurantComment', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY', '$BlogURL')";
 
         return mysqli_query($link, $sql_create);
     }
 
-    function update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhoto, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY){
+    function update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhoto, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL){
         global $link;
         //更新資料庫資料語法
         if($RestaurantPhoto != "" && $RestaurantPhoto != null){
@@ -149,14 +149,14 @@
             Restaurant_intro = '$RestaurantIntro', Restaurant_time = '$RestaurantTime',
             Restaurant_photo = '$RestaurantPhoto', Restaurant_comment = '$RestaurantComment',
             Restaurant_price = '$RestaurantPrice', Restaurant_address = '$RestaurantAddress',
-            Restaurant_x = '$RestaurantX', Restaurant_y = '$RestaurantY'
+            Restaurant_x = '$RestaurantX', Restaurant_y = '$RestaurantY', Blog_URL = '$BlogURL'
             WHERE Restaurant_ID = '$RestaurantID'";
         }else{
             $sql_update = "UPDATE puli_restaurant SET 
             Restaurant_name = '$RestaurantName', Restaurant_TEL = '$RestaurantTEL', 
             Restaurant_intro = '$RestaurantIntro', Restaurant_time = '$RestaurantTime', Restaurant_comment = '$RestaurantComment',
             Restaurant_price = '$RestaurantPrice', Restaurant_address = '$RestaurantAddress',
-            Restaurant_x = '$RestaurantX', Restaurant_y = '$RestaurantY'
+            Restaurant_x = '$RestaurantX', Restaurant_y = '$RestaurantY', Blog_URL = '$BlogURL'
             WHERE Restaurant_ID = '$RestaurantID'";
         }
         echo $sql_update;

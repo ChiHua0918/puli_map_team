@@ -165,13 +165,14 @@
                     <option value="2 km">~2km</option>
                 </select><br/>
                 類別: 
-                <select name="type">
-                    <option value="">無</option>
-                    <option value="麵食">麵食</option>
-                    <option value="飯食">飯食</option>
-                    <option value="日式料理">日式料理</option>
-                    <option value="韓式料理">韓式料理</option>
-                </select>
+                <!-- <select id="type">
+                <option value="">無</option>
+                <option value="麵">麵</option>
+                <option value="123">123</option>
+                <option value="你好">你好</option>
+                <option value="漢堡舖子">漢堡舖子</option>
+                </select> -->
+                <span id="typeSelect"></span>
                 <br />
                 價位: 
                 <select name="price">
@@ -196,7 +197,23 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 <script src="https://kit.fontawesome.com/99bbad7d3f.js" crossorigin="anonymous"></script>
 <script>
+    function categoryTbl(categoryList)
+    {
+        let str = "<select id=\"type\" name=\"CategoryName\">";
+        str += "<option value=\"\">無</option>"
+        for(let i = 0 ; i<categoryList.length ; i++)
+        {
+            str += `<option value=\"${categoryList[i]}\">${categoryList[i]}</option>`;
+        }
+        str += "</select>";
+
+        document.getElementById("typeSelect").innerHTML = str;
+    }
+
     $(function () {
+        var categoryList = ["冰品","小吃","點心","早餐","東南亞","早午餐","美式","韓式","日式","港式","宵夜","甜點"];
+        categoryTbl(categoryList);
+
         //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
         // var x = [160,656,333,1003,786];
         // var y = [195,398,573,398,471];
@@ -236,6 +253,8 @@
             var restaurant_name = [];
             var price = [];
             var address = [];
+            var blog_url = [];
+            var category = [];
 
             for(let i = 0 ; i<result.length ; i++)
             {
@@ -250,6 +269,8 @@
                 restaurant_name.push(result[i].RestaurantName);
                 price.push(result[i].RestaurantPrice);
                 address.push(result[i].RestaurantAddress);
+                blog_url.push(result[i].BlogURL);
+                category.push(result[i].CategoryName);
             }
             
             //存放各個marker
@@ -260,7 +281,7 @@
 
             for(let i = 0 ; i < x.length ; i++)
             {
-                markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i]));
+                markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i],cmt[i],blog_url[i]));
             }
 
             const popup = L.popup();
@@ -280,18 +301,17 @@
             // }
             // map.on('click', onMapClick);
 
-            function createMarker( x ,  y , url , name)
+            function createMarker( x ,  y , url , name, comment, blog_url)
             {
                 var loc = L.latLng([y, x]); // [y,x]
                 
                 if(url != "")
                 {
-                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>" + name + "</b><br><img src=' " + url +"' width='150px' alt='ncnu cm'><br/><a target='_blank' href='https://cm.ncnu.edu.tw/'>click for more info</a>");
-
+                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>" + name + "</center></b><br><img src='/PuliMap/" + url +"' width='150px' alt='ncnu cm'>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input style='float:right' type='button' value='詳細資訊' /></a><br/>");
                 }
                 else
                 {
-                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b>"+ name + "</b><br>");
+                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>"+ name + "</center></b>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/>");
                 }
                 marker.on('mouseover', function (e) {
                     this.openPopup();

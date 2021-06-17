@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- 資料庫： `wordpress`
 --
-CREATE DATABASE IF NOT EXISTS `testfoodmap` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `testfoodmap`;
+CREATE DATABASE IF NOT EXISTS `foodmapadmin` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `foodmapadmin`;
 
 -- --------------------------------------------------------
 
@@ -84,14 +84,14 @@ CREATE TABLE `puli_restaurant` (
   `Restaurant_address` text NOT NULL,
   `Restaurant_x` decimal(20,0) NOT NULL,
   `Restaurant_y` decimal(20,0) NOT NULL,
-  `wordpress_link` text NOT NULL
+  `Blog_URL` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 傾印資料表的資料 `puli_restaurant`
 --
 
-INSERT INTO `puli_restaurant` (`Restaurant_ID`, `Restaurant_name`, `Restaurant_TEL`, `Restaurant_intro`, `Restaurant_time`, `Restaurant_photo`, `Restaurant_comment`, `Restaurant_price`, `Restaurant_address`, `Restaurant_x`, `Restaurant_y`, `wordpress_link`) VALUES
+INSERT INTO `puli_restaurant` (`Restaurant_ID`, `Restaurant_name`, `Restaurant_TEL`, `Restaurant_intro`, `Restaurant_time`, `Restaurant_photo`, `Restaurant_comment`, `Restaurant_price`, `Restaurant_address`, `Restaurant_x`, `Restaurant_y`, `Blog_URL`) VALUES
 (66, 'test', '02562', '4561', '星期日 19:30~20:00 22:30~01:00,星期一 11:30~13:45 17:30~20:00 22:30~01:00,星期二 11:30~13:45 17:30~20:00 22:30~01:00,星期三 11:30~13:45 17:30~20:00 22:30~01:00,星期四 11:3~13:45 17:30~20:00 22:30~01:00,星期五 11:30~13:45 17:30~20:00 22:30~01:00,星期六 11:30~13:45 17:30~20:00 22:30~01:00', '', '123', 200, '545南投縣埔里鎮仁愛路319號', '100', '300', 'https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/212226/'),
 (67, 'test', '02562', '4561', '星期日 公休,星期一 11:30~13:45 17:30~20:00 22:30~01:00,星期二 11:30~13:45 17:30~20:00 22:30~01:00,星期三 11:30~13:45 17:30~20:00 22:30~01:00,星期四 11:3~13:45 17:30~20:00 22:30~01:00,星期五 11:30~13:45 17:30~20:00 22:30~01:00,星期六 11:30~13:45 17:30~20:00 22:30~01:00', '', '123', 200, '南投縣埔里鎮中華路171號', '200', '500', 'https://jscorpio.pixnet.net/blog/post/30454572'),
 (68, 'test', '02562', '4561', '星期日 19:30~20:00 22:30~01:00,星期一 11:30~13:45 17:30~20:00 22:30~01:00,星期二 11:30~13:45 17:30~20:00 22:30~01:00,星期三 11:30~13:45 17:30~20:00 22:30~01:00,星期四 11:3~13:45 17:30~20:00 22:30~01:00,星期五 11:30~13:45 17:30~20:00 22:30~01:00,星期六 11:30~13:45 17:30~20:00', '', '123', 200, '545南投縣埔里鎮仁愛路319號', '100', '300', 'https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/212226/'),

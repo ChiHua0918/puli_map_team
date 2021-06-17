@@ -13,7 +13,8 @@
     $RestaurantAddress = $_POST['RestaurantAddress'];
     $RestaurantX = $_POST['RestaurantX'];
     $RestaurantY = $_POST['RestaurantY'];
-
+    $BlogURL = $_POST['BlogURL'];
+    
 
     //紅色字體為判斷密碼是否填寫正確
     if(isset($_SESSION['userLogin'])){
@@ -68,7 +69,7 @@
                         }else{
                             unlink($target_file);
                             if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
-                                if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY))
+                                if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL))
                                 {
                                     header('Location: '."/view/MapEdit.php");
                                 }
@@ -83,7 +84,7 @@
                     }else{
                         unlink("../".$restaurant_photoUrl);
                         if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
-                            if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY))
+                            if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL))
                             {
                                 header('Location: '."/view/MapEdit.php");
                             }
@@ -98,7 +99,7 @@
                 }
             }
         } else {
-            if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "", $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY))
+            if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, "", $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL))
             {
                 header('Location: '."/view/MapEdit.php");
             }
