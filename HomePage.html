@@ -61,7 +61,7 @@
 
             .dialog-bottom {
                 margin-bottom: 40px;
-                width: 250px;
+                width: 350px;
                 height: 100px;
                 background: #e7b394;
                 position: relative;
@@ -214,7 +214,12 @@
     //     document.getElementById("dialog").innerHTML = showText;
     //     document.getElementById("dialog").onclick = changeText();
     // }
-    var text = ["大家好我是住在埔里的Paula，想吃美食的話，問我就找對人了啦!快來跟我一起去尋找埔里美食吧~", "點擊START開始使用", "還在煩惱埔里有甚麼吃的?或是不知道今天晚餐吃甚麼? 問paula我就對啦~ 我收集超多家美食，迫不急待與你分享美味的食物！"];
+    var text = ["大家好我是住在埔里的Paula，想吃美食的話，問我就找對人了啦!",
+    "快來跟我一起去尋找埔里美食吧~", 
+    "點擊START開始使用", 
+    "還在煩惱埔里有甚麼吃的?",
+    "不知道今天晚餐吃甚麼?",
+    "問paula我就對啦~ 我收集超多家美食，迫不急待與你分享美味的食物！"];
     var showText;
     var num = 0;
     showText = "<marquee loop=0 class='dialogContent'>" + text[num] + "</marquee>";
@@ -223,8 +228,8 @@
         return Math.floor(a + Math.random() * (b - a + 1));
     }
     function changetext() {
-        if (num >= 4) {
-            showText = "<marquee loop=0 class='dialogContent'>" + text[intRandom(0, text.length - 1)] + "</marquee>";
+        if (num >= text.length-1) {
+            showText = "<marquee loop=0 class='dialogContent'>" + text[intRandom(0, text.length-1)] + "</marquee>";
             document.getElementById("dialog").innerHTML = showText;
         }
         else {
