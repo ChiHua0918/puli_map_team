@@ -21,7 +21,7 @@
         puli_restaurant.Restaurant_comment, puli_restaurant.Restaurant_price, puli_restaurant.Restaurant_address, 
         puli_restaurant.Restaurant_x, puli_restaurant.Restaurant_y, puli_restaurant.Blog_URL,puli_recommend.Category_name
         FROM puli_restaurant
-        LEFT JOIN puli_rest_time on puli_restaurant.Restaurant_ID = puli_rest_time.Restaurant_ID 
+        LEFT JOIN puli_rest_time on puli_rest_time.Restaurant_ID = puli_restaurant.Restaurant_ID
         LEFT JOIN puli_recommend on puli_recommend.Restaurant_ID = puli_restaurant.Restaurant_ID ";
         $result = $link->query($sql);
         $arr_data = [];
