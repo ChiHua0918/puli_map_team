@@ -86,6 +86,14 @@
   #login_control{
     padding: 10px;
   }
+  #bg {
+    background-image: url("/src/食物背景透明3.png");
+    /* background-repeat: no-repeat; */
+    background-size: auto 100%;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+
 </style>
 <body>
   <div id="login_frame">
