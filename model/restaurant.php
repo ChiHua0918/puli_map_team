@@ -16,7 +16,13 @@
     function  get_all_restaurant_info() {
         // $sql 加入sql語法 從 user 的資料表中選擇所有欄位
         global $link;
-        $sql = "SELECT * FROM puli_restaurant";
+        $sql = "SELECT DISTINCT puli_restaurant.Restaurant_ID, puli_restaurant.Restaurant_name, puli_restaurant.Restaurant_TEL, 
+        puli_restaurant.Restaurant_intro, puli_restaurant.Restaurant_time, puli_restaurant.Restaurant_photo, 
+        puli_restaurant.Restaurant_comment, puli_restaurant.Restaurant_price, puli_restaurant.Restaurant_address, 
+        puli_restaurant.Restaurant_x, puli_restaurant.Restaurant_y, puli_restaurant.wordpress_link,puli_recommend.Category_name
+        FROM puli_restaurant
+        LEFT JOIN puli_rest_time on puli_restaurant.Restaurant_ID = puli_rest_time.Restaurant_ID 
+        LEFT JOIN puli_recommend on puli_recommend.Restaurant_ID = puli_restaurant.Restaurant_ID ";
         $result = $link->query($sql);
         $arr_data = [];
         if ($result -> num_rows > 0) {
@@ -34,7 +40,8 @@
                     "RestaurantAddress" => $row["Restaurant_address"], 
                     "RestaurantX" => $row["Restaurant_x"], 
                     "RestaurantY" => $row["Restaurant_y"],
-                    "BlogURL" => $row['Blog_URL']
+                    "BlogURL" => $row['Blog_URL'],
+                    "CategoryName" => $row['Category_name']
                 );
                 array_push($arr_data, $restaurant);
             }
@@ -130,55 +137,101 @@
         return $final_data;
     }
 
-    function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL){
+    function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){
         global $link;
         $sql_create = "INSERT INTO puli_restaurant 
         ( Restaurant_name, Restaurant_TEL, Restaurant_intro, Restaurant_time, Restaurant_photo, Restaurant_comment, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y, Blog_URL)
         VALUES
         ( '$RestaurantName', '$RestaurantTEL', '$RestaurantIntro', '$RestaurantTime', '$RestaurantPhotoUrl', '$RestaurantComment', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY', '$BlogURL')";
 
-        return mysqli_query($link, $sql_create);
+        if(mysqli_query($link, $sql_create)){
+            $sql_fetch = "SELECT Restaurant_ID FROM puli_restaurant WHERE Restaurant_name = '$RestaurantName'";
+            $result = mysqli_query($link, $sql_fetch);
+            while ($row = $result->fetch_assoc()) {
+                $RestaurantID = $row['Restaurant_ID'];
+            }
+        }else{
+            return FALSE;
+        }
+        // -------------新增 puli_recommend---------------
+        $sql_recommend = "INSERT INTO puli_recommend(Restaurant_ID,Category_name) VALUES ( '$RestaurantID', '$CategoryName')";
+        if (!mysqli_query($link, $sql_recommend)) {
+            // mysqli_query($link, $sql_del);
+            return FALSE;
+        } 
+        // --------------新增 puli_rest_time---------------
+        // 分割星期幾的時間(輸入ex:星期日 13:00~14:00 15:00~16:00,星期一 13:00~14:00)
+        $week = explode(",", $RestaurantTime);
+        // 分割該星期和營業時間(輸入ex:星期一 13:00~14:00)
+        for ($i = 0; $i < 7; $i++) {
+            // $time = [];
+            // array_push($time, explode(" ", $week[$i]));
+            $time = explode(" ", $week[$i]);
+            // 轉換星期->數字
+            $arr_week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+            for ($j = 0; $j < 7 ; $j++){
+                if ($time[0] == $arr_week[$j]){
+                    $DayID = $j; //星期幾
+                    break;
+                }
+            } 
+            // echo $DayID;
+            for ($t = 1; $t < count($time); $t++) { //營業時段
+                // 如果是公休或是時間不固定
+                if ($time[$t] == "公休" || $time[$t] == "營業時間不固定"){
+                    break;
+                }
+                // 分割開始營業&結束
+                $StartEnd = explode("~", $time[$t]);
+                $openTime = $StartEnd[0];
+                $endTime = $StartEnd[1];
+                $sql_rest_time = "INSERT INTO puli_rest_time(Day_ID, Restaurant_ID, open_time, end_time) VALUES ('$DayID', '$RestaurantID', '$openTime', '$endTime')";
+                // 新增至資料表
+                mysqli_query($link, $sql_rest_time);
+            }
+        }
+        return TRUE;
     }
 
-    function update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhoto, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL){
+    function update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){
         global $link;
         //更新資料庫資料語法
-        if($RestaurantPhoto != "" && $RestaurantPhoto != null){
-            $sql_update = "UPDATE puli_restaurant SET 
-            Restaurant_name = '$RestaurantName', Restaurant_TEL = '$RestaurantTEL', 
-            Restaurant_intro = '$RestaurantIntro', Restaurant_time = '$RestaurantTime',
-            Restaurant_photo = '$RestaurantPhoto', Restaurant_comment = '$RestaurantComment',
-            Restaurant_price = '$RestaurantPrice', Restaurant_address = '$RestaurantAddress',
-            Restaurant_x = '$RestaurantX', Restaurant_y = '$RestaurantY', Blog_URL = '$BlogURL'
-            WHERE Restaurant_ID = '$RestaurantID'";
-        }else{
-            $sql_update = "UPDATE puli_restaurant SET 
-            Restaurant_name = '$RestaurantName', Restaurant_TEL = '$RestaurantTEL', 
-            Restaurant_intro = '$RestaurantIntro', Restaurant_time = '$RestaurantTime', Restaurant_comment = '$RestaurantComment',
-            Restaurant_price = '$RestaurantPrice', Restaurant_address = '$RestaurantAddress',
-            Restaurant_x = '$RestaurantX', Restaurant_y = '$RestaurantY', Blog_URL = '$BlogURL'
-            WHERE Restaurant_ID = '$RestaurantID'";
+        if($RestaurantPhotoUrl != "" && $RestaurantPhotoUrl != null){
+            delete_restaurant_info($RestaurantID);
+            add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName);
+        } else {
+            $sql = "SELECT Restaurant_photo FROM puli_restaurant Where Restaurant_ID = '$RestaurantID'";
+            $result = mysqli_query($link, $sql);
+            $row = $result->fetch_assoc();
+            $RestaurantPhotoUrl = $row["Restaurant_photo"];
+            delete_restaurant_info($RestaurantID);
+            add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName);
         }
-        echo $sql_update;
-        return mysqli_query($link, $sql_update);
+        return TRUE;
     }
 
     function delete_restaurant_info($RestaurantID){
         global $link;
         // 搜尋資料庫資料
         $sql = "SELECT * FROM puli_restaurant Where Restaurant_ID = '$RestaurantID'";
-        // 執行查詢 mysqli_query(連接要使用的MySQL, 要查詢的資料)
         $result = mysqli_query($link, $sql);
         if ($result->num_rows > 0) {
             $sql_delete = "DELETE FROM puli_restaurant WHERE Restaurant_ID = $RestaurantID";
-            if(mysqli_query($link,$sql_delete)){
-                return TRUE;
-            }else{
-                return "資料庫錯誤";
-            }
-        }else{
-            return "查無資料";
+            mysqli_query($link,$sql_delete);
         }
+        $sql = "SELECT * FROM puli_rest_time Where Restaurant_ID = '$RestaurantID'";
+        $result = mysqli_query($link, $sql);
+        if ($result->num_rows > 0) {
+            $sql_D_rest = "DELETE FROM puli_rest_time WHERE Restaurant_ID = $RestaurantID";
+            mysqli_query($link,$sql_D_rest);
+        }
+        $sql = "SELECT * FROM puli_recommend Where Restaurant_ID = '$RestaurantID'";
+        $result = mysqli_query($link, $sql);
+        if ($result->num_rows > 0) {
+            $sql_recommend = "DELETE FROM puli_recommend WHERE Restaurant_ID = $RestaurantID";
+            mysqli_query($link,$sql_recommend);
+        }
+        return TRUE;
     }
     
 

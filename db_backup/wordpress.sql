@@ -78,7 +78,7 @@ CREATE TABLE `puli_restaurant` (
   `Restaurant_TEL` varchar(10) NOT NULL,
   `Restaurant_intro` text NOT NULL,
   `Restaurant_time` text NOT NULL,
-  `Restaurant_photo` varchar(20) NOT NULL,
+  `Restaurant_photo` varchar(100) NOT NULL,
   `Restaurant_comment` text NOT NULL,
   `Restaurant_price` int(10) NOT NULL,
   `Restaurant_address` text NOT NULL,
