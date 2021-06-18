@@ -10,6 +10,9 @@
         if($RestaurantID == null){
             echo "請輸入編號";
         }else{
+            $restaurant_photoUrl = get_restaurant_photoUrl_by_id($RestaurantID);
+            unlink("../".$restaurant_photoUrl);
+
             $result = delete_restaurant_info($RestaurantID);
             if($result === TRUE){
                 header('Location: '."/view/MapEdit.php");
