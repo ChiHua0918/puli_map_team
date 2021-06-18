@@ -833,19 +833,19 @@ ALTER TABLE `wp_users`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `puli_recommend`
 --
 ALTER TABLE `puli_recommend`
-  MODIFY `Recommend_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `Recommend_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `puli_restaurant`
 --
 ALTER TABLE `puli_restaurant`
-  MODIFY `Restaurant_ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `Restaurant_ID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `puli_rest_time`
 --
 ALTER TABLE `puli_rest_time`
-  MODIFY `rest_Time_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `rest_Time_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `wp_commentmeta`
