@@ -4,10 +4,8 @@ include("login.php");
 // 取得使用者想新增的資料餐廳資料
 $RestaurantName = $_POST['RestaurantName'];
 $RestaurantTEL = $_POST['RestaurantTEL'];
-$RestaurantIntro = $_POST['RestaurantIntro'];
 $RestaurantTime = $_POST['RestaurantTime'];
 $RestaurantPhoto = $_POST['RestaurantPhoto'];
-$RestaurantComment = $_POST['RestaurantComment'];
 $RestaurantPrice = $_POST['RestaurantPrice'];
 $RestaurantAddress = $_POST['RestaurantAddress'];
 $RestaurantX = $_POST['RestaurantX'];
@@ -20,9 +18,9 @@ echo $_SESSION['userLogin'];
 if (isset($_SESSION['userLogin'])) {
   // 新增至puli_restaurant資料表
   $sql_create = "INSERT INTO puli_restaurant 
-    ( Restaurant_name, Restaurant_TEL, Restaurant_intro, Restaurant_time, Restaurant_photo, Restaurant_comment, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y, wordpress_link)
+    ( Restaurant_name, Restaurant_TEL, Restaurant_time, Restaurant_photo, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y, wordpress_link)
     VALUES
-    ( '$RestaurantName', '$RestaurantTEL', '$RestaurantIntro', '$RestaurantTime', '$RestaurantPhoto', '$RestaurantComment', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY', '$wordpressLink')";
+    ( '$RestaurantName', '$RestaurantTEL', '$RestaurantTime', '$RestaurantPhoto', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY', '$wordpressLink')";
   if (mysqli_query($link, $sql_create)) {
     echo " " . $RestaurantName . " ";
     echo '新增成功!';
@@ -40,12 +38,14 @@ if (isset($_SESSION['userLogin'])) {
   }
   echo $RestaurantID;
   // -------------新增 puli_recommend---------------
-  $sql_recommend = "INSERT INTO puli_recommend
-    (Restaurant_ID,Category_name)VALUES( '$RestaurantID', '$CategoryName')";
-  if (mysqli_query($link, $sql_recommend)) {
-    echo "新增類別成功";
-  } else if (mysqli_query($link, $sql_recommend) == false){
-    echo "新增類別失敗";
+  echo gettype($CategoryName);
+  foreach ($CategoryName as $value){
+    $sql_recommend = "INSERT INTO puli_recommend (Restaurant_ID,Category_name) VALUES ('$RestaurantID','$value')";
+    if (mysqli_query($link, $sql_recommend)) {
+      echo "新增類別成功";
+    } else if (mysqli_query($link, $sql_recommend) == false){
+      echo "新增類別失敗";
+    }
   }
   // --------------新增 puli_rest_time---------------
   // 分割星期幾的時間(輸入ex:星期日 13:00~14:00 15:00~16:00,星期一 13:00~14:00)

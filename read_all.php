@@ -5,8 +5,8 @@
     include("connect.php");
     // $sql 加入sql語法 從 user 的資料表中選擇所有欄位
     $sql = "SELECT DISTINCT puli_restaurant.Restaurant_ID, puli_restaurant.Restaurant_name, puli_restaurant.Restaurant_TEL, 
-    puli_restaurant.Restaurant_intro, puli_restaurant.Restaurant_time, puli_restaurant.Restaurant_photo, 
-    puli_restaurant.Restaurant_comment, puli_restaurant.Restaurant_price, puli_restaurant.Restaurant_address, 
+    puli_restaurant.Restaurant_time, puli_restaurant.Restaurant_photo, 
+    puli_restaurant.Restaurant_price, puli_restaurant.Restaurant_address, 
     puli_restaurant.Restaurant_x, puli_restaurant.Restaurant_y, puli_restaurant.wordpress_link,puli_recommend.Category_name
     FROM puli_restaurant
     LEFT JOIN puli_rest_time on puli_restaurant.Restaurant_ID = puli_rest_time.Restaurant_ID 
@@ -20,10 +20,8 @@
             array("RestaurantID" => $row["Restaurant_ID"], 
             "RestaurantName" => $row["Restaurant_name"],
             "RestaurantTEL" => $row["Restaurant_TEL"], 
-            "RestaurantIntro" => $row["Restaurant_intro"], 
             "RestaurantTime" => $row["Restaurant_time"], 
             "RestaurantPhoto" => $row["Restaurant_photo"], 
-            "RestaurantComment" => $row["Restaurant_comment"], 
             "RestaurantPrice" => $row["Restaurant_price"], 
             "RestaurantAddress" => $row["Restaurant_address"], 
             "RestaurantX" => $row["Restaurant_x"], 
