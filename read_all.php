@@ -31,7 +31,8 @@
         );
             array_push($arr_data,$restaurant);
         }
-	echo json_encode($arr_data,JSON_NUMERIC_CHECK);
+    echo json_encode($arr_data);
+    // json_encode($arr_data,JSON_NUMERIC_CHECK);
     } else {
         echo "0 結果";
     }
