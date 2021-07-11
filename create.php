@@ -24,10 +24,10 @@ if (isset($_SESSION['userLogin'])) {
   if (mysqli_query($link, $sql_create)) {
     echo " " . $RestaurantName . " ";
     echo '新增成功!';
-    echo "<script>alert('新增成功');</script>";
+    echo "<script>alert('新增餐廳成功');</script>";
   } else {
     echo '新增失敗!';
-    echo "<script>alert('新增失敗');</script>";
+    echo "<script>alert('新增餐廳失敗');</script>";
   }
 
   // 先抓取餐廳那一欄資料(主要想抓ID)
@@ -39,11 +39,11 @@ if (isset($_SESSION['userLogin'])) {
   echo $RestaurantID;
   // -------------新增 puli_recommend---------------
   echo gettype($CategoryName);
-  foreach ($CategoryName as $value){
+  foreach ($CategoryName as $value) {
     $sql_recommend = "INSERT INTO puli_recommend (Restaurant_ID,Category_name) VALUES ('$RestaurantID','$value')";
     if (mysqli_query($link, $sql_recommend)) {
       echo "新增類別成功";
-    } else if (mysqli_query($link, $sql_recommend) == false){
+    } else if (mysqli_query($link, $sql_recommend) == false) {
       echo "新增類別失敗";
     }
   }
@@ -57,16 +57,16 @@ if (isset($_SESSION['userLogin'])) {
     $time = explode(" ", $week[$i]);
     print_r($time);
     // 轉換星期->數字
-    $arr_week = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
-    for ($j = 0; $j < 7 ; $j++){
-      if ($time[0] == $arr_week[$j]){
+    $arr_week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    for ($j = 0; $j < 7; $j++) {
+      if ($time[0] == $arr_week[$j]) {
         $DayID = $j; //星期幾
       }
-    } 
+    }
     echo $DayID;
     for ($t = 1; $t < count($time); $t++) { //營業時段
       // 如果是公休或是時間不固定
-      if ($time[$t] == "公休" || $time[$t] == "營業時間不固定"){
+      if ($time[$t] == "公休" || $time[$t] == "營業時間不固定") {
         break;
       }
       // 分割開始營業&結束
@@ -78,6 +78,9 @@ if (isset($_SESSION['userLogin'])) {
       // 新增至資料表
       if (mysqli_query($link, $sql_rest_time)) {
         echo "已新增時間";
+      }
+      else{
+        echo "新增時間失敗";
       }
     }
   }
