@@ -32,7 +32,7 @@
             "CategoryName" => $row['Category_name']
             );
             if ($check == $row["Restaurant_ID"]){
-                $addCategory .= $row['Category_name'];
+                $addCategory .= "、".$row['Category_name'];
                 // print_r(count($arr_data));
                 $arr_data[count($arr_data)-1]['CategoryName'] = $addCategory;
             }
