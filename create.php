@@ -42,9 +42,9 @@ if (isset($_SESSION['userLogin'])) {
   foreach ($CategoryName as $value) {
     $sql_recommend = "INSERT INTO puli_recommend (Restaurant_ID,Category_name) VALUES ('$RestaurantID','$value')";
     if (mysqli_query($link, $sql_recommend)) {
-      echo "新增類別成功";
+      echo "<script>alert('新增類別成功');</script>";
     } else if (mysqli_query($link, $sql_recommend) == false) {
-      echo "新增類別失敗";
+      echo "<script>alert('新增類別失敗');</script>";
     }
   }
   // --------------新增 puli_rest_time---------------
