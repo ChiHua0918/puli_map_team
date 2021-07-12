@@ -43,10 +43,10 @@
             // 用來檢查餐廳ID是不是同一個  目的:讓一家餐廳的多類別顯示在同一行
             $check = $row["Restaurant_ID"];
         }
-    for ($i = 0; $i < count($arr_data); $i++){
-        print_r($arr_data[$i]);
-        echo "<br/><br/>";
-    }
+    // for ($i = 0; $i < count($arr_data); $i++){
+    //     print_r($arr_data[$i]);
+    //     echo "<br/><br/>";
+    // }
 
     echo json_encode($arr_data);
     // json_encode($arr_data,JSON_NUMERIC_CHECK);
