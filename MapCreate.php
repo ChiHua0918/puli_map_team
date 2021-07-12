@@ -60,49 +60,6 @@ if (!isset($_SESSION['userLogin'])) {
             list-style-type: none;
         }
 
-        /* @media screen and (min-width: 680px) {
-            nav li:first-child {
-                padding-left: 30px;
-            }
-            nav li {
-                display: inline-block;
-                padding-right: 30px;
-            }
-        }
-        @media (min-width: 480px) and (max-width: 680px) {
-            nav li {
-                text-align: center;
-            }
-            nav ul {
-                columns: 2;
-                -webkit-columns: 2;
-                -moz-columns: 2;
-            }
-        } */
-        input[type=submit],
-        button {
-            vertical-align: middle;
-            font-size: 14pt;
-            font-family: times new roman;
-            /* width: 60px;
-            height: 35px; */
-        }
-
-        select,
-        button {
-            vertical-align: middle;
-            font-size: 14pt;
-            font-family: times new roman;
-            /* width: 60px;
-            height: 35px; */
-        }
-
-        #data {
-            text-align: left;
-            display: inline-block;
-            line-height: 30pt;
-        }
-
         .active {
             transform: translateX(1195px);
         }
@@ -127,108 +84,16 @@ if (!isset($_SESSION['userLogin'])) {
             transform: rotate(180deg);
         }
 
-        /* crud */
-        .data {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: center;
-        }
-
-        .thead {}
-
-        .tbody {}
-
-        tr {
-            border-bottom: 1px solid #cbcbcb;
-        }
-
-        th,
-        td {
-            height: 40px;
-            padding: 2px;
-        }
-
-        tr:hover {
-            background-color: rgba(235, 235, 235, 0.5);
-        }
-
-        .add_btn {
-            position: fixed;
-            top: 60px;
-            right: 50px;
-            text-decoration: none;
-            padding: 3px 4px;
-            background: #005AB5;
-            color: white;
-            border-radius: 3px;
-        }
-
-        .edit_btn {
-            text-decoration: none;
-            padding: 3px 4px;
+        .Add {
             background: #2E8B57;
             color: white;
             border-radius: 3px;
-            width: 50px;
-            height: 35px;
-
         }
 
-        a,
-        .del_btn {
-            text-decoration: none;
-            font-size: 14pt;
-        }
-
-        a:hover,
-        .del_btn {
-            text-decoration: none;
-            font-size: 14pt;
-            color: white;
-        }
-
-        .del_btn {
-            text-decoration: none;
-            padding: 3px 4px;
-            background: #800000;
-            color: white;
-            border-radius: 3px;
-            width: 50px;
-            height: 35px;
-        }
-
-        #dialog {
-            display: none;
-            width: 500px;
-            height: 600px;
-            position: fixed;
-            margin-top: -50px;
-            padding: 30px;
-            /* border: 2px solid blue; */
-            background-color: rgba(155, 212, 233, 0.9);
-            z-index: 3;
-            /* right: 35%;
-            top: 15%; */
-        }
-
-        #dialog_content {
-            vertical-align: middle;
-            color: white;
-        }
-
-        #closeBtn {
-            /* position:relative; */
-            margin: 15px;
-            text-decoration: none;
-            padding: 3px 4px;
+        .reset {
             background: red;
             color: white;
             border-radius: 3px;
-            width: 50px;
-            height: 35px;
-            position: relative;
-            top: -50px;
-            left: 50px;
         }
 
         #main {
@@ -250,8 +115,7 @@ if (!isset($_SESSION['userLogin'])) {
             vertical-align: middle;
         }
 
-        h2 {
-            text-align: center;
+        legend {
             color: darkgreen;
         }
     </style>
@@ -260,7 +124,7 @@ if (!isset($_SESSION['userLogin'])) {
 <body>
     <nav class="navbar navbar-light " style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <a class="navbar-brand">foodmap</a>
+            <a class="navbar-brand" style="color:#2E8B57;font-weight:bold">Pulifood map</a>
             <a class="d-flex" href="../controller/logout.php"><i class="fas fa-user fa-2x"></i></a>
         </div>
     </nav>
@@ -272,25 +136,23 @@ if (!isset($_SESSION['userLogin'])) {
         </div>
     </div>
     <div id="main">
-        <h2>新增餐廳</h2>
         <form action="../controller/create_restaurant_info.php" method="post" enctype="multipart/form-data">
             <fieldset>
-                <legend>基本資料</legend>
-                名稱: <input type="text" name="RestaurantName" required /><br />
+                <legend>新增餐廳</legend>
+                名稱: <input type="text" name="RestaurantName" placeholder="請輸入名稱" style="background-color:transparent;border-width:0px;" required /><br />
                 電話:
-                <input type="tel" name="RestaurantTEL" required /><br />
+                <input type="tel" name="RestaurantTEL" placeholder="請輸入電話" style="background-color:transparent;border-width:0px;" required /><br />
                 <!--簡介: <br/><textarea type="text" name="RestaurantIntro" required cols="4" rows="1" disabled>32145621345213</textarea> <br />-->
-                營業時間: <br /><textarea type="text" name="RestaurantTime" required placeholder="ex:星期五 7:00~10:00,星期六 7:00~10:00" cols="20" rows="5" /></textarea> <br />
-                Date: <input type="date" name="dte" /><br />
+                營業時間: <br /><textarea type="text" name="RestaurantTime" required cols="32" rows="5">星期日 7:00~10:00 13:00~17:00,星期一 7:00~10:00 13:00~17:00,星期二 7:00~10:00 13:00~17:00,星期三 7:00~10:00 13:00~17:00,星期四 7:00~10:00 13:00~17:00,星期五 7:00~10:00 13:00~17:00,星期六 公休</textarea> <br />
                 照片: <input type="file" accept="image/*" multiple name="RestaurantPhoto" /><br />
                 <!--評價: <input type="text" name="RestaurantComment" required /> <br/>-->
-                價錢: <input type="text" name="RestaurantPrice" required /> <br />
-                地址: <input type="text" name="RestaurantAddress" required size="100" /> <br />
-                x座標: <input type="text" name="RestaurantX" required /> <br />
-                y座標: <input type="text" name="RestaurantY" required /> <br />
-                部落格網址: <input type="text" name="BlogURL" required placeholder="請先縮短網址" size="50" /> <br />
+                價錢: <input type="text" name="RestaurantPrice" placeholder="請輸入價錢" style="background-color:transparent;border-width:0px;" required /> <br />
+                地址: <input type="text" name="RestaurantAddress" placeholder="請輸入地址" style="background-color:transparent;border-width:0px;" required size="100" /> <br />
+                x座標: <input type="text" name="RestaurantX" placeholder="請輸入x座標" style="background-color:transparent;border-width:0px;" required /> <br />
+                y座標: <input type="text" name="RestaurantY" placeholder="請輸入y座標" style="background-color:transparent;border-width:0px;" required /> <br />
+                部落格網址: <input type="text" name="BlogURL" required placeholder="請輸入網址" style="background-color:transparent;border-width:0px;"size="50" /> <br />
                 食物類別:
-                <select id="typeSelect" name="CategoryName" multiple>
+                <select id="typeSelect" name="CategoryName[]" required multiple>
                     <option value="冰品">冰品</option>
                     <option value="小吃">小吃</option>
                     <option value="點心">點心</option>
@@ -304,10 +166,11 @@ if (!isset($_SESSION['userLogin'])) {
                     <option value="宵夜">宵夜</option>
                     <option value="甜點">甜點</option>
                 </select>
+                <!-- <script>console.log(CategoryName);</script> -->
                 <br />
             </fieldset>
-            <input type="submit" value="新增餐廳" />
-            <input type="reset" value="重填" />
+            <input class="Add" type="submit" value="新增" />
+            <input class="reset" type="reset" value="重填" />
         </form>
     </div>
 

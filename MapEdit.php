@@ -8,7 +8,7 @@ if (!isset($_SESSION['userLogin'])) {
 <html lang="en">
 
 <head>
-    <title>埔里美食地圖 - 編輯頁面</title>
+    <title>編輯頁面</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -234,7 +234,7 @@ if (!isset($_SESSION['userLogin'])) {
 <body>
     <nav class="navbar navbar-light " style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <a class="navbar-brand">foodmap</a>
+            <a class="navbar-brand" style="color: #005AB5;font-weight:bold">Pulifood map</a>
             <a class="d-flex" href="../controller/logout.php"><i class="fas fa-user fa-2x"></i></a>
         </div>
     </nav>
@@ -286,7 +286,7 @@ if (!isset($_SESSION['userLogin'])) {
     </div>
 
     <div id="dialog">
-        <h5 style="text-align: center;">修改頁面</h5>
+        <h5 style="text-align: center;color:#005AB5;font-weight:bold">修改頁面</h5>
         <div id="dialog_content">
 
         </div>
@@ -360,7 +360,7 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
 
-        tbl += "營業時間:<br/><textarea type=\"text\" name=\"RestaurantTime\" cols=\"40\" rows=\"3\" style=\"border:2px #9bd4e9 solid\"> "+ time[pos] + "</textarea><br/>";
+        tbl += "營業時間:<br/><textarea type=\"text\" name=\"RestaurantTime\" cols=\"40\" rows=\"3\" style=\"border:2px #9bd4e9 solid\">"+ time[pos] + "</textarea><br/>";
         tbl += "價錢: <input type=\"text\" name=\"RestaurantPrice\" size=\"10\" style=\"border:2px #9bd4e9 solid\" value=\"" + price[pos] + "\"/><br/>";
         tbl += "地址: <input type=\"text\" name=\"RestaurantAddress\" size=\"30\" style=\"border:2px #9bd4e9 solid\" value=\"" + address[pos] + "\" /><br/>";
         tbl += "x座標: <input type=\"text\" name=\"RestaurantX\" size=\"4\" style=\"border:2px #9bd4e9 solid\" value=\"" + x[pos] + "\" /><br/>";
@@ -379,7 +379,7 @@ if (!isset($_SESSION['userLogin'])) {
     }
 
     function categoryTbl(curType) {
-        let str = "<select id=\"type\" name=\"CategoryName\" multiple size='3' style=\"border:8px #9bd4e9 solid\">";
+        let str = "<select id=\"type\" name=\"CategoryName[]\" multiple size='3' style=\"border:8px #9bd4e9 solid\">";
         for (let i = 0; i < categoryList.length; i++) {
             if (categoryList[i] == curType) {
                 str += `<option value=\"${categoryList[i]}\" selected>${categoryList[i]}</option>`;

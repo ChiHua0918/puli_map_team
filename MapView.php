@@ -164,7 +164,7 @@
 <body>
     <nav class="navbar navbar-light " style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <a class="navbar-brand">foodmap</a>
+            <a class="navbar-brand" style="center;color:#005AB5;font-weight:bold">Pulifood map</a>
             <?php 
                 if(isset($_SESSION['userLogin'])){
                     echo '<a class="d-flex" href="../controller/logout.php"><i class="fas fa-user fa-2x"></i></a>';
@@ -449,7 +449,8 @@
                         {
                             restaurant_id.push(result[i].RestaurantID);
                         }
-
+                        // console.log(restaurant_id);
+                        console.log(id);
                         //remove marker icon which is filter
                         //first we should reset all of the icon
                         //and then remove icon which isn't included in restaurant_id array
