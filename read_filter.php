@@ -5,20 +5,21 @@
 
     // 使用者在下拉式選單選的條件
     // 時間 
-    $time = $_GET['time'];
+    $time = $_POST['time'];
     // 類別
-    $type = $_GET['type'];
+    $type = $_POST['type'];
     // 價錢
-    $price = $_GET['price'];
+    $price = $_POST['price'];
     // 使用者目前位置
-    $userLocation = $_GET['userLocation'];
+    $userLocation = $_POST['userLocation'];
     // 距離範圍
-    $dist = $_GET['dist'];
+    $dist = $_POST['dist'];
 
     // 判斷今天星期幾
+    date_default_timezone_set("Asia/Taipei");
     $todayDate = date("w");
 
-    //echo $todayDate;
+    // echo $todayDate;
 
     //echo "time:" . $time . " type:" . $type . " price:" . $price . " dist:" . $dist . " userLocation:" . $userLocation;
 
@@ -45,7 +46,7 @@
         // $f_sql = $f_sql."AND puli_rest_time.Day_ID = '".$today_date."' AND puli_rest_time.open_time <= '".$time."' AND puli_rest_time.end_time >= '".$time."' ";
         $f_sql = $f_sql." AND puli_rest_time.open_time <= '".$time."' 
         AND puli_rest_time.end_time >= '".$time."' ";
-    }
+        }
     // 類別
     if ($type!= ""){
         $f_sql = $f_sql."AND Category_name = '".$type."' ";
@@ -53,16 +54,21 @@
     // 價位
     if ($price != "") {
         $min_max = explode("~", $price);
+        // echo gettype($min_max[0]);
         // print_r($min_max);
+        // 換成int
+        
         if ($min_max[1] == ""){
             $min_max[1] = 100000;
         }
         else if ($min_max[0] == ""){
             $min_max[0] = 0;
         }
-        
-        $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= '".$min_max[0]."' 
-        AND puli_restaurant.Restaurant_price <= '".$min_max[1]."'";
+        // 因為價格為一個平均價，所以篩選會取大一些 EX:網頁篩選條件00~150 => 實際篩選70~180
+        $min = (int)$min_max[0]-30;
+        $max = (int)$min_max[1]+30;
+
+        $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= $min AND puli_restaurant.Restaurant_price <= $max";
     }
 
     // $result 從DB中取出結果集
@@ -81,7 +87,7 @@
         // 先做時間、價錢、類別的篩選
         // 如果有選距離篩選，再把前面篩選之結果 做距離的篩選
         if ($dist != NULL && count($arr_fl_data) != 0){
-            $dis = explode(" ", $dist);
+            $dist = explode(" ", $dist);
             $dist = $dist[0];
             for ($i = 0; $i < count($arr_fl_data); $i++){
                 //PHP代碼以檢索JSON數據 
