@@ -22,13 +22,15 @@
         html, body {
             height: 100vh;
             padding-bottom:100px;
+            background-image: url("../src/食物背景透明3.png");
+            background-size: 100%;
         }
         #map_container {
             position: relative;
             z-index: 1;
-            top: 100px;
-            left: 6vw;
-            width: 88vw;
+            top: 40px;
+            left: 3vw;
+            width: 72vw;
             height: 90%;
         }
         #map {
@@ -126,26 +128,54 @@
         tr:hover {
             background-color: rgba(235, 235, 235, 0.5);
         }
+        .add_btn {
+            position: fixed;
+            top: 60px;
+            right: 50px;
+            text-decoration: none;
+            padding: 3px 4px;
+            background: #005AB5;
+            color: white;
+            border-radius: 3px;
+        }
         .edit_btn {
             text-decoration: none;
-            padding: 3px 6px;
+            padding: 3px 4px;
             background: #2E8B57;
             color: white;
             border-radius: 3px;
+            width: 50px;
+            height: 35px;
         }
+        a,
         .del_btn {
-            width: 4em;
             text-decoration: none;
-            padding: 3px 6px;
+            font-size: 14pt;
+        }
+
+        a:hover,
+        .del_btn {
+            text-decoration: none;
+            font-size: 14pt;
+            color: white;
+        }
+
+        .del_btn {
+            text-decoration: none;
+            padding: 3px 4px;
+            background: #800000;
             color: white;
             border-radius: 3px;
-            background: #800000;
+            width: 50px;
+            height: 35px;
         }
+        
         #dialog{
             display: none;
             width: 500px;
-            height: 500px;
-            position: absolute;
+            height: 600px;
+            position: fixed;
+            margin-top: -50px;
             padding: 30px;
             /* border: 2px solid blue; */
             background-color: rgba(155, 212, 233, 0.9);
@@ -157,16 +187,27 @@
             vertical-align: middle;
             color: white;
         }
-        #closeBtn{
+
+        #closeBtn {
             /* position:relative; */
             margin: 15px;
+            text-decoration: none;
+            padding: 3px 4px;
+            background: red;
+            color: white;
+            border-radius: 3px;
+            width: 50px;
+            height: 35px;
+            position: relative;
+            top: -50px;
+            left: 50px;
         }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-light " style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <a class="navbar-brand">foodmap</a>
+        <a class="navbar-brand" style="color: #005AB5;font-weight:bold">Pulifood map</a>
             <a class="d-flex" href="/controller/logout.php"><i class="fas fa-user fa-2x"></i></a>
         </div>
     </nav>
@@ -175,7 +216,7 @@
         <div>
             <h1 align = "center">資料總表</h1>
             <form action="/controller/create_restaurant_info.php" method="post" enctype="multipart/form-data">
-            <table border="1" width="480" align = "center" style="background-color:white">
+            <!-- <table border="1" width="480" align = "center" style="background-color:white">
                 <tr>
                     <th>名稱</th>
                     <th>電話</th>
@@ -205,22 +246,23 @@
             <td id="typeSelect"></td>
             </tr>
 
-            </table>
+            </table> -->
 
-            <input type="submit" value="新增餐廳"/>
+            <!-- <input type="submit" value="新增餐廳"/> -->
 
             </form>
         </div>
         
-        <div id="list">
+        <div id='map_container'>
+            <div id='map'></div>
         </div>
     </div>
-    <div id='map_container'>
-        <div id='map'></div>
+    <input type="submit" class="add_btn" onclick= "location.href='MapCreate.php'" value="新增餐廳" />
+    <div id="list">
     </div>
 
     <div id="dialog">
-        <h5 style="text-align: center;">修改頁面</h5>
+        <h5 style="text-align: center;color:#005AB5;font-weight:bold">修改頁面</h5>
         <div id="dialog_content">
 
         </div>
@@ -245,9 +287,7 @@
     var y = [];
     var time = [];
     var tel = [];
-    var cmt = [];
     var photo = [];
-    var intro = [];
     var restaurant_name = [];
     var price = [];
     var address = [];
@@ -303,7 +343,6 @@
         
         
         tbl += "營業時間: <input type=\"text\" name=\"RestaurantTime\" size=\"10\" style=\"border-style:none\" value=\""+ time[pos] +"\" /><br/>";
-        tbl += "評價: <input type=\"text\" name=\"RestaurantComment\" size=\"10\" style=\"border-style:none\" value=\""+ cmt[pos] +"\" /><br/>";
         tbl += "價錢: <input type=\"text\" name=\"RestaurantPrice\" size=\"10\" style=\"border-style:none\" value=\""+ price[pos] +"\"/><br/>";
         tbl += "地址: <input type=\"text\" name=\"RestaurantAddress\" size=\"30\" style=\"border-style:none\" value=\""+ address[pos] +"\" /><br/>";
         tbl += "x座標: <input type=\"text\" name=\"RestaurantX\" size=\"4\" style=\"border-style:none\" value=\""+ x[pos] +"\" /><br/>";
@@ -312,7 +351,8 @@
         tbl += "食物類型:" + categoryTbl(category[pos]) +  "<br />";  
 
         tbl += "<input type=\"hidden\" name=\"RestaurantID\" value=\""+id[pos]+"\">";
-        tbl += "<input type=\"submit\" class=\"edit_btn\" value=\"更新\" style=\"padding=10px;\"></form>"
+        tbl += "<input type=\"submit\" class=\"edit_btn\" value=\"更新\" style=\"padding=10px;\"></form>";
+        tbl += "<td><button id='closeBtn' onclick='closeClick()'>關閉</button></td>";
     
         content.innerHTML = tbl;
     }
@@ -322,7 +362,7 @@
     }
     function categoryTbl(curType)
     {
-        let str = "<select id=\"type\" name=\"CategoryName\">";
+        let str = "<select id=\"type\" name=\"CategoryName\" multiple size='3' style=\"border:8px #9bd4e9 solid\">";
         for(let i = 0 ; i<categoryList.length ; i++)
         {
             if( categoryList[i] == curType)
@@ -335,15 +375,15 @@
             }
         }
         str += "</select>";
-        if(curType == "")
-        {
-            document.getElementById("typeSelect").innerHTML = str;
-        }
+        // if(curType == "")
+        // {
+        //     document.getElementById("typeSelect").innerHTML = str;
+        // }
         return str;
     }
 
     $(function () {
-        categoryTbl("");
+        // categoryTbl("");
         //存放各個marker的資訊，到時候從DB取出時可直接存成陣列
         // var x = [160,656,333,1003,786];
         // var y = [195,398,573,398,471];
@@ -375,9 +415,7 @@
                 y.push(result[i].RestaurantY);
                 time.push(result[i].RestaurantTime);
                 tel.push(result[i].RestaurantTEL);
-                cmt.push(result[i].RestaurantComment);
                 photo.push(result[i].RestaurantPhoto);
-                intro.push(result[i].RestaurantIntro);
                 restaurant_name.push(result[i].RestaurantName);
                 price.push(result[i].RestaurantPrice);
                 address.push(result[i].RestaurantAddress);
@@ -391,12 +429,12 @@
             var addMarker;
 
             var tbl = "<table class='data'>";
-            tbl += "<tr><th>名稱</th><th>x座標</th><th>y座標</th><th>簡介</th><th>營業時間</th><th>照片</th><th>電話</th><th>評價</th><th>價錢</th><th>地址</th><th colspan='2'></th></tr>";
+            tbl += "<tr><th>名稱</th><th>x座標</th><th>y座標</th><th>類別</th><th>營業時間</th><th>照片</th><th>電話</th><th>價錢</th><th>地址</th><th style='width:50px'>Blog</th><th colspan='2'></th></tr>";
 
             tbl += "<tbody>";
             for(let i = 0 ; i < x.length ; i++)
             {
-                markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i]));
+                markers.push(createMarker(x[i], y[i], photo[i], restaurant_name[i], time[i], price[i], address[i], tel[i], blog_url[i]));
 
                 // $("list").innerHTML += "<tr><td>"+ restaurant_name[i]+"</td>";
                 // $("list").innerHTML += "<td>" + restaurant_name[i] +"</td>";
@@ -407,29 +445,32 @@
                 // $("list").innerHTML += "<td>" + photo[i] +"</td>";
                 // $("list").innerHTML += "<td>" + intro[i] +"</td>";
                 // $("list").innerHTML += "</tr>";
-
+                var str = time[i].split(',');
+                var timeString = '';
+                for (let j = 0; j < str.length; j++) {
+                    timeString += str[j] + "<br/>";
+                }
                 
 
                 tbl += "<tr>";
-                tbl += "<td>" + restaurant_name[i] +"</td>";
+                tbl += "<td>" + restaurant_name[i] + "</td>";
                 tbl += "<td>" + x[i] + "</td>";
                 tbl += "<td>" + y[i] + "</td>";
-                tbl += "<td>" + intro[i] + "</td>";
-                tbl += "<td>" + time[i] +"</td>";
-                tbl += "<td>" + photo[i] +"</td>";
-                tbl += "<td>" + tel[i] +"</td>";
-                tbl += "<td>" + cmt[i] +"</td>";
-                tbl += "<td>" + price[i] +"</td>";
+                tbl += "<td>" + category[i] + "</td>";
+                tbl += "<td>" + timeString + "</td>";
+                tbl += "<td>" + photo[i] + "</td>";
+                tbl += "<td>" + tel[i] + "</td>";
+                tbl += "<td>" + price[i] + "</td>";
                 tbl += "<td>" + address[i] + "</td>";
                 tbl += "<td>" + blog_url[i] + "</td>";
-                tbl += "<td>" + category[i] + "</td>";
+
 
                 //修改按鈕
                 tbl += "<td><button onclick=\"updateBtn('" + i + "')\" class=\"edit_btn\">修改</button></td>";
 
                 //刪除按鈕
                 //tbl += "<td><a href=\"delete.php?del="+ id[i] +"\" class='del_btn'>刪除</a></td>";
-                tbl +="<td><a class='del_btn ' href='/controller/delete_restaurant_info.php?rid="+id[i]+"'>刪除</a></td>";
+                tbl +="<td><a type=\"submit\" class='del_btn ' href='/controller/delete_restaurant_info.php?rid="+id[i]+"'>刪除</a></td>";
                 tbl += "</tr>";
             }
 
@@ -453,17 +494,42 @@
             }
             map.on('click', onMapClick);
 
-            function createMarker( x ,  y , url , name, comment, blog_url)
+            function createMarker(x, y, url, name, time, price, address, tel, blog_url)
             {
+                // console.log(time);
+                var str = time.split(',');
+                var timeString = '';
+                for (let i = 0; i < str.length; i++) {
+                    timeString += "<br/>" + str[i];
+                }
                 var loc = L.latLng([y, x]); // [y,x]
                 
                 if(url != "")
                 {
-                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>" + name + "</center></b><br><img src='/puli_map_team-MVC/src/" + url +"' width='150px' alt='ncnu cm'>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input style='float:right' type='button' value='詳細資訊' /></a><br/>");
+                    var marker = L.marker(loc,{icon: myIcon}).addTo(map)..bindPopup("<b><center><h2><font color='#8b0000'>" + name + "</font></h2></center></b>" +
+                            "<h6><img src='../src/" + url + "' width='350px'>" +
+                            "<br>營業時間:" + timeString +
+                            "<br>價錢:" + price +
+                            "<br>地址:" + address +
+                            "<br>電話:" + tel +
+                            "<br><a href=' https://www.google.com.tw/maps/search/%22" + name + "' target='_blank'><input type='button' value='GoogleMap' /></a>" +
+                            "<a href='" + blog_url + "' target='_blank'><input type='button' value='詳細資訊' /></a><br/></h6>", {
+                                minWidth: 400,
+                                maxHeight: 500
+                            });
                 }
                 else
                 {
-                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>"+ name + "</center></b>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/>");
+                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><h2><center><font color='#8b0000'>" + name + "</font></center></h2></b>" +
+                            "<h5><br>營業時間:" + timeString +
+                            "<br>價錢:" + price +
+                            "<br>地址:" + address +
+                            "<br>電話:" + tel +
+                            "<br><a href=' https://www.google.com.tw/maps/search/%22" + name + "' target='_blank'><input type='button'  value='GoogleMap' /></a>" +
+                            "<a href='" + blog_url + "' target='_blank'><input type='button'  value='詳細資訊' /></a><br/></h5>", {
+                                minWidth: 500,
+                                maxHeight: 500
+                            });
                 }
                 marker.on('mouseover', function (e) {
                     this.openPopup();

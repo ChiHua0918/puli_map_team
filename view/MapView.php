@@ -15,6 +15,8 @@
         html, body {
             height: 100vh;
             padding-bottom:100px;
+            background-image: url("../src/食物背景透明3.png");
+            background-size: 100%;
         }
         #map_container {
             position: relative;
@@ -162,7 +164,7 @@
 <body>
     <nav class="navbar navbar-light " style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <a class="navbar-brand">foodmap</a>
+        <a class="navbar-brand" style="center;color:#005AB5;font-weight:bold">Pulifood map</a>
             <?php 
                 if(isset($_SESSION['userLogin'])){
                     echo '<a class="d-flex" href="/controller/logout.php"><i class="fas fa-user fa-2x"></i></a>';
@@ -286,9 +288,9 @@
             var y = [];
             var time = [];
             var tel = [];
-            var cmt = [];
+            // var cmt = [];
             var photo = [];
-            var intro = [];
+            // var intro = [];
             var restaurant_name = [];
             var price = [];
             var address = [];
@@ -302,9 +304,9 @@
                 y.push(result[i].RestaurantY);
                 time.push(result[i].RestaurantTime);
                 tel.push(result[i].RestaurantTEL);
-                cmt.push(result[i].RestaurantComment);
+                // cmt.push(result[i].RestaurantComment);
                 photo.push(result[i].RestaurantPhoto);
-                intro.push(result[i].RestaurantIntro);
+                // intro.push(result[i].RestaurantIntro);
                 restaurant_name.push(result[i].RestaurantName);
                 price.push(result[i].RestaurantPrice);
                 address.push(result[i].RestaurantAddress);
@@ -320,7 +322,7 @@
 
             for(let i = 0 ; i < x.length ; i++)
             {
-                markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i],cmt[i],blog_url[i]));
+                markers.push(createMarker(x[i],y[i],photo[i],restaurant_name[i],time[i],price[i],address[i],tel[i],blog_url[i]));
             }
 
             const popup = L.popup();
@@ -340,17 +342,37 @@
             // }
             // map.on('click', onMapClick);
 
-            function createMarker( x ,  y , url , name, comment, blog_url)
+            function createMarker( x ,  y , url ,name,time ,price,address,tel,blog_url)
             {
+                // console.log(time);
+                var str = time.split(',');
+                var timeString = '';
+                for (let i = 0 ; i < str.length ; i++){
+                    timeString += "<br/>" + str[i];
+                }
                 var loc = L.latLng([y, x]); // [y,x]
                 
                 if(url != "")
                 {
-                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>" + name + "</center></b><br><img src='/PuliMap/" + url +"' width='150px' alt='ncnu cm'>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input style='float:right' type='button' value='詳細資訊' /></a><br/>");
+                    var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center><h2><font color='#8b0000'>" + name + "</font></h2></center></b>"
+                    +"<h6><img src='../src/" + url +"' width='350px'>"
+                    +"<br>營業時間:"+timeString
+                    +"<br>價錢:"+price
+                    +"<br>地址:"+address
+                    +"<br>電話:"+tel
+                    +"<br><a href=' https://www.google.com.tw/maps/search/%22"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"
+                    +"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/></h6>", { minWidth:400 ,maxHeight:500});
+
                 }
                 else
                 {
-                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center>"+ name + "</center></b>"+"<br>評價:"+comment+"<br><a href=' https://www.google.com.tw/maps/search/"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"+"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/>");
+                    var marker= L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><h2><center><font color='#8b0000'>"+ name+ "</font></center></h2></b>"
+                    +"<h5><br>營業時間:"+timeString
+                    +"<br>價錢:"+price
+                    +"<br>地址:"+address
+                    +"<br>電話:"+tel
+                    +"<br><a href=' https://www.google.com.tw/maps/search/%22"+name+"' target='_blank'><input type='button'  value='GoogleMap' /></a>"
+                    +"<a href='"+ blog_url +"' target='_blank'><input type='button'  value='詳細資訊' /></a><br/></h5>", { minWidth:500 ,maxHeight:500 });
                 }
                 marker.on('mouseover', function (e) {
                     this.openPopup();

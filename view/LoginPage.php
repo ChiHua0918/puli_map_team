@@ -8,7 +8,6 @@
   <script type="text/javascript" src="login.js"></script> -->
 </head>
 <style type="text/css">
-
   /* 整個表格 */
   #login_frame {
     width: 400px;
@@ -31,19 +30,6 @@
   #image_logo {
     margin-top: 22px;
   }
-  /* 使用者名稱/密碼的左邊 */
-  /* .label_input {
-  font-size: 16px;
-  font-family: 宋體;
-  width: 85px;
-  height: 28px;
-  line-height: 28px;
-  text-align: center;
-  color: white;
-  background-color: #0a242b;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  } */
   /* 使用者名稱/密碼 */
   .text_field {
     width: 270px;
@@ -70,18 +56,9 @@
     border: 0;
     float: center;
   }
-  /* 忘記密碼 */
-  #forget_pwd {
-    font-size: 14px;
-    color: #0a242b;
+  #btn_login:hover {
+    background-color: #336699;
     text-decoration: none;
-    position: relative;
-    float: center;
-    top: 5px;
-  }
-  #forget_pwd:hover {
-    color: #8ab3be;
-    text-decoration: underline;
   }
   #login_control{
     padding: 10px;
@@ -89,24 +66,22 @@
   
   @media screen and (max-width: 1532px) {
       body {
-          background-image: url("/src/食物背景透明3.png");
+          background-image: url("../src/食物背景透明3.png");
           /* background-repeat: no-repeat; */
           background-size: auto 100%;
           background-position: center center;
           background-attachment: fixed;
       }
   }
-
   @media screen and (min-width: 1532px) {
       body {
-          background-image: url("/src/食物背景透明3.png");
+          background-image: url("../src/食物背景透明3.png");
           background-repeat: no-repeat;
           background-size: 100% auto;
           background-position: center center;
           background-attachment: fixed;
       }
   }
-
 </style>
 <body>
   <div id="login_frame">

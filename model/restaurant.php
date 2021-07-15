@@ -25,6 +25,8 @@
         LEFT JOIN puli_recommend on puli_recommend.Restaurant_ID = puli_restaurant.Restaurant_ID ";
         $result = $link->query($sql);
         $arr_data = [];
+        $addCategory = "";
+        $check = 0;
         if ($result -> num_rows > 0) {
             // 輸出數據
             while($row = $result->fetch_assoc()) {
@@ -32,10 +34,8 @@
                     "RestaurantID" => $row["Restaurant_ID"], 
                     "RestaurantName" => $row["Restaurant_name"],
                     "RestaurantTEL" => $row["Restaurant_TEL"], 
-                    "RestaurantIntro" => $row["Restaurant_intro"], 
                     "RestaurantTime" => $row["Restaurant_time"], 
                     "RestaurantPhoto" => $row["Restaurant_photo"], 
-                    "RestaurantComment" => $row["Restaurant_comment"], 
                     "RestaurantPrice" => $row["Restaurant_price"], 
                     "RestaurantAddress" => $row["Restaurant_address"], 
                     "RestaurantX" => $row["Restaurant_x"], 
@@ -43,7 +43,16 @@
                     "BlogURL" => $row['Blog_URL'],
                     "CategoryName" => $row['Category_name']
                 );
-                array_push($arr_data, $restaurant);
+                if ($check == $row["Restaurant_ID"]){
+                    $addCategory .= "、".$row['Category_name'];
+                    $arr_data[count($arr_data)-1]['CategoryName'] = $addCategory;
+                }
+                else{
+                    array_push($arr_data,$restaurant);
+                    $addCategory = $row['Category_name']; //紀錄目前餐廳ID類別
+                }
+                // 用來檢查餐廳ID是不是同一個  目的:讓一家餐廳的多類別顯示在同一行
+                $check = $row["Restaurant_ID"];
             }
         }
         return $arr_data;
@@ -137,12 +146,12 @@
         return $final_data;
     }
 
-    function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){
+    function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){
         global $link;
         $sql_create = "INSERT INTO puli_restaurant 
-        ( Restaurant_name, Restaurant_TEL, Restaurant_intro, Restaurant_time, Restaurant_photo, Restaurant_comment, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y, Blog_URL)
+        ( Restaurant_name, Restaurant_TEL, Restaurant_time, Restaurant_photo, Restaurant_price, Restaurant_address, Restaurant_x, Restaurant_y, Blog_URL)
         VALUES
-        ( '$RestaurantName', '$RestaurantTEL', '$RestaurantIntro', '$RestaurantTime', '$RestaurantPhotoUrl', '$RestaurantComment', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY', '$BlogURL')";
+        ( '$RestaurantName', '$RestaurantTEL', '$RestaurantTime', '$RestaurantPhotoUrl', '$RestaurantPrice', '$RestaurantAddress', '$RestaurantX', '$RestaurantY', '$BlogURL')";
 
         if(mysqli_query($link, $sql_create)){
             $sql_fetch = "SELECT Restaurant_ID FROM puli_restaurant WHERE Restaurant_name = '$RestaurantName'";
@@ -193,19 +202,19 @@
         return TRUE;
     }
 
-    function update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){
+    function update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){
         global $link;
         //更新資料庫資料語法
         if($RestaurantPhotoUrl != "" && $RestaurantPhotoUrl != null){
             delete_restaurant_info($RestaurantID);
-            add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName);
+            add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName);
         } else {
             $sql = "SELECT Restaurant_photo FROM puli_restaurant Where Restaurant_ID = '$RestaurantID'";
             $result = mysqli_query($link, $sql);
             $row = $result->fetch_assoc();
             $RestaurantPhotoUrl = $row["Restaurant_photo"];
             delete_restaurant_info($RestaurantID);
-            add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantIntro, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantComment, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName);
+            add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName);
         }
         return TRUE;
     }
