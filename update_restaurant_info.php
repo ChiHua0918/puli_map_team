@@ -14,18 +14,17 @@
     $BlogURL = $_POST['BlogURL'];
     $CategoryName = $_POST['CategoryName'];
     
-
+    
     //紅色字體為判斷密碼是否填寫正確
     if(isset($_SESSION['userLogin'])){
         if(file_exists($_FILES['RestaurantPhoto']['tmp_name']) && is_uploaded_file($_FILES['RestaurantPhoto']['tmp_name'])){
             // 如果原本沒有圖片
-            if ($restaurant_photoUrl != ""){
-                $restaurant_photoUrl = get_restaurant_photoUrl_by_id($RestaurantID);
+            $restaurant_photoUrl = get_restaurant_photoUrl_by_id($RestaurantID);
+            echo "原本的".$restaurant_photoUrl."-----------------------------<br/>";
+            echo gettype($restaurant_photoUrl)."<br/>";
+            if ($restaurant_photoUrl == NULL){
+                $restaurant_photoUrl = "../無";
             }
-            else{
-                $restaurant_photoUrl = "123.jpg";
-            }
-            echo "原本的".$restaurant_photoUrl;
             $target_dir = "../uploads/";
             $target_file = $target_dir . basename($_FILES["RestaurantPhoto"]["name"]);
             $uploadOk = 1;
@@ -60,17 +59,19 @@
                 echo $msg;
                 // if everything is ok, try to upload file
             } else {
-                if($restaurant_photoUrl != null){
+                if($restaurant_photoUrl != null){    //..,uploads,2D.png
                     // Check if file already exists
                     echo $restaurant_photoUrl;
                     if (file_exists($target_file)) {
-                        echo $target_file;
+                        echo $target_file."<br/>";
                         $file_name = explode("/",$restaurant_photoUrl)[1];
                         echo '<br/>'.$file_name;
                         echo '<br/>'.$_FILES["RestaurantPhoto"]["name"];
-                        if($file_name != $_FILES["RestaurantPhoto"]["name"]){
+
+                        if($file_name == $_FILES["RestaurantPhoto"]["name"]){
                             $msg = "Sorry, file already exists.";
                             echo $msg;
+                            echo "<script>alert('上傳到同一個檔案囉!'); location='../view/MapEdit.php';</script>";
                             // $uploadOk = 0;
                         }else{
                             unlink($target_file);
@@ -119,4 +120,5 @@
     {
         header('Location: '."../view/LoginPage.php");
     }
+    
 ?>
