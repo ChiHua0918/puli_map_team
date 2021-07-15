@@ -31,10 +31,10 @@ if (!isset($_SESSION['userLogin'])) {
         #map_container {
             position: relative;
             z-index: 1;
-            top: 40px;
+            top: 20px;
             left: 3vw;
-            width: 72vw;
-            height: 90%;
+            width: 70vw;
+            height: 45vw;
         }
 
         #map {
@@ -271,7 +271,6 @@ if (!isset($_SESSION['userLogin'])) {
             <td><input type="text" name="BlogURL" required size="20" placeholder="請先縮短網址" style="border-style:none"/></td>
             <td id="typeSelect"></td>
             </tr>
-
             </table> -->
 
 
@@ -409,14 +408,14 @@ if (!isset($_SESSION['userLogin'])) {
             .then(result => {
                 const bounds = [
                     [0, 0],
-                    [730, 1600]
+                    [750,1000]
                 ];
                 const map = L.map('map', {
                     crs: L.CRS.Simple
                 });
                 map.setView([365, 800]);
                 map.fitBounds(bounds);
-                const image = L.imageOverlay('../src/puliMap2.png', bounds).addTo(map);
+                const image = L.imageOverlay('../src/puliMap3.png', bounds).addTo(map);
 
                 // set my own marker icon
                 const myIcon = L.icon({
@@ -526,7 +525,7 @@ if (!isset($_SESSION['userLogin'])) {
                         var marker = L.marker(loc, {
                             icon: myIcon
                         }).addTo(map).bindPopup("<b><center><h2><font color='#8b0000'>" + name + "</font></h2></center></b>" +
-                            "<h6><img src='../src/" + url + "' width='350px'>" +
+                            "<h6><img src='../" + url + "' height='200px'>" +
                             "<br>營業時間:" + timeString +
                             "<br>價錢:" + price +
                             "<br>地址:" + address +
@@ -536,6 +535,7 @@ if (!isset($_SESSION['userLogin'])) {
                                 minWidth: 400,
                                 maxHeight: 500
                             });
+                        console.log(url);
 
                     } else {
                         var marker = L.marker(loc, {

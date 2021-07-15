@@ -31,10 +31,10 @@ if (!isset($_SESSION['userLogin'])) {
         #map_container {
             position: relative;
             z-index: 1;
-            top: 40px;
+            top: 20px;
             left: 3vw;
-            width: 72vw;
-            height: 90%;
+            width: 70vw;
+            height: 45vw;
         }
 
         #map {
@@ -215,14 +215,14 @@ if (!isset($_SESSION['userLogin'])) {
             .then(result => {
                 const bounds = [
                     [0, 0],
-                    [730, 1600]
+                    [750, 1000]
                 ];
                 const map = L.map('map', {
                     crs: L.CRS.Simple
                 });
                 map.setView([365, 800]);
                 map.fitBounds(bounds);
-                const image = L.imageOverlay('../src/puliMap2.png', bounds).addTo(map);
+                const image = L.imageOverlay('../src/puliMap3.png', bounds).addTo(map);
 
                 // set my own marker icon
                 const myIcon = L.icon({

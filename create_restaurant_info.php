@@ -5,10 +5,8 @@
     // 取得使用者想新增的資料餐廳資料
     $RestaurantName = $_POST['RestaurantName'];
     $RestaurantTEL = $_POST['RestaurantTEL'];
-    $RestaurantIntro = $_POST['RestaurantIntro'];
     $RestaurantTime = $_POST['RestaurantTime'];
     // $RestaurantPhoto = $_POST['RestaurantPhoto'];
-    $RestaurantComment = $_POST['RestaurantComment'];
     $RestaurantPrice = $_POST['RestaurantPrice'];
     $RestaurantAddress = $_POST['RestaurantAddress'];
     $RestaurantX = $_POST['RestaurantX'];

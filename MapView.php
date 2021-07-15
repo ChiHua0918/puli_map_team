@@ -21,10 +21,10 @@
         #map_container {
             position: relative;
             z-index: 1;
-            top: 100px;
-            left: 6vw;
-            width: 88vw;
-            height: 90%;
+            top: 30px;
+            left: 3vw;
+            width: 70vw;
+            height: 40vw;
         }
         #map {
             z-index: 1;
@@ -263,7 +263,7 @@
         fetch("../controller/get_all_restaurant_info.php")
         .then(res => {  return res.json()} )
         .then(result => { 
-            const bounds = [[0,0], [730,1600]];
+            const bounds = [[0,0], [750,1000]];
             const map = L.map('map', {
                 // minZoom: -1,
                 // zoom:0,
@@ -273,7 +273,7 @@
             });
             map.setView([365, 800]);
             map.fitBounds(bounds);
-            const image = L.imageOverlay('../src/puliMap2.png', bounds).addTo(map);
+            const image = L.imageOverlay('../src/puliMap3.png', bounds).addTo(map);
             
 
             // set my own marker icon
@@ -356,7 +356,7 @@
                 if(url != "")
                 {
                     var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center><h2><font color='#8b0000'>" + name + "</font></h2></center></b>"
-                    +"<h6><img src='../src/" + url +"' width='350px'>"
+                    +"<h6><img src='../" + url +"' height='200px'>"
                     +"<br>營業時間:"+timeString
                     +"<br>價錢:"+price
                     +"<br>地址:"+address
