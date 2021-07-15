@@ -61,7 +61,7 @@
                 echo $msg;
                 // if everything is ok, try to upload file
             } else {
-                echo $target_file;
+                // echo $target_file;
                 if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
                     if(add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName))
                     {
