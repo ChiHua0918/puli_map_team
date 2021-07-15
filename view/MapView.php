@@ -356,7 +356,7 @@
                 if(url != "")
                 {
                     var marker = L.marker(loc,{icon: myIcon}).addTo(map).bindPopup("<b><center><h2><font color='#8b0000'>" + name + "</font></h2></center></b>"
-                    +"<h6><img src='../src/" + url +"' width='350px'>"
+                    +"<h6><img src='/" + url +"' width='350px'>"
                     +"<br>營業時間:"+timeString
                     +"<br>價錢:"+price
                     +"<br>地址:"+address
