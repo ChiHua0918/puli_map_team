@@ -406,13 +406,15 @@ if (!isset($_SESSION['userLogin'])) {
                 return res.json()
             })
             .then(result => {
-                const bounds = [
-                    [0, 0],
-                    [750,1000]
-                ];
+                const bounds = [[0,0], [750,1000]];
+                const bounds2 = [[-250,-250], [1200,1250]];
                 const map = L.map('map', {
-                    crs: L.CRS.Simple
-                });
+                minZoom: 0,
+                zoom:0,
+                maxZoom: 4,
+                maxBounds: bounds2,
+                crs: L.CRS.Simple
+            });
                 map.setView([365, 800]);
                 map.fitBounds(bounds);
                 const image = L.imageOverlay('../src/puliMap3.png', bounds).addTo(map);
