@@ -263,6 +263,7 @@
         fetch("/controller/get_all_restaurant_info.php")
         .then(res => {  return res.json()} )
         .then(result => { 
+            console.log(result);
             const bounds = [[0,0], [730,1600]];
             const map = L.map('map', {
                 // minZoom: -1,
@@ -344,7 +345,7 @@
 
             function createMarker( x ,  y , url ,name,time ,price,address,tel,blog_url)
             {
-                // console.log(time);
+                console.log(time);
                 var str = time.split(',');
                 var timeString = '';
                 for (let i = 0 ; i < str.length ; i++){
