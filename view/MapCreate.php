@@ -236,7 +236,7 @@ if (!isset($_SESSION['userLogin'])) {
                     id.push(result[i].RestaurantID);
                     x.push(result[i].RestaurantX);
                     y.push(result[i].RestaurantY);
-                    time.push(result[i].RestaurantTime);
+                    time.push((result[i].RestaurantTime).toString());
                     tel.push(result[i].RestaurantTEL);
                     photo.push(result[i].RestaurantPhoto);
                     restaurant_name.push(result[i].RestaurantName);
