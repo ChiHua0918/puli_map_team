@@ -378,7 +378,7 @@ if (!isset($_SESSION['userLogin'])) {
     }
 
     function categoryTbl(curType) {
-        let str = "<select id=\"type\" name=\"CategoryName\" multiple size='3' style=\"border:8px #9bd4e9 solid\">";
+        let str = "<select id=\"type\" name=\"CategoryName[]\" multiple size='3' style=\"border:8px #9bd4e9 solid\">";
         for (let i = 0; i < categoryList.length; i++) {
             if (categoryList[i] == curType) {
                 str += `<option value=\"${categoryList[i]}\" selected>${categoryList[i]}</option>`;
