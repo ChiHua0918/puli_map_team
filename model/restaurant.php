@@ -166,11 +166,7 @@
         // echo gettype($CategoryName);
         foreach ($CategoryName as $value) {
           $sql_recommend = "INSERT INTO puli_recommend (Restaurant_ID,Category_name) VALUES ('$RestaurantID','$value')";
-          if (mysqli_query($link, $sql_recommend)) {
-            echo "新增類別成功";
-          } else if (mysqli_query($link, $sql_recommend) == false) {
-            echo "新增類別失敗";
-          }
+          mysqli_query($link, $sql_recommend);
         }
         // --------------新增 puli_rest_time---------------
         // 分割星期幾的時間(輸入ex:星期日 13:00~14:00 15:00~16:00,星期一 13:00~14:00)
