@@ -351,6 +351,7 @@
                 for (let i = 0 ; i < str.length ; i++){
                     timeString += "<br/>" + str[i];
                 }
+                y = parseInt(y)+7;
                 var loc = L.latLng([y, x]); // [y,x]
                 
                 

@@ -31,10 +31,10 @@ if (!isset($_SESSION['userLogin'])) {
         #map_container {
             position: relative;
             z-index: 1;
-            top: 20px;
+            top: 30px;
             left: 3vw;
-            width: 70vw;
-            height: 45vw;
+            width: 55vw;
+            height: 38vw;
         }
 
         #map {
@@ -44,11 +44,12 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .modify {
-            width: 1200px;
-            height: 100%;
+            width: 1150px;
+            height: 87%;
+            top: 100px;
             background-color: rgba(255, 255, 255, 0.801);
             box-shadow: 0px 0px 3px hsla(240, 40%, 15%, 0.6);
-            position: absolute;
+            position: fixed;
             z-index: 2;
             right: 0%;
             text-align: center;
@@ -104,13 +105,13 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .active {
-            transform: translateX(1195px);
+            transform: translateX(1145px);
         }
 
         .btn {
             position: absolute;
             top: 50%;
-            right: 1200px;
+            right: 1150px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
@@ -411,7 +412,7 @@ if (!isset($_SESSION['userLogin'])) {
                 const map = L.map('map', {
                 minZoom: 0,
                 zoom:0,
-                maxZoom: 4,
+                maxZoom: 2,
                 maxBounds: bounds2,
                 crs: L.CRS.Simple
             });
@@ -520,6 +521,7 @@ if (!isset($_SESSION['userLogin'])) {
                     for (let i = 0; i < str.length; i++) {
                         timeString += "<br/>" + str[i];
                     }
+                    y = parseInt(y)+7;
                     var loc = L.latLng([y, x]); // [y,x]
 
 

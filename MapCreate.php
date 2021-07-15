@@ -33,8 +33,8 @@ if (!isset($_SESSION['userLogin'])) {
             z-index: 1;
             top: 20px;
             left: 3vw;
-            width: 70vw;
-            height: 45vw;
+            width: 55vw;
+            height: 40vw;
         }
 
         #map {
@@ -44,7 +44,7 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .modify {
-            width: 1200px;
+            width: 1150px;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.801);
             box-shadow: 0px 0px 3px hsla(240, 40%, 15%, 0.6);
@@ -61,13 +61,13 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .active {
-            transform: translateX(1195px);
+            transform: translateX(1145px);
         }
 
         .btn {
             position: absolute;
             top: 50%;
-            right: 1200px;
+            right: 1150px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
@@ -279,6 +279,7 @@ if (!isset($_SESSION['userLogin'])) {
                     for (let i = 0; i < str.length; i++) {
                         timeString += "<br/>" + str[i];
                     }
+                    y = parseInt(y)+7;
                     var loc = L.latLng([y, x]); // [y,x]
 
 
