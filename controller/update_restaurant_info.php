@@ -55,14 +55,27 @@
                 echo $msg;
                 // if everything is ok, try to upload file
             } else {
-                if($restaurant_photoUrl != null){
+                if($restaurant_photoUrl != null && $restaurant_photoUrl != ""){
+                    if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
+                        if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName))
+                        {
+                            header('Location: '."/view/MapEdit.php");
+                        }
+                        else{
+                            echo "更新失敗!";
+                        }
+                    } else {
+                        $msg = "Sorry, there was an error uploading your file.";
+                        echo $msg;
+                    }
+                } else {
                     // Check if file already exists
-                    echo $restaurant_photoUrl;
+                    // echo $restaurant_photoUrl;
                     if (file_exists($target_file)) {
-                        echo $target_file;
+                        // echo $target_file;
                         $file_name = explode("/",$restaurant_photoUrl)[1];
-                        echo '<br/>'.$file_name;
-                        echo '<br/>'.$_FILES["RestaurantPhoto"]["name"];
+                        // echo '<br/>'.$file_name;
+                        // echo '<br/>'.$_FILES["RestaurantPhoto"]["name"];
                         if($file_name != $_FILES["RestaurantPhoto"]["name"]){
                             $msg = "Sorry, file already exists.";
                             echo $msg;
@@ -96,19 +109,6 @@
                             $msg = "Sorry, there was an error uploading your file.";
                             echo $msg;
                         }
-                    }
-                }else{
-                    if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
-                        if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName))
-                        {
-                            header('Location: '."/view/MapEdit.php");
-                        }
-                        else{
-                            echo "更新失敗!";
-                        }
-                    } else {
-                        $msg = "Sorry, there was an error uploading your file.";
-                        echo $msg;
                     }
                 }
             }
