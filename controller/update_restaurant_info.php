@@ -97,6 +97,19 @@
                             echo $msg;
                         }
                     }
+                }else{
+                    if (move_uploaded_file($_FILES["RestaurantPhoto"]["tmp_name"], $target_file)) {
+                        if(update_restaurant_info($RestaurantID, $RestaurantName, $RestaurantTEL, $RestaurantTime, "uploads/".basename($_FILES["RestaurantPhoto"]["name"]), $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName))
+                        {
+                            header('Location: '."/view/MapEdit.php");
+                        }
+                        else{
+                            echo "更新失敗!";
+                        }
+                    } else {
+                        $msg = "Sorry, there was an error uploading your file.";
+                        echo $msg;
+                    }
                 }
             }
         } else {
