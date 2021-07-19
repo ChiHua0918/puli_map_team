@@ -44,7 +44,7 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .modify {
-            width: 1150px;
+            width: 1000px;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.801);
             box-shadow: 0px 0px 3px hsla(240, 40%, 15%, 0.6);
@@ -61,13 +61,13 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .active {
-            transform: translateX(1145px);
+            transform: translateX(1005px);
         }
 
         .btn {
             position: absolute;
             top: 50%;
-            right: 1150px;
+            right: 1000px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
