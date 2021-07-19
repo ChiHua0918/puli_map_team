@@ -33,7 +33,7 @@ if (!isset($_SESSION['userLogin'])) {
             z-index: 1;
             top: 20px;
             left: 3vw;
-            width: 55vw;
+            width: 60vw;
             height: 40vw;
         }
 
