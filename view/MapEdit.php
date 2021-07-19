@@ -31,10 +31,10 @@ if (!isset($_SESSION['userLogin'])) {
         #map_container {
             position: relative;
             z-index: 1;
-            top: 40px;
+            top: 30px;
             left: 3vw;
-            width: 72vw;
-            height: 90%;
+            width: 55vw;
+            height: 38vw;
         }
 
         #map {
@@ -44,11 +44,11 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .modify {
-            width: 1200px;
-            height: 100%;
+            width: 1150px;
+            height: 87%;
             background-color: rgba(255, 255, 255, 0.801);
             box-shadow: 0px 0px 3px hsla(240, 40%, 15%, 0.6);
-            position: absolute;
+            position: fixed;
             z-index: 2;
             right: 0%;
             text-align: center;
@@ -104,13 +104,13 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .active {
-            transform: translateX(1195px);
+            transform: translateX(1145px);
         }
 
         .btn {
             position: absolute;
             top: 50%;
-            right: 1200px;
+            right: 1150px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
@@ -406,16 +406,18 @@ if (!isset($_SESSION['userLogin'])) {
                 return res.json()
             })
             .then(result => {
-                const bounds = [
-                    [0, 0],
-                    [730, 1600]
-                ];
+                const bounds = [[0,0], [750,1000]];
+                const bounds2 = [[-250,-250], [1200,1250]];
                 const map = L.map('map', {
+                    minZoom: 0,
+                    zoom:0,
+                    maxZoom: 2,
+                    maxBounds: bounds2,
                     crs: L.CRS.Simple
                 });
                 map.setView([365, 800]);
                 map.fitBounds(bounds);
-                const image = L.imageOverlay('../src/puliMap2.png', bounds).addTo(map);
+                const image = L.imageOverlay('../src/puliMap3.png', bounds).addTo(map);
 
                 // set my own marker icon
                 const myIcon = L.icon({
@@ -518,6 +520,7 @@ if (!isset($_SESSION['userLogin'])) {
                     for (let i = 0; i < str.length; i++) {
                         timeString += "<br/>" + str[i];
                     }
+                    y = parseInt(y)+7;
                     var loc = L.latLng([y, x]); // [y,x]
 
 
@@ -525,7 +528,7 @@ if (!isset($_SESSION['userLogin'])) {
                         var marker = L.marker(loc, {
                             icon: myIcon
                         }).addTo(map).bindPopup("<b><center><h2><font color='#8b0000'>" + name + "</font></h2></center></b>" +
-                            "<h6><img src='/" + url + "' width='350px'>" +
+                            "<h6><img src='/" + url + "' width='200px'>" +
                             "<br>營業時間:" + timeString +
                             "<br>價錢:" + price +
                             "<br>地址:" + address +
