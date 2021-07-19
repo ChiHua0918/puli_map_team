@@ -61,7 +61,7 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .active {
-            transform: translateX(295px);
+            transform: translateX(1145px);
         }
 
         .btn {
