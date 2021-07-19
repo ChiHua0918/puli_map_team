@@ -67,7 +67,7 @@ if (!isset($_SESSION['userLogin'])) {
         .btn {
             position: absolute;
             top: 50%;
-            right: 1150px;
+            right: 300px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
