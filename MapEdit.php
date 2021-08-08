@@ -316,7 +316,7 @@ if (!isset($_SESSION['userLogin'])) {
     var address = [];
     var blog_url = [];
     var category = [];
-    var categoryList = ["冰品", "小吃", "點心", "早餐", "東南亞", "早午餐", "美式", "韓式", "日式", "港式", "宵夜", "甜點"];
+    var categoryList = ["冰品", "小吃", "點心", "早餐", "東南亞", "早午餐", "美式", "韓式", "日式", "港式", "宵夜", "甜點","原住民料理"];
 
     window.onload = function() {
         setDialog();

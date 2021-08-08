@@ -33,7 +33,7 @@ if (!isset($_SESSION['userLogin'])) {
             z-index: 1;
             top: 20px;
             left: 3vw;
-            width: 55vw;
+            width: 60vw;
             height: 40vw;
         }
 
@@ -44,7 +44,7 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .modify {
-            width: 1150px;
+            width: 1000px;
             height: 100%;
             background-color: rgba(255, 255, 255, 0.801);
             box-shadow: 0px 0px 3px hsla(240, 40%, 15%, 0.6);
@@ -61,13 +61,13 @@ if (!isset($_SESSION['userLogin'])) {
         }
 
         .active {
-            transform: translateX(1145px);
+            transform: translateX(1005px);
         }
 
         .btn {
             position: absolute;
             top: 50%;
-            right: 1150px;
+            right: 1000px;
             padding: 40px 10px;
             background-color: rgba(255, 255, 255, 0.801);
             border-radius: 6px 0 0 6px;
@@ -199,7 +199,7 @@ if (!isset($_SESSION['userLogin'])) {
     var address = [];
     var blog_url = [];
     var category = [];
-    var categoryList = ["冰品", "小吃", "點心", "早餐", "東南亞", "早午餐", "美式", "韓式", "日式", "港式", "宵夜", "甜點"];
+    var categoryList = ["冰品", "小吃", "點心", "早餐", "東南亞", "早午餐", "美式", "韓式", "日式", "港式", "宵夜", "甜點","原住民料理"];
 
     $(function() {
         // categoryTbl("");
@@ -295,7 +295,7 @@ if (!isset($_SESSION['userLogin'])) {
                             "<br><a href=' https://www.google.com.tw/maps/search/%22" + name + "' target='_blank'><input type='button' value='GoogleMap' /></a>" +
                             "<a href='" + blog_url + "' target='_blank'><input type='button' value='詳細資訊' /></a><br/></h6>", {
                                 minWidth: 400,
-                                maxHeight: 500
+                                maxHeight: 300
                             });
 
                     } else {
@@ -309,7 +309,7 @@ if (!isset($_SESSION['userLogin'])) {
                             "<br><a href=' https://www.google.com.tw/maps/search/%22" + name + "' target='_blank'><input type='button'  value='GoogleMap' /></a>" +
                             "<a href='" + blog_url + "' target='_blank'><input type='button'  value='詳細資訊' /></a><br/></h5>", {
                                 minWidth: 500,
-                                maxHeight: 500
+                                maxHeight: 300
                             });
                         // console.log(timeString);
                     }
