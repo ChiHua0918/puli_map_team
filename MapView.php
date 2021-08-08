@@ -364,7 +364,7 @@
                     +"<br>地址:"+address
                     +"<br>電話:"+tel
                     +"<br><a href=' https://www.google.com.tw/maps/search/%22"+name+"' target='_blank'><input type='button' value='GoogleMap' /></a>"
-                    +"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/></h6>", { minWidth:400 ,maxHeight:500});
+                    +"<a href='"+ blog_url +"' target='_blank'><input type='button' value='詳細資訊' /></a><br/></h6>", { minWidth:400 ,maxHeight:300});
 
                 }
                 else
@@ -375,7 +375,7 @@
                     +"<br>地址:"+address
                     +"<br>電話:"+tel
                     +"<br><a href=' https://www.google.com.tw/maps/search/%22"+name+"' target='_blank'><input type='button'  value='GoogleMap' /></a>"
-                    +"<a href='"+ blog_url +"' target='_blank'><input type='button'  value='詳細資訊' /></a><br/></h5>", { minWidth:500 ,maxHeight:500 });
+                    +"<a href='"+ blog_url +"' target='_blank'><input type='button'  value='詳細資訊' /></a><br/></h5>", { minWidth:500 ,maxHeight:300 });
                 // console.log(timeString);
                 }
                 marker.on('mouseover', function (e) {
