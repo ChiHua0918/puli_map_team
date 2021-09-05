@@ -90,6 +90,11 @@
         }
         // 價位
         if ($price != "") {
+            // 如果去掉其他的符號
+            if ((int)$price == 0){
+                // 去掉符號
+                $price = substr($price,1,count($price));
+            }
             $min_max = explode("~", $price);
             if ($min_max[1] == ""){
                 $min_max[1] = 100000;
