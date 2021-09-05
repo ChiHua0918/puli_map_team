@@ -315,7 +315,7 @@ if (!isset($_SESSION['userLogin'])) {
     var address = [];
     var blog_url = [];
     var category = [];
-    var categoryList = ["冰品", "小吃", "點心", "早餐", "東南亞", "早午餐", "美式", "韓式", "日式", "港式", "宵夜", "甜點"];
+    var categoryList = ["冰品", "小吃", "點心", "早餐", "東南亞", "早午餐", "美式", "韓式", "日式", "港式", "宵夜", "甜點","原住民料理"];
 
     window.onload = function() {
         setDialog();
@@ -536,7 +536,7 @@ if (!isset($_SESSION['userLogin'])) {
                             "<br><a href=' https://www.google.com.tw/maps/search/%22" + name + "' target='_blank'><input type='button' value='GoogleMap' /></a>" +
                             "<a href='" + blog_url + "' target='_blank'><input type='button' value='詳細資訊' /></a><br/></h6>", {
                                 minWidth: 400,
-                                maxHeight: 500
+                                maxHeight: 300
                             });
 
                     } else {
@@ -550,7 +550,7 @@ if (!isset($_SESSION['userLogin'])) {
                             "<br><a href=' https://www.google.com.tw/maps/search/%22" + name + "' target='_blank'><input type='button'  value='GoogleMap' /></a>" +
                             "<a href='" + blog_url + "' target='_blank'><input type='button'  value='詳細資訊' /></a><br/></h5>", {
                                 minWidth: 500,
-                                maxHeight: 500
+                                maxHeight: 300
                             });
                         // console.log(timeString);
                     }
