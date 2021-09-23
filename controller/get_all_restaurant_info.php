@@ -6,5 +6,5 @@
     // fetch data 連接 puli_restaurant 取得資料
     // 傳json格式給地圖
     require_once("../model/restaurant.php");
-    echo json_encode(get_all_restaurant_info(), JSON_NUMERIC_CHECK);
+    echo json_encode(get_all_restaurant_info());//, JSON_NUMERIC_CHECK);
 ?>

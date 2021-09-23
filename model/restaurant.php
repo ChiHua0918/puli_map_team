@@ -96,8 +96,10 @@
                 $min_max[0] = 0;
             }
             
-            $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= '".$min_max[0]."' 
-            AND puli_restaurant.Restaurant_price <= '".$min_max[1]."'";
+            $min = $min_max[0];
+            $max = $min_max[1];
+            $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= $min
+            AND puli_restaurant.Restaurant_price <= $max";
         }
 
         // $result 從DB中取出結果集
@@ -115,8 +117,8 @@
             }
             // 先做時間、價錢、類別的篩選
             // 如果有選距離篩選，再把前面篩選之結果 做距離的篩選
-            if ($dist != NULL && count($arr_fl_data) != 0){
-                $dis = explode(" ", $dist);
+            if ($dist != "" && count($arr_fl_data) != 0){
+                $dist = explode(" ", $dist);
                 $dist = $dist[0];
                 for ($i = 0; $i < count($arr_fl_data); $i++){
                     //PHP代碼以檢索JSON數據 
@@ -143,7 +145,7 @@
                 }
             }
         }
-        return $final_data;
+        return $arr_fl_data;
     }
 
     function add_restaurant_info($RestaurantName, $RestaurantTEL, $RestaurantTime, $RestaurantPhotoUrl, $RestaurantPrice, $RestaurantAddress, $RestaurantX, $RestaurantY, $BlogURL, $CategoryName){

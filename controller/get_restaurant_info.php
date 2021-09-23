@@ -20,5 +20,5 @@
     // 判斷今天星期幾
     $todayDate = date("w");
 
-    echo json_encode(get_restaurant_info($todayDate, $time, $type, $price, $userLocation, $dist), JSON_NUMERIC_CHECK);
+    echo json_encode(get_restaurant_info($todayDate, $time, $type, $price, $userLocation, $dist));//, JSON_NUMERIC_CHECK);
 ?>
