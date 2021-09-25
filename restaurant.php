@@ -63,9 +63,9 @@
 
     function get_restaurant_info($todayDate, $time, $type, $price, $userLocation, $dist){
         global $link;
-    //     // 篩選動作 (依 使用者偏好的選項 進行篩選)
-    //     // 將 puli_restaurant, puli_rest_time 資料表做連接    
-    //     // JOIN 結合多個資料表，組成一個暫時性的資料表 供查詢
+        // 篩選動作 (依 使用者偏好的選項 進行篩選)
+        // 將 puli_restaurant, puli_rest_time 資料表做連接    
+        // JOIN 結合多個資料表，組成一個暫時性的資料表 供查詢
         $f_sql = "SELECT DISTINCT puli_restaurant.Restaurant_ID, puli_restaurant.Restaurant_name, puli_restaurant.Restaurant_TEL, 
         puli_restaurant.Restaurant_intro, puli_restaurant.Restaurant_time, puli_restaurant.Restaurant_photo, 
         puli_restaurant.Restaurant_comment, puli_restaurant.Restaurant_price, puli_restaurant.Restaurant_address, 
@@ -73,8 +73,8 @@
         FROM puli_restaurant 
         LEFT JOIN puli_rest_time on puli_restaurant.Restaurant_ID = puli_rest_time.Restaurant_ID 
         LEFT JOIN puli_recommend on puli_recommend.Restaurant_ID = puli_restaurant.Restaurant_ID 
-        WHERE puli_rest_time.Day_ID = '".$todayDate."'  ";
-
+        WHERE 1=1 ";
+        // WHERE puli_rest_time.Day_ID = '".$todayDate."' ";
         // 時間
         if ($time != ""){
             // 時間 (使用者選的時間)
@@ -83,18 +83,14 @@
             // $f_sql = $f_sql."AND puli_rest_time.Day_ID = '".$today_date."' AND puli_rest_time.open_time <= '".$time."' AND puli_rest_time.end_time >= '".$time."' ";
             $f_sql = $f_sql." AND puli_rest_time.open_time <= '".$time."'
             AND puli_rest_time.end_time >= '".$time."' ";
+            
         }
         // 類別
         if ($type!= ""){
-            $f_sql = $f_sql."AND Category_name = '".$type."' ";
+            $f_sql = $f_sql." AND Category_name = '".$type."' ";
         }
         // 價位
         if ($price != "") {
-            // 如果去掉其他的符號
-            if ((int)$price == 0){
-                // 去掉符號
-                $price = substr($price,1,count($price));
-            }
             $min_max = explode("~", $price);
             if ($min_max[1] == ""){
                 $min_max[1] = 100000;
@@ -104,8 +100,7 @@
             }
             $min = $min_max[0];
             $max = $min_max[1];
-            $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= $min
-            AND puli_restaurant.Restaurant_price <= $max";
+            $f_sql = $f_sql . " AND puli_restaurant.Restaurant_price >= $min AND puli_restaurant.Restaurant_price <= $max";
         }
 
         // $result 從DB中取出結果集
@@ -125,8 +120,6 @@
             // 先做時間、價錢、類別的篩選
             // 如果有選距離篩選，再把前面篩選之結果 做距離的篩選
             if ($dist != "" && count($arr_fl_data) != 0){
-                $dist = explode(" ", $dist);
-                $dist = $dist[0];
                 for ($i = 0; $i < count($arr_fl_data); $i++){
                     //PHP代碼以檢索JSON數據 
                     $distance_data = file_get_contents('https://maps.googleapis.com/maps/api/distancematrix/json?&origins='.urlencode($userLocation).'&destinations='.urlencode($arr_fl_data[$i]['RestaurantAddress']).'&key=AIzaSyAE86ozbw5PYKeYzhTaZ71buMjLMozzc_U');
