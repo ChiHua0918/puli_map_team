@@ -82,7 +82,7 @@
         }
         // 類別
         if ($type!= ""){
-            $f_sql = $f_sql."AND Category_name = '".$type."' ";
+            $f_sql = $f_sql." AND Category_name = '".$type."' ";
         }
         // 價位
         if ($price != "") {
@@ -97,8 +97,7 @@
             
             $min = $min_max[0];
             $max = $min_max[1];
-            $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= $min
-            AND puli_restaurant.Restaurant_price <= $max";
+            $f_sql = $f_sql . "AND puli_restaurant.Restaurant_price >= $min AND puli_restaurant.Restaurant_price <= $max";
         }
 
         // $result 從DB中取出結果集
