@@ -241,13 +241,13 @@
         
     function categoryTbl()
     {
-        let str = "<select id=\"type\" name=\"CategoryName\">";
-        str += "<option value=\"\">無</option>"
+        let str = `<select id="type" name="CategoryName">`;
+        str += `<option value="">無</option>`;
         for(let i = 0 ; i<categoryList.length ; i++)
         {
-            str += `<option value=\"${categoryList[i]}\">${categoryList[i]}</option>`;
+            str += `<option value="${categoryList[i]}">${categoryList[i]}</option>`;
         }
-        str += "</select>";
+        str += `</select>`;
 
         document.getElementById("typeSelect").innerHTML = str;
     }
