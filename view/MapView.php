@@ -200,10 +200,10 @@
                 </select><br/>
                 距離: <select id="dist">
                 <option value="">無</option>
-                <option value="0.1 km">~100m</option>
-                <option value="0.6 km">~600m</option>
-                <option value="1 km">~1km</option>
-                <option value="2 km">~2km</option>
+                <option value="0.1">~100m</option>
+                <option value="0.6">~600m</option>
+                <option value="1">~1km</option>
+                <option value="2">~2km</option>
                 </select><br/>
                 類別: 
                 <!-- <select id="type">
@@ -252,6 +252,8 @@
         document.getElementById("typeSelect").innerHTML = str;
     }
 
+    var userPosition;
+    var acceptGetLoca = false;
     $(function () {
         categoryTbl();
 
@@ -412,8 +414,8 @@
             form.addEventListener("submit",formSubmit);
 
             //get user position variable
-            var userPosition;
-            var acceptGetLoca = false;
+            // var userPosition;
+            // var acceptGetLoca = false;
             getLocation();
 
             function formSubmit(e)

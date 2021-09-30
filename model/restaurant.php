@@ -78,8 +78,7 @@
             // 14:00 => "14:00"
             $time = htmlspecialchars($time);
             // $f_sql = $f_sql."AND puli_rest_time.Day_ID = '".$today_date."' AND puli_rest_time.open_time <= '".$time."' AND puli_rest_time.end_time >= '".$time."' ";
-            $f_sql = $f_sql." AND puli_rest_time.open_time <= '".$time."' 
-            AND puli_rest_time.end_time >= '".$time."' ";
+            $f_sql = $f_sql." AND puli_rest_time.open_time <= '".$time."' AND puli_rest_time.end_time >= '".$time."' ";
         }
         // 類別
         if ($type!= ""){
@@ -118,8 +117,8 @@
             // 先做時間、價錢、類別的篩選
             // 如果有選距離篩選，再把前面篩選之結果 做距離的篩選
             if ($dist != "" && count($arr_fl_data) != 0){
-                $dist = explode(" ", $dist);
-                $dist = $dist[0];
+                // $dist = explode(" ", $dist);
+                // $dist = $dist[0];
                 for ($i = 0; $i < count($arr_fl_data); $i++){
                     //PHP代碼以檢索JSON數據 
                     $distance_data = file_get_contents('https://maps.googleapis.com/maps/api/distancematrix/json?&origins='.urlencode($userLocation).'&destinations='.urlencode($arr_fl_data[$i]['RestaurantAddress']).'&key=AIzaSyAE86ozbw5PYKeYzhTaZ71buMjLMozzc_U');

@@ -18,6 +18,7 @@
     $dist = $_GET['dist'];
 
     // 判斷今天星期幾
+    date_default_timezone_set("Asia/Taipei");
     $todayDate = date("w");
 
     echo json_encode(get_restaurant_info($todayDate, $time, $type, $price, $userLocation, $dist));//, JSON_NUMERIC_CHECK);
