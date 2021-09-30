@@ -70,7 +70,8 @@
         FROM puli_restaurant 
         LEFT JOIN puli_rest_time on puli_restaurant.Restaurant_ID = puli_rest_time.Restaurant_ID 
         LEFT JOIN puli_recommend on puli_recommend.Restaurant_ID = puli_restaurant.Restaurant_ID 
-        WHERE puli_rest_time.Day_ID = '".$todayDate."'  ";
+        WHERE 1 = 1 ";
+        // WHERE puli_rest_time.Day_ID = '".$todayDate."'  ";
 
         // 時間
         if ($time != ""){
